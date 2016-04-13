@@ -16,17 +16,14 @@ public class ReceiveSocketAsync implements Runnable{
 
     Socket mReceiveSocket;
 
-    SocketReceiverDataListener mReceiveListener;
-
-    Context mContext;
+    public SocketReceiverDataListener mReceiveListener;
 
     Thread t;
 
-    public ReceiveSocketAsync(SocketReceiverDataListener receiveListener, Socket receiveSocket, Context context) {
+    public ReceiveSocketAsync(SocketReceiverDataListener receiveListener, Socket receiveSocket) {
         // TODO Auto-generated constructor stub
         mReceiveSocket = receiveSocket;
         mReceiveListener = receiveListener;
-        mContext = context;
     }
 
     @Override
@@ -46,7 +43,7 @@ public class ReceiveSocketAsync implements Runnable{
                 os.flush();
 
                 if (os.size() > 0){
-                    ((SocketReceiverDataListener)mContext).onReceiveData(os.toByteArray());
+                    mReceiveListener.onReceiveData(os.toByteArray());
                 }
             }
 

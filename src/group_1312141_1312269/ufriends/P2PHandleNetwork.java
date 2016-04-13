@@ -5,6 +5,8 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
 
+import group_1312141_1312269.ufriends.ReceiveSocketAsync.SocketReceiverDataListener;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,16 +20,24 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
     private static final int SOCKET_TIMEOUT = 5000;
 
-    Context mContext;
-
     ServerReceiveSocket_Thread serverReceiveThread;
     ServerSendSocket_Thread serverSendThread;
     Socket mSendSocket;
     Socket mReceiveSocket;
+    
+    ReceiveSocketAsync receiveThread;
+    
     public P2PHandleNetworkListener mListener;
+    public SocketReceiverDataListener mReceiveDataListener;
 
-    public P2PHandleNetwork(Context context){
-        mContext = context;
+    public P2PHandleNetwork(){
+    	mReceiveDataListener = null;
+    	
+    }
+    
+    public void setReceiveDataListener(SocketReceiverDataListener listener){
+    	mReceiveDataListener = listener;
+    	receiveThread.mReceiveListener = listener;
     }
 
     public void send(final InputStream is){
@@ -73,7 +83,6 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
                     }
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
-                    Toast.makeText(mContext.getApplicationContext(), "Error of create", Toast.LENGTH_SHORT).show();
                 }
             }else {
                 mSendSocket = new Socket();
@@ -90,7 +99,7 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
                             mSendSocket.bind(null);
                             mSendSocket.connect(new InetSocketAddress(hostIP, ServerReceiveSocket_Thread.PORT), SOCKET_TIMEOUT);
-                            ReceiveSocketAsync receiveThread = new ReceiveSocketAsync((ReceiveSocketAsync.SocketReceiverDataListener)mContext, mReceiveSocket, mContext);
+                            ReceiveSocketAsync receiveThread = new ReceiveSocketAsync(mReceiveDataListener, mReceiveSocket);
                             receiveThread.start();
                             mListener.onConnectComplete();
 
@@ -119,8 +128,10 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
     public void onReceive_ReceiveSocket(Socket receiveSocket) {
         // TODO Auto-generated method stub
         mReceiveSocket = receiveSocket;
-        ReceiveSocketAsync receiveThread = new ReceiveSocketAsync((ReceiveSocketAsync.SocketReceiverDataListener)mContext, receiveSocket, mContext);
+        
+        receiveThread = new ReceiveSocketAsync(mReceiveDataListener, receiveSocket);
         receiveThread.start();
+        
         mListener.onConnectComplete();
     }
 

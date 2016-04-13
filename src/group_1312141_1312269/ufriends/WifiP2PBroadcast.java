@@ -3,7 +3,9 @@ package group_1312141_1312269.ufriends;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.NetworkInfo;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
@@ -15,19 +17,96 @@ import java.io.InputStream;
  */
 public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManager.PeerListListener, P2PHandleNetwork.P2PHandleNetworkListener {
 
-    WifiP2pManager mManager;
-    WifiP2pManager.Channel mChannel;
-    Context mContext;
+    WifiP2pManager mManager = null;
+    WifiP2pManager.Channel mChannel = null;
+    
+    public Context mContext;
+    
     public WifiP2PBroadcastListener mListener = null;
+    
     P2PHandleNetwork mP2PHandle;
-
-    public WifiP2PBroadcast(WifiP2pManager manager, WifiP2pManager.Channel channel, MainActivity activity){
-        mManager = manager;
-        mChannel = channel;
+ 
+    public WifiP2PBroadcast(MainActivity activity){
         mContext = activity;
 
-        mP2PHandle = new P2PHandleNetwork(mContext);
+        mP2PHandle = new P2PHandleNetwork();
         mP2PHandle.mListener = this;
+    }
+    
+    public void setManager() {
+    	
+        mManager = (WifiP2pManager) mContext.getSystemService(Context.WIFI_P2P_SERVICE);
+        mChannel = mManager.initialize(mContext, mContext.getMainLooper(), null);
+    }
+    
+    public void register(IntentFilter filter){
+        
+        mContext.registerReceiver(this, filter);
+    }
+    
+    public void advertiseWifiP2P() {
+    	
+        mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+    
+    public void connectPeer(WifiP2pConfig config){
+    	
+    	mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+    
+    public void disconnectFromPeer() {
+        mManager.removeGroup(mChannel, new WifiP2pManager.ActionListener() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+                mManager.cancelConnect(mChannel, new WifiP2pManager.ActionListener() {
+
+                    @Override
+                    public void onSuccess() {
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    @Override
+                    public void onFailure(int reason) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
 
     @Override
