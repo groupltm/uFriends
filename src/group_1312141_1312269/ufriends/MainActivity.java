@@ -1,4 +1,6 @@
-package com.example.ufriends;
+package group_1312141_1312269.ufriends;
+
+import com.example.ufriends.R;
 
 import android.app.Activity;
 import android.os.Bundle;
