@@ -9,6 +9,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
@@ -29,13 +30,13 @@ import android.widget.Toast;
 import com.example.ufriends.R;
 
 
-public class MainActivity extends Activity implements WifiP2PBroadcastListener, SocketReceiverDataListener{
+public class MainActivity extends Activity implements WifiP2PBroadcastListener{
 
 	DeviceListAdapter deviceListAdapter;
     ListView lvDevice;
     List<WifiP2pDevice> mPeerList = new ArrayList<WifiP2pDevice>();
 
-    WifiP2PBroadcast mBroadcast;
+    public static WifiP2PBroadcast mBroadcast;
     IntentFilter filter = new IntentFilter();
 
     @Override
@@ -67,7 +68,6 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener, 
         mBroadcast.setManager();
 
         mBroadcast.mListener = this;
-        mBroadcast.mP2PHandle.mReceiveDataListener = this;
 
         filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -134,7 +134,8 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener, 
     @Override
     public void onConnection() {
         // TODO Auto-generated method stub
-        
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -142,21 +143,4 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener, 
         // TODO Auto-generated method stub
     	mBroadcast.advertiseWifiP2P();
     }
-
-	@Override
-	public void onReceiveData(byte[] data) {
-		// TODO Auto-generated method stub
-		Handler hd = new Handler(getMainLooper());
-
-        hd.post(new Runnable() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-            	Toast.makeText(getApplicationContext(), "Da nhan dc du lieu", Toast.LENGTH_SHORT).show();
-            }
-        });
-		
-        mBroadcast.disconnectFromPeer();
-	}
 }

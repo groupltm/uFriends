@@ -99,7 +99,7 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
                             mSendSocket.bind(null);
                             mSendSocket.connect(new InetSocketAddress(hostIP, ServerReceiveSocket_Thread.PORT), SOCKET_TIMEOUT);
-                            ReceiveSocketAsync receiveThread = new ReceiveSocketAsync(mReceiveDataListener, mReceiveSocket);
+                            receiveThread = new ReceiveSocketAsync(mReceiveDataListener, mReceiveSocket);
                             receiveThread.start();
                             mListener.onConnectComplete();
 

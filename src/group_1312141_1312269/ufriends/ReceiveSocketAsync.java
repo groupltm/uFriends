@@ -43,7 +43,9 @@ public class ReceiveSocketAsync implements Runnable{
                 os.flush();
 
                 if (os.size() > 0){
-                    mReceiveListener.onReceiveData(os.toByteArray());
+                	if (mReceiveListener != null){
+                		mReceiveListener.onReceiveData(os.toByteArray());
+                	}
                 }
             }
 
