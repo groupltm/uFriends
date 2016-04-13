@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.ufriends;
 
 import android.app.Activity;
 import android.os.Bundle;
