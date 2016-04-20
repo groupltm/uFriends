@@ -3,6 +3,7 @@ package group_1312141_1312269.ufriends;
 import group_1312141_1312269.ufriends.ReceiveSocketAsync.SocketReceiverDataListener;
 import group_1312141_1312269.ufriends.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.sip.SipRegistrationListener;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -18,6 +20,7 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +37,10 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
 
 	DeviceListAdapter deviceListAdapter;
     ListView lvDevice;
-    List<WifiP2pDevice> mPeerList = new ArrayList<WifiP2pDevice>();
 
-    public static WifiP2PBroadcast mBroadcast;
     IntentFilter filter = new IntentFilter();
+    
+    public static MyBundle mBundle = new MyBundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
 
         lvDevice = (ListView)findViewById(R.id.lvDevice);
 
-        deviceListAdapter = new DeviceListAdapter(this, R.layout.list_device_item, mPeerList);
+        deviceListAdapter = new DeviceListAdapter(this, R.layout.list_device_item, mBundle.mPeerList);
         lvDevice.setAdapter(deviceListAdapter);
         lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -62,12 +65,20 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
         setBroadcast();
     }
     
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	// TODO Auto-generated method stub
+    	super.onSaveInstanceState(outState);
+    	
+    	
+    }
+    
     private void setBroadcast() {
 
-        mBroadcast = new WifiP2PBroadcast(this);
-        mBroadcast.setManager();
+        mBundle.mBroadcast = new WifiP2PBroadcast(this);
+        mBundle.mBroadcast.setManager();
 
-        mBroadcast.mListener = this;
+        mBundle.mBroadcast.mListener = this;
 
         filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -75,8 +86,8 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
         filter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
         filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
 
-        mBroadcast.register(filter);
-        mBroadcast.advertiseWifiP2P();
+        mBundle.mBroadcast.register(filter);
+        mBundle.mBroadcast.advertiseWifiP2P();
     }
 
 
@@ -114,20 +125,20 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
     }
 
     private void connectToPeer(int position){
-        WifiP2pDevice device = mPeerList.get(position);
+        WifiP2pDevice device = mBundle.mPeerList.get(position);
         final WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = device.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
         config.groupOwnerIntent = 15;
         
-        mBroadcast.connectPeer(config);
+        mBundle.mBroadcast.connectPeer(config);
     }
     
     @Override
     public void onPeers(WifiP2pDeviceList peers) {
         // TODO Auto-generated method stub
-        mPeerList.clear();
-        mPeerList.addAll(peers.getDeviceList());
+        mBundle.mPeerList.clear();
+        mBundle.mPeerList.addAll(peers.getDeviceList());
         deviceListAdapter.notifyDataSetChanged();
     }
 
@@ -141,6 +152,6 @@ public class MainActivity extends Activity implements WifiP2PBroadcastListener{
     @Override
     public void onDisconnect() {
         // TODO Auto-generated method stub
-    	mBroadcast.advertiseWifiP2P();
+    	mBundle.mBroadcast.advertiseWifiP2P();
     }
 }
