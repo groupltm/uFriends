@@ -1,20 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
- 
-    <TextView
-        android:id="@+id/txtMsg"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="6">
+    
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="20dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:text="Sample"
-        android:textColor="#000" />
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:background="@drawable/rawshapes">
+            
+            <TextView
+		        android:id="@+id/txtMsg"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        
+		        android:layout_margin="5dp"
+		        android:text="dâdadadadadadadadadadadadadasdzfsdfszdfsdfszda"
+		        
+		       
+		         />
+        </LinearLayout>
+        
+        <TextView 
+            android:id="@+id/txtSeenDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textColor="#EEEEEE"
+            android:text="seen"/>
+            />
+    </LinearLayout>
+    
+    <ImageView 
+        android:id="@+id/imvAvatar"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        />
 </LinearLayout>

@@ -2,15 +2,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/layout" >
-    
-    <ListView
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/abcd"
+        android:layout_above="@+id/tblo">
+        
+        <ListView
         android:id="@+id/lvChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" 
         android:layout_above="@+id/tblo"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"/>
+        android:transcriptMode="alwaysScroll"
+        />
+        
+    </LinearLayout>
+    
     
         <TableLayout
         	android:id="@+id/tblo"
