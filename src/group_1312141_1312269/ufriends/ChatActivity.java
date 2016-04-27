@@ -39,7 +39,7 @@ public class ChatActivity extends Activity implements SocketReceiverDataListener
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		mBroadcast = MainActivity.mBundle.mBroadcast;
+		mBroadcast = MyBundle.mBroadcast;
 		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		
 		setContentView(R.layout.activity_chat);

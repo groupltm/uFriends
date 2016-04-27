@@ -9,7 +9,8 @@ import android.net.wifi.p2p.WifiP2pDevice;
 public class MyBundle implements Serializable{
 	
 	public List<WifiP2pDevice> mPeerList; 
-	public WifiP2PBroadcast mBroadcast;
+	public static WifiP2PBroadcast mBroadcast;
+	public static boolean isConnect;
 	
 	public MyBundle() {
 		// TODO Auto-generated constructor stub
