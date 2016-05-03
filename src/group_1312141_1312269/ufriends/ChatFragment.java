@@ -37,12 +37,14 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 	View mView;
 
 	boolean side = false;
+	
+	MyBundle mBundle;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		mBundle = mBundle.getInstance();
 	}
 
 	@Override
@@ -122,7 +124,7 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 	        edtChatIn.setText("");
 	        
 	        InputStream is = convertStringToIs(msg);
-	        MyBundle.mBroadcast.send(is);
+	        mBundle.mBroadcast.send(is);
 		}
 		
 		return true;

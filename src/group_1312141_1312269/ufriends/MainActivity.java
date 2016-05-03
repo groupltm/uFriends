@@ -3,6 +3,7 @@ package group_1312141_1312269.ufriends;
 import group_1312141_1312269.ufriends.ReceiveSocketAsync.SocketReceiverDataListener;
 import group_1312141_1312269.ufriends.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ufriends.R;
+import com.google.gson.JsonIOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -166,11 +168,21 @@ public class MainActivity extends AppCompatActivity {
 	private Toolbar toolbar;
 	private TabLayout tabLayout;
 	public static ViewPager viewPager;
+	MyBundle mBundle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mBundle = MyBundle.getInstance();
+		try {
+			mBundle.getInfoFromJSONFile(getApplicationContext());
+			//mBundle.setInfoToXMLFile(getApplicationContext());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -189,10 +201,10 @@ public class MainActivity extends AppCompatActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == 1) {
-					if (MyBundle.isConnect == true){
+					if (mBundle.isConnect == true){
 						ChatFragment chatfm = (ChatFragment) ((ViewPagerAdapter) viewPager
 								.getAdapter()).getItem(1);
-						MyBundle.mBroadcast.mP2PHandle.setReceiveDataListener((SocketReceiverDataListener)chatfm);
+						mBundle.mBroadcast.mP2PHandle.setReceiveDataListener((SocketReceiverDataListener)chatfm);
 					}			
 				}
 			}

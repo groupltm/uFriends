@@ -35,7 +35,7 @@ public class BrowseFragment extends Fragment implements WifiP2PBroadcastListener
 
     IntentFilter filter = new IntentFilter();
     
-    public static MyBundle mBundle = new MyBundle();
+    MyBundle mBundle = MyBundle.getInstance();
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -151,7 +151,7 @@ public class BrowseFragment extends Fragment implements WifiP2PBroadcastListener
 			public void run() {
 				// TODO Auto-generated method stub
 				//MainActivity.viewPager.setCurrentItem(1, true);
-				MyBundle.isConnect = true;
+				mBundle.isConnect = true;
 				
 		    	MainActivity tab = ((MainActivity)getActivity());
 		    	tab.setCurrentTab(2);
