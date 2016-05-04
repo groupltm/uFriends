@@ -26,8 +26,8 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
     
     P2PHandleNetwork mP2PHandle;
  
-    public WifiP2PBroadcast(MainActivity activity){
-        mContext = activity;
+    public WifiP2PBroadcast(Context context){
+        mContext = context;
 
         mP2PHandle = new P2PHandleNetwork();
         mP2PHandle.mListener = this;
