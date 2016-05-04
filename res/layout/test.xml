@@ -1,0 +1,40 @@
+<LinearLayout
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:weightSum="2"
+    >
+    
+    <ListView
+            android:id="@+id/lvChat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll" />
+    
+    <TableLayout
+        android:id="@+id/tblo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+
+            <EditText
+                android:id="@+id/edtChatIn"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:text="Send" />
+        </TableRow>
+    </TableLayout>
+    
+</LinearLayout>
