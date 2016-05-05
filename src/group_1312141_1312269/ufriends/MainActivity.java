@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 		mBundle = MyBundle.getInstance();
 		try {
 			mBundle.getInfoFromJSONFile(getApplicationContext());
-			//mBundle.setInfoToXMLFile(getApplicationContext());
+			//mBundle.setInfoToJSONFile(getApplicationContext());
 		} catch (JsonIOException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

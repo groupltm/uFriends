@@ -150,4 +150,10 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 		});
 		
 	}
+
+	@Override
+	public void onCompleteSendData() {
+		// TODO Auto-generated method stub
+		
+	}
 }
