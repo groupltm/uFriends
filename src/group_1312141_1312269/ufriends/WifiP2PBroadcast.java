@@ -6,19 +6,30 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.p2p.WifiP2pManager.ActionListener;
+import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
+import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
+import android.os.Handler;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created by hungmai on 07/04/2016.
  */
 public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManager.PeerListListener, P2PHandleNetwork.P2PHandleNetworkListener {
 
+	public static int SERVICE_BROADCASTING_INTERVAL = 10000;
+	
     WifiP2pManager mManager = null;
     WifiP2pManager.Channel mChannel = null;
+    
+    WifiP2pDnsSdServiceInfo service;
+    WifiP2pDnsSdServiceRequest serviceRequest;
     
     public Context mContext;
     
@@ -62,6 +73,119 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
         });
     }
     
+  public void advertiseService(final String serviceName, final String serviceType, final Map<String, String> serviceInfo){
+
+      // Service information.  Pass it an instance name, service type
+      // _protocol._transportlayer , and the map containing
+      // information other devices will want once they connect to this one.
+	  advertiseWifiP2P();
+	  
+      service = WifiP2pDnsSdServiceInfo.newInstance(serviceName, serviceType, serviceInfo);
+
+      // Add the local service, sending the service info, network channel,
+      // and listener that will be used to indicate success or failure of
+      // the request
+      
+      mManager.clearLocalServices(mChannel, new ActionListener() {
+		
+		@Override
+		public void onSuccess() {
+			// TODO Auto-generated method stub
+			mManager.addLocalService(mChannel, service, new WifiP2pManager.ActionListener() {
+		          @Override
+		          public void onSuccess() {
+		        	  Handler hd = new Handler();
+		        	  hd.postDelayed(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							advertiseService(serviceName, serviceType, serviceInfo);
+						}
+					}, SERVICE_BROADCASTING_INTERVAL);
+		          }
+
+		          @Override
+		          public void onFailure(int arg0) {
+		              // Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY
+		          }
+		      });
+		}
+		
+		@Override
+		public void onFailure(int reason) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+      
+  }
+
+  private void setServiceRequest(final String serviceName, WifiP2pManager.DnsSdTxtRecordListener txtListener, WifiP2pManager.DnsSdServiceResponseListener servListener){
+
+      mManager.setDnsSdResponseListeners(mChannel, servListener, txtListener);
+
+      serviceRequest = WifiP2pDnsSdServiceRequest.newInstance();
+  }
+
+  public void discoverService(final String serviceName, final WifiP2pManager.DnsSdTxtRecordListener txtListener, final WifiP2pManager.DnsSdServiceResponseListener servListener){
+	  
+	  advertiseWifiP2P();
+
+      setServiceRequest(serviceName, txtListener, servListener);
+      
+      mManager.removeServiceRequest(mChannel, serviceRequest, new ActionListener() {
+		
+		@Override
+		public void onSuccess() {
+			// TODO Auto-generated method stub
+			mManager.addServiceRequest(mChannel, serviceRequest, new WifiP2pManager.ActionListener() {
+
+		          @Override
+		          public void onSuccess() {
+		              // TODO Auto-generated method stub
+		              mManager.discoverServices(mChannel, new WifiP2pManager.ActionListener() {
+
+		                  @Override
+		                  public void onSuccess() {
+		                      // TODO Auto-generated method stub
+		                	  Handler hd = new Handler();
+		                	  hd.postDelayed(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									discoverService(serviceName, txtListener, servListener);
+								}
+							}, SERVICE_BROADCASTING_INTERVAL);
+		                  }
+
+		                  @Override
+		                  public void onFailure(int reason) {
+		                      // TODO Auto-generated method stub
+
+		                  }
+		              });
+		          }
+
+		          @Override
+		          public void onFailure(int reason) {
+		              // TODO Auto-generated method stub
+
+		          }
+		      });
+		}
+		
+		@Override
+		public void onFailure(int reason) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+      
+      
+  }
+    
     public void connectPeer(WifiP2pConfig config){
     	
     	mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
@@ -69,6 +193,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
+            	
             }
 
             @Override
