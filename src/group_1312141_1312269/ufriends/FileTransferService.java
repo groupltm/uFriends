@@ -105,6 +105,12 @@ public class FileTransferService {
                         break;
                     }
 
+//                    if (checkReceiveId(code)){
+//                        result = 4;
+//                        byte[] realBuf = getRealBuffer(buf, len, false);
+//                        out.write(realBuf, 0, len - 4);
+//                    }
+
                     if (checkCode(code)) {
                         byte[] endFile = detectEndFile(oldBuf, oldLen);
                         if (checkEndFile(endFile)) {
