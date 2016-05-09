@@ -1,19 +1,30 @@
 package group_1312141_1312269.ufriends;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.ufriends.R;
+import com.google.gson.JsonIOException;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -32,7 +43,8 @@ public class SettingFragment extends Fragment{
 		super.onCreate(savedInstanceState);
 		
 		myBundle = MyBundle.getInstance();
-		mInfo = convertInfoToStringList(myBundle.mInfo);
+		mInfo = myBundle.mInfo.convertInfoToStringList();
+		mInfo.remove(0);
 	}
 	
 	@Override
@@ -46,6 +58,21 @@ public class SettingFragment extends Fragment{
 		lvMyInfo = (ListView)mView.findViewById(R.id.lvInfo);
 		lvMyInfo.setAdapter(new InfoArrayAdapter(getActivity(), R.layout.list_info_item, mInfo));
 		
+		setAvatar();
+		
+		mAvatar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				openGalery();
+			}
+		});
+		
+		return mView;
+	}
+	
+	private void setAvatar(){
 		if (myBundle.mInfo._imagePath.equals("")){
 			mAvatar.setImageResource(R.drawable.ic_launcher);
 		}else{
@@ -58,21 +85,56 @@ public class SettingFragment extends Fragment{
 			    mAvatar.setImageBitmap(myBitmap);
 			}
 		}
-		
-		return mView;
 	}
 	
-	private List<String> convertInfoToStringList(Info info){
-		List<String> infoList = new ArrayList<>();
+	private void openGalery() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 100);
+    }
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+
+//		Uri uri = data.getData();
+//		Bitmap bitmap;
+//		try {
+//			bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+//			mAvatar.setImageBitmap(bitmap);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		infoList.add(info._name);
-		infoList.add(String.valueOf(info._age));
-		if (info._sex){
-			infoList.add("Male");
-		}else{
-			infoList.add("Female");
+		String realPath;
+        // SDK < API11
+        if (Build.VERSION.SDK_INT < 11)
+            realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getContext(), data.getData());
+        
+        // SDK >= 11 && SDK < 19
+        else if (Build.VERSION.SDK_INT < 19)
+            realPath = RealPathUtil.getRealPathFromURI_API11to18(getContext(), data.getData());
+        
+        // SDK > 19 (Android 4.4)
+        else
+            realPath = RealPathUtil.getRealPathFromURI_API19(getContext(), data.getData());
+        // Log.d(TAG, String.valueOf(bitmap));
+
+        myBundle.mInfo._imagePath = realPath;
+        try {
+			myBundle.setInfoToJSONFile(getContext());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return infoList;
+        setAvatar();
 	}
 }

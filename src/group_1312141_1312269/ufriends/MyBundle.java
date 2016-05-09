@@ -79,8 +79,7 @@ public class MyBundle implements Serializable {
 		Gson gson = new Gson();
 
 		// 1. Java object to JSON, and save into a file
-		File external = Environment.getExternalStorageDirectory();
-		File file = new File(external, "test.json");
+		File file = new File("data/data/com.example.ufriends/test.json");
 		if (!file.exists()) {
 			file.createNewFile();
 			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
