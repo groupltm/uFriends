@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 	// @Override
 	// public void onConnection() {
 	// // TODO Auto-generated method stub
-	// Intent intent = new Intent(this, ChatActivity.class);
+	//Intent intent = new Intent(this, ChatActivity.class);
 	// startActivity(intent);
 	// }
 	//
@@ -232,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
 				getSupportFragmentManager());
 		adapter.addFragment(new BrowseFragment(), "Browse");
 		adapter.addFragment(new ChatFragment(), "Chat");
+		adapter.addFragment(new SettingFragment(), "Setting");
 		viewPager.setAdapter(adapter);
 
 	}

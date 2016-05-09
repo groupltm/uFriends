@@ -2916,9 +2916,9 @@ containing a value of this type.
         public static final int top=0x7f090031;
         public static final int topPanel=0x7f090046;
         public static final int touch_outside=0x7f090071;
+        public static final int tv=0x7f090081;
+        public static final int tvInput=0x7f090082;
         public static final int tvLabel=0x7f09007f;
-        public static final int tvName=0x7f090081;
-        public static final int tvNameInput=0x7f090082;
         public static final int tvSubInfo=0x7f090080;
         public static final int txtMsg=0x7f09007d;
         public static final int up=0x7f090001;
