@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" 
-            android:background="@drawable/rawshapes">
+            android:background="@drawable/rawshapes_right"
+            >
             
             <TextView
 		        android:id="@+id/txtMsg"
@@ -40,10 +41,10 @@
             />
     </LinearLayout>
     
-    <ImageView 
+    <group_1312141_1312269.ufriends.Custom_MyImageView 
         android:id="@+id/imvAvatar"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:scaleType="fitXY"

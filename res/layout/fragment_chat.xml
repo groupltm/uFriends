@@ -1,45 +1,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <LinearLayout
+    android:layout_height="fill_parent"
+    android:id="@+id/layout" >
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F3F3F3" >
-
+        android:background="@drawable/abcd"
+        android:layout_above="@+id/tblo">
+        
         <ListView
-            android:id="@+id/lvChat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/tblo"
-            android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll" />
-    </LinearLayout>
-
-    <TableLayout
-        android:id="@+id/tblo"
+        android:id="@+id/lvChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/holo_blue_bright" >
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dip" >
-
-            <EditText
-                android:id="@+id/edtChatIn"
-                android:layout_weight="2" />
-
-            <Button
-                android:id="@+id/btnSend"
-                android:text="Send" />
-        </TableRow>
-    </TableLayout>
+        android:layout_alignParentRight="true" 
+        android:layout_above="@+id/tblo"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        />
+        
+    </LinearLayout>
+    
+    
+        <TableLayout
+        	android:id="@+id/tblo"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:background="@android:color/primary_text_light" >
+	
+	        <TableRow
+	            android:id="@+id/tableRow1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="5dip" >
+	
+	            <EditText
+	                android:id="@+id/edtChatIn"
+	                android:layout_weight="2" />
+	
+	            <Button
+	                android:id="@+id/btnSend"
+	                android:text="Send" />
+	        </TableRow>
+	        
+    	</TableLayout>
 
 </RelativeLayout>
