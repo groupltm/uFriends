@@ -221,24 +221,24 @@ public class BrowseFragment extends Fragment implements
 
 	@Override
 	public void onConnection() {
-		// TODO Auto-generated method stub
-		// Intent intent = new Intent(getActivity(), ChatActivity.class);
-		// startActivity(intent);
+		 //TODO Auto-generated method stub
+		 Intent intent = new Intent(getActivity(), ChatActivity.class);
+		 startActivity(intent);
 
-		Handler hd = new Handler(getActivity().getMainLooper());
-		hd.post(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				// MainActivity.viewPager.setCurrentItem(1, true);
-				mBundle.isConnect = true;
-
-				MainActivity tab = ((MainActivity) getActivity());
-				tab.setCurrentTab(2);
-
-			}
-		});
+//		Handler hd = new Handler(getActivity().getMainLooper());
+//		hd.post(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				// MainActivity.viewPager.setCurrentItem(1, true);
+//				mBundle.isConnect = true;
+//
+//				MainActivity tab = ((MainActivity) getActivity());
+//				tab.setCurrentTab(2);
+//
+//			}
+//		});
 
 	}
 

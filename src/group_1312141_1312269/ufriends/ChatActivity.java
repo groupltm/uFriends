@@ -1,47 +1,47 @@
-//package group_1312141_1312269.ufriends;
-//
-//import java.io.ByteArrayInputStream;
-//import java.io.InputStream;
-//import java.nio.charset.StandardCharsets;
-//
-//import group_1312141_1312269.ufriends.ReceiveSocketAsync.SocketReceiverDataListener;
-//import android.app.Activity;
-//import android.content.Context;
-//import android.database.DataSetObserver;
-//import android.os.Bundle;
-//import android.os.Handler;
-//import android.view.KeyEvent;
-//import android.view.MotionEvent;
-//import android.view.View;
-//import android.view.inputmethod.InputMethodManager;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.LinearLayout;
-//import android.widget.ListView;
-//import android.widget.RelativeLayout;
-//
-//import com.example.ufriends.R;
-//
-//public class ChatActivity extends Activity implements SocketReceiverDataListener{
-//	
-//	WifiP2PBroadcast mBroadcast;
-//	
-//	ChatArrayAdapter mChatAdapter;
-//	
-//	ListView lvChat;
-//	EditText edtChatIn;
-//	Button btnSend;
-//	
-//	boolean side = false;
-//	
-//	
-//	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		// TODO Auto-generated method stub
-//		super.onCreate(savedInstanceState);
-//		
-//		mBroadcast = MyBundle.mBroadcast;
+package group_1312141_1312269.ufriends;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import group_1312141_1312269.ufriends.ReceiveSocketAsync.SocketReceiverDataListener;
+import android.app.Activity;
+import android.content.Context;
+import android.database.DataSetObserver;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import com.example.ufriends.R;
+
+public class ChatActivity extends Activity implements SocketReceiverDataListener{
+	
+	WifiP2PBroadcast mBroadcast;
+	
+	ChatArrayAdapter mChatAdapter;
+	
+	ListView lvChat;
+	EditText edtChatIn;
+	Button btnSend;
+	
+	boolean side = false;
+	
+	
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+//		MyBundle mBundle = MyBundle.getInstance();
+//		mBroadcast = mBundle;
 //		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 //		
 //		setContentView(R.layout.activity_chat);
@@ -99,46 +99,52 @@
 //				lvChat.setSelection(mChatAdapter.getCount() - 1);
 //			}
 //		});
-//	}
-//	
-//	private InputStream convertStringToIs(String s){
-//		InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
-//		return stream;
-//	}
-//	
-//	private boolean sendChatMessage(){
-//		String msg = edtChatIn.getText().toString();
-//		if (!msg.equals("")){
-//			side = false;
-//			mChatAdapter.add(new ChatMessage(side, edtChatIn.getText().toString()));
-//	        edtChatIn.setText("");
-//	        
-//	        InputStream is = convertStringToIs(msg);
-//	        mBroadcast.send(is);
-//		}
-//		
-//		return true;
-//	}
-//
-//	@Override
-//	public void onReceiveData(byte[] data) {
-//		// TODO Auto-generated method stub
-//		final String msg = new String(data, StandardCharsets.UTF_8);
-//		side = true;
-//		
-//		Handler hd = new Handler(getMainLooper());
-//		
-//		hd.post(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				
-//				
-//				mChatAdapter.add(new ChatMessage(side, msg));
-//			}
-//		});
-//		
-//	}
-//
-//}
+	}
+	
+	private InputStream convertStringToIs(String s){
+		InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
+		return stream;
+	}
+	
+	private boolean sendChatMessage(){
+		String msg = edtChatIn.getText().toString();
+		if (!msg.equals("")){
+			side = false;
+			mChatAdapter.add(new ChatMessage(side, edtChatIn.getText().toString()));
+	        edtChatIn.setText("");
+	        
+	        InputStream is = convertStringToIs(msg);
+	        mBroadcast.send(is);
+		}
+		
+		return true;
+	}
+
+	@Override
+	public void onReceiveData(byte[] data) {
+		// TODO Auto-generated method stub
+		final String msg = new String(data, StandardCharsets.UTF_8);
+		side = true;
+		
+		Handler hd = new Handler(getMainLooper());
+		
+		hd.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				
+				mChatAdapter.add(new ChatMessage(side, msg));
+			}
+		});
+		
+	}
+
+	@Override
+	public void onCompleteSendData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

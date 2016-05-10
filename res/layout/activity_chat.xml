@@ -2,49 +2,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/layout" >
-    <LinearLayout 
+    
+    <fragment 
+        android:name="group_1312141_1312269.ufriends.ChatFragment"
+        android:id="@+id/fm_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/abcd"
-        android:layout_above="@+id/tblo">
-        
-        <ListView
-        android:id="@+id/lvChat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" 
-        android:layout_above="@+id/tblo"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
         />
-        
-    </LinearLayout>
-    
-    
-        <TableLayout
-        	android:id="@+id/tblo"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentRight="true"
-	        android:background="@android:color/holo_orange_dark" >
-	
-	        <TableRow
-	            android:id="@+id/tableRow1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:padding="5dip" >
-	
-	            <EditText
-	                android:id="@+id/edtChatIn"
-	                android:layout_weight="2" />
-	
-	            <Button
-	                android:id="@+id/btnSend"
-	                android:text="Send" />
-	        </TableRow>
-	        
-    	</TableLayout>
 
 </RelativeLayout>
