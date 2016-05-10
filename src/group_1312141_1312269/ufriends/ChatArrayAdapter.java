@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
@@ -17,6 +18,8 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     private TextView chatText;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
+    
+    private ImageView avatar;
    
  
     @Override
@@ -49,6 +52,9 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         }
         chatText = (TextView) row.findViewById(R.id.txtMsg);
         chatText.setText(chatMessageObj.message);
+        
+        avatar = (ImageView)row.findViewById(R.id.imvAvatar);
+        avatar.setImageResource(R.drawable.dodo);
         return row;
     }
 }

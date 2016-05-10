@@ -1,18 +1,58 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
- 
-    <TextView
-        android:id="@+id/txtMsg"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="6">
+    
+    <group_1312141_1312269.ufriends.Custom_MyImageView
+        android:id="@+id/imvAvatar"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        />
+        
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="20dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:text="Sample"
-        android:textColor="#000" />
-</RelativeLayout>
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+         >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:background="@drawable/rawshapes_left"
+            android:layout_marginTop="5dp"
+        	android:layout_marginLeft="10dp"	
+            >
+            
+            <TextView
+		        android:id="@+id/txtMsg"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        
+		        android:layout_margin="5dp"
+		        android:text="dâdadadadadadadadadadadadadasdzfsdfszdfsdfszda"
+		        
+		       
+		         />
+        </LinearLayout>
+        
+        <TextView 
+            android:id="@+id/txtSeenDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textColor="#EEEEEE"
+            android:text="seen"
+            android:layout_marginTop="5dp"
+        	android:layout_gravity="right"
+            />
+            />
+    </LinearLayout>
+    
+</LinearLayout>
