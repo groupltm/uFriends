@@ -7,8 +7,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="20dp"
-        android:src="@drawable/ic_launcher"
+       	android:layout_marginStart="20dp"
+        android:src="@drawable/ic_person"
         />
     
     <TextView 
@@ -38,8 +38,8 @@
         android:layout_width="60dp"
         android:layout_height="70dp"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_supervisor_account_white_24dp"
-        android:background="#A30943"
+        android:src="@drawable/ic_mode_edit_white_24dp"
+        android:background="#AAAAAA"
         />
 
 </RelativeLayout>

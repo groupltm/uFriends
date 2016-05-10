@@ -2780,13 +2780,17 @@ containing a value of this type.
         public static final int dodo=0x7f02004f;
         public static final int ic_folder_white_24dp=0x7f020050;
         public static final int ic_launcher=0x7f020051;
-        public static final int ic_photo_camera_white_24dp=0x7f020052;
-        public static final int ic_photo_library_white_24dp=0x7f020053;
-        public static final int ic_send_white_24dp=0x7f020054;
-        public static final int ic_supervisor_account_white_24dp=0x7f020055;
-        public static final int notification_template_icon_bg=0x7f020058;
-        public static final int rawshapes_left=0x7f020056;
-        public static final int rawshapes_right=0x7f020057;
+        public static final int ic_mode_edit_black_24dp=0x7f020052;
+        public static final int ic_mode_edit_white_24dp=0x7f020053;
+        public static final int ic_person=0x7f020054;
+        public static final int ic_person_white_24dp=0x7f020055;
+        public static final int ic_photo_camera_white_24dp=0x7f020056;
+        public static final int ic_photo_library_white_24dp=0x7f020057;
+        public static final int ic_send_white_24dp=0x7f020058;
+        public static final int ic_supervisor_account_white_24dp=0x7f020059;
+        public static final int notification_template_icon_bg=0x7f02005c;
+        public static final int rawshapes_left=0x7f02005a;
+        public static final int rawshapes_right=0x7f02005b;
     }
     public static final class id {
         public static final int action0=0x7f09008d;
