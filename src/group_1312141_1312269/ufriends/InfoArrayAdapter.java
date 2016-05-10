@@ -169,7 +169,7 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 	private void showModifyAgeDialog() {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 		alertDialog.setTitle("Age");
-		alertDialog.setMessage("Enter Your Sex");
+		alertDialog.setMessage("Enter Your Age");
 
 		inputAge = new EditText(mContext);
 		inputAge.setInputType(InputType.TYPE_CLASS_NUMBER);
