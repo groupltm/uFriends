@@ -111,30 +111,30 @@ public class SettingFragment extends Fragment{
 //			e.printStackTrace();
 //		}
 		
-		String realPath;
-        // SDK < API11
-        if (Build.VERSION.SDK_INT < 11)
-            realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getContext(), data.getData());
-        
-        // SDK >= 11 && SDK < 19
-        else if (Build.VERSION.SDK_INT < 19)
-            realPath = RealPathUtil.getRealPathFromURI_API11to18(getContext(), data.getData());
-        
-        // SDK > 19 (Android 4.4)
-        else
-            realPath = RealPathUtil.getRealPathFromURI_API19(getContext(), data.getData());
-        // Log.d(TAG, String.valueOf(bitmap));
-
-        myBundle.mInfo._imagePath = realPath;
-        try {
-			myBundle.setInfoToJSONFile(getContext());
-		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        setAvatar();
+//		String realPath;
+//        // SDK < API11
+//        if (Build.VERSION.SDK_INT < 11)
+//            realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getContext(), data.getData());
+//        
+//        // SDK >= 11 && SDK < 19
+//        else if (Build.VERSION.SDK_INT < 19)
+//            realPath = RealPathUtil.getRealPathFromURI_API11to18(getContext(), data.getData());
+//        
+//        // SDK > 19 (Android 4.4)
+//        else
+//            realPath = RealPathUtil.getRealPathFromURI_API19(getContext(), data.getData());
+//        // Log.d(TAG, String.valueOf(bitmap));
+//
+//        myBundle.mInfo._imagePath = realPath;
+//        try {
+//			myBundle.setInfoToJSONFile(getContext());
+//		} catch (JsonIOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        setAvatar();
 	}
 }

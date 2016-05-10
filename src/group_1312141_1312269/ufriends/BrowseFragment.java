@@ -37,11 +37,14 @@ public class BrowseFragment extends Fragment implements
 
 	DeviceListAdapter deviceListAdapter;
 	ListView lvDevice;
+	ListView lvConnectDevice;
 	View mView;
 
 	IntentFilter filter = new IntentFilter();
 
 	MyBundle mBundle = MyBundle.getInstance();
+	
+	Thread checkPeerThread;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,14 +107,14 @@ public class BrowseFragment extends Fragment implements
 							Map<String, String> txtRecordMap,
 							WifiP2pDevice srcDevice) {
 						// TODO Auto-generated method stub
-						if (fullDomainName.equals("ufriends._tcp.local.")) {
-							if (!mBundle.mPeerList.contains(srcDevice)){
-								Info info = convertMapToInfo(txtRecordMap);
-								mBundle.mPeerInfoList.add(info);
-								mBundle.mPeerList.add(srcDevice);
-								deviceListAdapter.notifyDataSetChanged();
-							}					
-						}
+//						if (fullDomainName.equals("ufriends._tcp.local.")) {
+//							if (!mBundle.mPeerList.contains(srcDevice)){
+//								Info info = convertMapToInfo(txtRecordMap);
+//								mBundle.mPeerInfoList.add(info);
+//								mBundle.mPeerList.add(srcDevice);
+//								deviceListAdapter.notifyDataSetChanged();
+//							}					
+//						}
 					}
 				}, null);
 	}
@@ -195,21 +198,26 @@ public class BrowseFragment extends Fragment implements
 
 	@Override
 	public void onPeers(WifiP2pDeviceList peers) {
-		// TODO Auto-generated method stub
-		// mBundle.mPeerList.clear();
-		// mBundle.mPeerList.addAll(peers.getDeviceList());
-		// deviceListAdapter.notifyDataSetChanged();
+		 //TODO Auto-generated method stub
+		 mBundle.mPeerList.clear();
+		 mBundle.mPeerList.addAll(peers.getDeviceList());
+		 deviceListAdapter.notifyDataSetChanged();
+		 
+		 mBundle.mPeerInfoList.clear();
+		 for (int i = 0; i < mBundle.mPeerList.size(); i++){
+			 mBundle.mPeerInfoList.add(new Info());
+		 }
 		
-		Collection<WifiP2pDevice> collecPeers = peers.getDeviceList();
-		for (WifiP2pDevice peer:mBundle.mPeerList){
-			if(!checkAvailablePeers(collecPeers, peer)){
-				int peerPosition = mBundle.mPeerList.indexOf(peer);
-				mBundle.mPeerInfoList.remove(peerPosition);
-				mBundle.mPeerList.remove(peerPosition);
-			}
-		}
-		
-		deviceListAdapter.notifyDataSetChanged();
+//		Collection<WifiP2pDevice> collecPeers = peers.getDeviceList();
+//		for (WifiP2pDevice peer:mBundle.mPeerList){
+//			if(!checkAvailablePeers(collecPeers, peer)){
+//				int peerPosition = mBundle.mPeerList.indexOf(peer);
+//				mBundle.mPeerInfoList.remove(peerPosition);
+//				mBundle.mPeerList.remove(peerPosition);
+//			}
+//		}
+//		
+//		deviceListAdapter.notifyDataSetChanged();
 	}
 	
 	private boolean checkAvailablePeers(Collection<WifiP2pDevice> peers, WifiP2pDevice peer){
@@ -235,7 +243,7 @@ public class BrowseFragment extends Fragment implements
 //				mBundle.isConnect = true;
 //
 //				MainActivity tab = ((MainActivity) getActivity());
-//				tab.setCurrentTab(2);
+//				tab.setCurrentTab(2);	
 //
 //			}
 //		});

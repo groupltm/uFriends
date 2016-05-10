@@ -1,13 +1,89 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/layout" >
-    
-    <fragment 
-        android:name="group_1312141_1312269.ufriends.ChatFragment"
-        android:id="@+id/fm_chat"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    android:orientation="vertical"
+    android:background="@drawable/abcd"
+    android:weightSum="2" >
 
-</RelativeLayout>
+    <ListView
+        android:id="@+id/lvChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/tblo"
+        android:layout_alignParentRight="true"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:layout_weight="1" />
+
+    <TableLayout
+        android:id="@+id/layout_CameraFile"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/darker_gray">
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+	    
+	        <Button
+		        android:id="@+id/btnCamera"	        
+	            android:layout_gravity="center_vertical"
+	            android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+		        android:background="@drawable/ic_photo_camera_white_24dp" />
+	        
+	        <Button
+		        android:id="@+id/btnFile"	        
+	            android:layout_gravity="center_vertical"
+	            android:layout_width="30dp"
+                android:layout_height="30dp"
+		        android:background="@drawable/ic_photo_library_white_24dp" />
+	        
+	        </TableRow>
+	             
+        </TableLayout>
+    
+    <TableLayout
+    	android:id="@+id/tblo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/darker_gray">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:weightSum="12" >
+           	         
+            <EditText
+                android:id="@+id/edtChatIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="11"
+                android:hint="Write something" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/ic_send_white_24dp" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

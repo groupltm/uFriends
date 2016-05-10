@@ -9,7 +9,6 @@
         android:id="@+id/imvIcon"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true"
         android:layout_margin="10dp"
         android:src="@drawable/avatar"
         android:scaleType="fitXY"
@@ -36,6 +35,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="text"
+            />
+        
+        <TextView 
+            android:id="@+id/tvConnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Available"
+            android:textStyle="italic"
             />
         
     </LinearLayout>
