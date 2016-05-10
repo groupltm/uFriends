@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="80dp" >
+    
+    <group_1312141_1312269.ufriends.Custom_MyImageView 
+        android:id="@+id/imvIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_launcher"
+        />
+    
+    <TextView 
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="20sp"
+        android:layout_toEndOf="@+id/imvIcon"
+        android:layout_marginStart="20dp"
+        android:paddingTop="10dp"
+        />
+    
+    <TextView 
+        android:id="@+id/tvInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hung"
+        android:textSize="15sp"
+        android:layout_toEndOf="@+id/imvIcon"
+        android:layout_below="@+id/tv"
+        android:layout_marginStart="20dp"
+        />
+    
+    <ImageButton 
+        android:id="@+id/btnModify"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_supervisor_account_white_24dp"
+        android:background="#A30943"
+        />
+
+</RelativeLayout>
