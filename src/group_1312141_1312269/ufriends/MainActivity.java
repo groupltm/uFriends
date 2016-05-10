@@ -194,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
 
 		tabLayout = (TabLayout) findViewById(R.id.tabs);
 		tabLayout.setupWithViewPager(viewPager);
+		
+		setupTabIcon();
 
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -231,10 +233,15 @@ public class MainActivity extends AppCompatActivity {
 		ViewPagerAdapter adapter = new ViewPagerAdapter(
 				getSupportFragmentManager());
 		adapter.addFragment(new BrowseFragment(), "Browse");
-		adapter.addFragment(new ChatFragment(), "Chat");
+		//adapter.addFragment(new ChatFragment(), "Chat");
 		adapter.addFragment(new SettingFragment(), "Setting");
 		viewPager.setAdapter(adapter);
 
+	}
+	
+	private void setupTabIcon(){
+		tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_white_24dp);
+		tabLayout.getTabAt(1).setIcon(R.drawable.ic_settings_white_24dp);
 	}
 
 	class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -263,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int position) {
 			return mFragmentTitleList.get(position);
+			
+			//return null;
 		}
 	}
 }

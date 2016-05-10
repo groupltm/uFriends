@@ -65,10 +65,6 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 
 		ImageView icon = (ImageView) v.findViewById(R.id.imvIcon);
 
-		int color = Color.parseColor("#d3d3d3");
-
-		icon.setColorFilter(color);
-
 		TextView tv = (TextView) v.findViewById(R.id.tv);
 
 		TextView tvInput = (TextView) v.findViewById(R.id.tvInput);
@@ -77,7 +73,6 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 
 		switch (position) {
 		case 0:
-			icon.setImageResource(R.drawable.ic_supervisor_account_white_24dp);
 			tv.setText("Name");
 			btnModifyName = (ImageButton) v.findViewById(R.id.btnModify);
 			btnModifyName.setOnClickListener(new OnClickListener() {
@@ -91,7 +86,6 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 			break;
 
 		case 1:
-			icon.setImageResource(R.drawable.ic_supervisor_account_white_24dp);
 			tv.setText("Age");
 			btnModifyAge = (ImageButton) v.findViewById(R.id.btnModify);
 			btnModifyAge.setOnClickListener(new OnClickListener() {
@@ -105,7 +99,6 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 			break;
 
 		case 2:
-			icon.setImageResource(R.drawable.ic_supervisor_account_white_24dp);
 			tv.setText("Sex");
 			btnModifySex = (ImageButton) v.findViewById(R.id.btnModify);
 			btnModifySex.setOnClickListener(new OnClickListener() {
