@@ -116,7 +116,7 @@ public class BrowseFragment extends Fragment implements
 		Map<String, String> serviceInfo = createMap(mBundle.mInfo);
 
 		mBundle.mBroadcast.advertiseService("ufriends", "_tcp", serviceInfo);
-		mBundle.mBroadcast.discoverService("ufriends",
+		mBundle.mBroadcast.discoverService(
 				new DnsSdTxtRecordListener() {
 
 					@Override
@@ -125,14 +125,14 @@ public class BrowseFragment extends Fragment implements
 							Map<String, String> txtRecordMap,
 							WifiP2pDevice srcDevice) {
 						// TODO Auto-generated method stub
-//						if (fullDomainName.equals("ufriends._tcp.local.")) {
-//							if (!mBundle.mPeerList.contains(srcDevice)){
-//								Info info = convertMapToInfo(txtRecordMap);
-//								mBundle.mPeerInfoList.add(info);
-//								mBundle.mPeerList.add(srcDevice);
-//								deviceListAdapter.notifyDataSetChanged();
-//							}					
-//						}
+						if (fullDomainName.equals("ufriends._tcp.local.")) {
+							if (!mBundle.mPeerList.contains(srcDevice)){
+								Info info = convertMapToInfo(txtRecordMap);
+								mBundle.mPeerInfoList.add(info);
+								mBundle.mPeerList.add(srcDevice);
+								deviceListAdapter.notifyDataSetChanged();
+							}					
+						}
 					}
 				}, null);
 	}
