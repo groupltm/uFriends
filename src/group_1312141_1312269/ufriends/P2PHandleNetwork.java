@@ -41,7 +41,9 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
     public void setReceiveDataListener(ReceiveSocketAsync.SocketReceiverDataListener listener){
         mReceiveDataListener = listener;
         for (ConnectedPeer peer:mConnectedPeers){
-            peer.mReceiveThread.mReceiveListener = listener;
+        	if (peer != null){
+        		peer.mReceiveThread.mReceiveListener = listener;
+        	}         
         }
     }
 

@@ -29,7 +29,6 @@ public class MyBundle implements Serializable {
 	public List<WifiP2pDevice> mPeerList;
 	public List<Info> mPeerInfoList;
 	public List<Info> mPeerInfoConnectList;
-	public List<WifiP2pDevice> mPeerConnectList;
 	public WifiP2PBroadcast mBroadcast;
 	public boolean isConnect;
 	public Info mInfo;
@@ -39,8 +38,9 @@ public class MyBundle implements Serializable {
 		// TODO Auto-generated constructor stub
 		mPeerList = new ArrayList<WifiP2pDevice>();
 		mPeerInfoList = new ArrayList<>();
+		
+		mPeerInfoConnectList = new ArrayList<>();
 		mInfo = new Info();
-
 	}
 
 	public static MyBundle getInstance() {

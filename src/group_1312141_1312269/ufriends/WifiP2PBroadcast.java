@@ -121,6 +121,23 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
         });
 
     }
+    
+    public void stopAdvertise(){
+    	mManager.stopPeerDiscovery(mChannel, new ActionListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(int reason) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+    }
 
     private void setServiceRequest(final String serviceName, WifiP2pManager.DnsSdTxtRecordListener txtListener, WifiP2pManager.DnsSdServiceResponseListener servListener){
 
@@ -270,6 +287,8 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
                 }else{
                     mListener.onDisconnect();
                 }
+            }else if (state == NetworkInfo.State.CONNECTING){
+            	mListener.onConnecting();
             }
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             // Respond to this device's wifi state changing
@@ -319,6 +338,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
     public interface WifiP2PBroadcastListener{
         public void onPeers(WifiP2pDeviceList peers);
         public void onConnection();
+        public void onConnecting();
         public void onDisconnect();
     }
 }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 	 
     private TextView chatText;
-    private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
+    private static List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
     
     private ImageView avatar;
@@ -26,6 +26,10 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     public void add(ChatMessage object) {
         chatMessageList.add(object);
         super.add(object);
+    }
+    
+    public void clear(){
+    	chatMessageList.clear();
     }
  
     public ChatArrayAdapter(Context context, int textViewResourceId) {

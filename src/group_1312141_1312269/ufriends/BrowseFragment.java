@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -36,6 +37,7 @@ public class BrowseFragment extends Fragment implements
 		WifiP2PBroadcastListener {
 
 	DeviceListAdapter deviceListAdapter;
+	DeviceListAdapter deviceConnectListAdapter;
 	ListView lvDevice;
 	ListView lvConnectDevice;
 	View mView;
@@ -60,17 +62,33 @@ public class BrowseFragment extends Fragment implements
 		mView = inflater.inflate(R.layout.fragment_browse, container, false);
 
 		lvDevice = (ListView) mView.findViewById(R.id.lvDevice);
+		lvConnectDevice = (ListView)mView.findViewById(R.id.lvConnectDevice);
+		
 
 		deviceListAdapter = new DeviceListAdapter(getActivity(),
 				R.layout.list_device_item, mBundle.mPeerInfoList);
+		deviceConnectListAdapter = new DeviceListAdapter(getActivity(),
+				R.layout.list_device_item, mBundle.mPeerInfoConnectList);
+		
 		lvDevice.setAdapter(deviceListAdapter);
-		lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		lvDevice.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
 				connectToPeer(position);
+			}
+		});
+		
+		lvConnectDevice.setAdapter(deviceConnectListAdapter);
+		lvConnectDevice.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				checkConnectPeer();
 			}
 		});
 
@@ -119,54 +137,6 @@ public class BrowseFragment extends Fragment implements
 				}, null);
 	}
 
-	public class DeviceListAdapter extends ArrayAdapter<Info> {
-
-		Context mContext;
-		int mResource;
-		// List <WifiP2pDevice> mList;
-		List<Info> mInfoList;
-
-		public DeviceListAdapter(Context context, int resource,
-				List<Info> objects) {
-			super(context, resource, objects);
-			// TODO Auto-generated constructor stub
-
-			mContext = context;
-			mResource = resource;
-			// mList = objects;
-			mInfoList = objects;
-		}
-
-		@SuppressLint("ViewHolder")
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-
-			View v = convertView;
-
-			LayoutInflater inflater = (LayoutInflater) this.getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inflater.inflate(mResource, null);
-
-			TextView tvDeviceName = (TextView) v.findViewById(R.id.tvLabel);
-			TextView tvSubInfo = (TextView) v.findViewById(R.id.tvSubInfo);
-
-			tvDeviceName.setText(mInfoList.get(position)._name);
-			Info info = mInfoList.get(position);
-			String subInfo;
-
-			if (info._sex) {
-				subInfo = "Sex: Male; " + "Age: " + String.valueOf(info._age);
-			} else {
-				subInfo = "Sex: Female; " + "Age: " + String.valueOf(info._age);
-			}
-			tvSubInfo.setText(subInfo);
-
-			return v;
-		}
-
-	}
-
 	private Map<String, String> createMap(Info info) {
 		Map<String, String> result = new HashMap<>();
 
@@ -185,6 +155,22 @@ public class BrowseFragment extends Fragment implements
 
 		return info;
 	}
+	
+	private void addConnectPeerToList(Info peerInfo, int status){
+		peerInfo._status = status;
+		mBundle.mPeerInfoConnectList.clear();
+		mBundle.mPeerInfoConnectList.add(peerInfo);
+		deviceConnectListAdapter.notifyDataSetChanged();
+	}
+	
+	private void checkConnectPeer(){
+		Info info = mBundle.mPeerInfoConnectList.get(0);
+		if (info._status == 1){
+			mBundle.mBroadcast.disconnectFromPeer();
+		}else {
+			showChatView();
+		}
+	}
 
 	private void connectToPeer(int position) {
 		WifiP2pDevice device = mBundle.mPeerList.get(position);
@@ -201,12 +187,22 @@ public class BrowseFragment extends Fragment implements
 		 //TODO Auto-generated method stub
 		 mBundle.mPeerList.clear();
 		 mBundle.mPeerList.addAll(peers.getDeviceList());
-		 deviceListAdapter.notifyDataSetChanged();
+		 
 		 
 		 mBundle.mPeerInfoList.clear();
 		 for (int i = 0; i < mBundle.mPeerList.size(); i++){
 			 mBundle.mPeerInfoList.add(new Info());
+			 
+			 if (mBundle.mPeerList.get(i).status == 1){
+				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 1);
+			 }
+			 else if (mBundle.mPeerList.get(i).status == 0){
+				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 2);
+			 }
+
 		 }
+		 
+		 deviceListAdapter.notifyDataSetChanged();
 		
 //		Collection<WifiP2pDevice> collecPeers = peers.getDeviceList();
 //		for (WifiP2pDevice peer:mBundle.mPeerList){
@@ -226,12 +222,17 @@ public class BrowseFragment extends Fragment implements
 		}
 		return false;
 	}
+	
+	private void showChatView(){
+		Intent intent = new Intent(getActivity(), ChatActivity.class);
+		startActivity(intent);
+	}
 
 	@Override
 	public void onConnection() {
 		 //TODO Auto-generated method stub
-		 Intent intent = new Intent(getActivity(), ChatActivity.class);
-		 startActivity(intent);
+		mBundle.mBroadcast.stopAdvertise();
+		showChatView();
 
 //		Handler hd = new Handler(getActivity().getMainLooper());
 //		hd.post(new Runnable() {
@@ -253,6 +254,13 @@ public class BrowseFragment extends Fragment implements
 	@Override
 	public void onDisconnect() {
 		// TODO Auto-generated method stub
+		mBundle.mPeerInfoConnectList.clear();
 		mBundle.mBroadcast.advertiseWifiP2P();
+	}
+
+	@Override
+	public void onConnecting() {
+		// TODO Auto-generated method stub
+		
 	}
 }

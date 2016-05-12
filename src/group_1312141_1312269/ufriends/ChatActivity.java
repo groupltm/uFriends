@@ -64,18 +64,18 @@ public class ChatActivity extends Activity implements SocketReceiverDataListener
 		
 		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
 		
-		layout.setOnTouchListener(new View.OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(edtChatIn.getWindowToken(), 0);
-				
-				return false;
-			}
-		});
+//		layout.setOnTouchListener(new View.OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				// TODO Auto-generated method stub
+//				
+//				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//				imm.hideSoftInputFromWindow(edtChatIn.getWindowToken(), 0);
+//				
+//				return false;
+//			}
+//		});
 		
 		btnSend.setOnClickListener(new View.OnClickListener() {
 			

@@ -2,8 +2,8 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="@drawable/abcd"
+    android:orientation="vertical"
     android:weightSum="2" >
 
     <ListView
@@ -12,51 +12,50 @@
         android:layout_height="0dp"
         android:layout_above="@+id/tblo"
         android:layout_alignParentRight="true"
+        android:layout_weight="1"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:layout_weight="1" />
+        android:transcriptMode="alwaysScroll" />
 
     <TableLayout
         android:id="@+id/layout_CameraFile"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/darker_gray">
-        <TableRow
-            android:id="@+id/tableRow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dip" >
-	    
-	        <Button
-		        android:id="@+id/btnCamera"	        
-	            android:layout_gravity="center_vertical"
-	            android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="5dp"
-		        android:background="@drawable/ic_photo_camera_white_24dp" />
-	        
-	        <Button
-		        android:id="@+id/btnFile"	        
-	            android:layout_gravity="center_vertical"
-	            android:layout_width="30dp"
-                android:layout_height="30dp"
-		        android:background="@drawable/ic_photo_library_white_24dp" />
-	        
-	        </TableRow>
-	             
-        </TableLayout>
-    
-    <TableLayout
-    	android:id="@+id/tblo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:background="@android:color/darker_gray">
+        android:background="@android:color/darker_gray" >
+
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_photo_camera_white_24dp" />
+
+            <Button
+                android:id="@+id/btnFile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_photo_library_white_24dp" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tblo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/darker_gray" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -64,15 +63,13 @@
             android:layout_height="wrap_content"
             android:padding="5dip"
             android:weightSum="12" >
-           	         
+
             <EditText
                 android:id="@+id/edtChatIn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="11"
                 android:hint="Write something" >
-
-                <requestFocus />
             </EditText>
 
             <Button
@@ -83,7 +80,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/ic_send_white_24dp" />
         </TableRow>
-
     </TableLayout>
 
 </LinearLayout>
