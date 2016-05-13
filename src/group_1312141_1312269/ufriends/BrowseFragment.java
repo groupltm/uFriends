@@ -115,6 +115,7 @@ public class BrowseFragment extends Fragment implements
 
 		Map<String, String> serviceInfo = createMap(mBundle.mInfo);
 
+		mBundle.mBroadcast.stopDiscoveryService();
 		mBundle.mBroadcast.advertiseService("ufriends", "_tcp", serviceInfo);
 		mBundle.mBroadcast.discoverService(
 				new DnsSdTxtRecordListener() {
@@ -134,7 +135,15 @@ public class BrowseFragment extends Fragment implements
 							}					
 						}
 					}
-				}, null);
+				}, new DnsSdServiceResponseListener() {
+					
+					@Override
+					public void onDnsSdServiceAvailable(String instanceName,
+							String registrationType, WifiP2pDevice srcDevice) {
+						// TODO Auto-generated method stub
+						int a = 0;
+					}
+				});
 	}
 
 	private Map<String, String> createMap(Info info) {
@@ -185,35 +194,35 @@ public class BrowseFragment extends Fragment implements
 	@Override
 	public void onPeers(WifiP2pDeviceList peers) {
 		 //TODO Auto-generated method stub
-		 mBundle.mPeerList.clear();
-		 mBundle.mPeerList.addAll(peers.getDeviceList());
-		 
-		 
-		 mBundle.mPeerInfoList.clear();
-		 for (int i = 0; i < mBundle.mPeerList.size(); i++){
-			 mBundle.mPeerInfoList.add(new Info());
-			 
-			 if (mBundle.mPeerList.get(i).status == 1){
-				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 1);
-			 }
-			 else if (mBundle.mPeerList.get(i).status == 0){
-				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 2);
-			 }
-
-		 }
-		 
-		 deviceListAdapter.notifyDataSetChanged();
+//		 mBundle.mPeerList.clear();
+//		 mBundle.mPeerList.addAll(peers.getDeviceList());
+//		 
+//		 
+//		 mBundle.mPeerInfoList.clear();
+//		 for (int i = 0; i < mBundle.mPeerList.size(); i++){
+//			 mBundle.mPeerInfoList.add(new Info());
+//			 
+//			 if (mBundle.mPeerList.get(i).status == 1){
+//				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 1);
+//			 }
+//			 else if (mBundle.mPeerList.get(i).status == 0){
+//				 addConnectPeerToList(mBundle.mPeerInfoList.get(i), 2);
+//			 }
+//
+//		 }
+//		 
+//		 deviceListAdapter.notifyDataSetChanged();
 		
-//		Collection<WifiP2pDevice> collecPeers = peers.getDeviceList();
-//		for (WifiP2pDevice peer:mBundle.mPeerList){
-//			if(!checkAvailablePeers(collecPeers, peer)){
-//				int peerPosition = mBundle.mPeerList.indexOf(peer);
-//				mBundle.mPeerInfoList.remove(peerPosition);
-//				mBundle.mPeerList.remove(peerPosition);
-//			}
-//		}
-//		
-//		deviceListAdapter.notifyDataSetChanged();
+		Collection<WifiP2pDevice> collecPeers = peers.getDeviceList();
+		for (WifiP2pDevice peer:mBundle.mPeerList){
+			if(!checkAvailablePeers(collecPeers, peer)){
+				int peerPosition = mBundle.mPeerList.indexOf(peer);
+				mBundle.mPeerInfoList.remove(peerPosition);
+				mBundle.mPeerList.remove(peerPosition);
+			}
+		}
+		
+		deviceListAdapter.notifyDataSetChanged();
 	}
 	
 	private boolean checkAvailablePeers(Collection<WifiP2pDevice> peers, WifiP2pDevice peer){
