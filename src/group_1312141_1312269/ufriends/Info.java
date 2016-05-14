@@ -16,11 +16,7 @@ public class Info implements Serializable {
 		_name = "anonymous";
 		_age = 0;
 		_sex = false;
-		_status = 0;
-	}
-	
-	public Info clone() throws CloneNotSupportedException {
-        return (Info) super.clone();
+		_status = 2;
 	}
 	
 	public void setInfo(String imagePath, String name, int age, boolean sex){
@@ -55,4 +51,8 @@ public class Info implements Serializable {
 		
 		return infoList;
 	}
+	
+	protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

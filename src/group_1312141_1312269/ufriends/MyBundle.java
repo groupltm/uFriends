@@ -26,8 +26,8 @@ import android.provider.OpenableColumns;
 
 public class MyBundle implements Serializable {
 
-	public List<WifiP2pDevice> mPeerList;
-	public List<Info> mPeerInfoList;
+	public List<MyPeer> mPeerList;
+	//public List<Info> mPeerInfoList;
 	public List<Info> mPeerInfoConnectList;
 	public WifiP2PBroadcast mBroadcast;
 	public boolean isConnect;
@@ -36,8 +36,8 @@ public class MyBundle implements Serializable {
 
 	private MyBundle() {
 		// TODO Auto-generated constructor stub
-		mPeerList = new ArrayList<WifiP2pDevice>();
-		mPeerInfoList = new ArrayList<>();
+		mPeerList = new ArrayList<MyPeer>();
+		//mPeerInfoList = new ArrayList<>();
 		
 		mPeerInfoConnectList = new ArrayList<>();
 		mInfo = new Info();

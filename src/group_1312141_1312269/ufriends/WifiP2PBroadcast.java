@@ -63,13 +63,13 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
-
+            	
             }
 
             @Override
             public void onFailure(int reason) {
                 // TODO Auto-generated method stub
-
+            	Log.d("failure", "failure of discoverPeers!!!");
             }
         });
     }
@@ -103,6 +103,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             @Override
             public void onFailure(int arg0) {
                 // Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY
+            	Log.d("failure", "failure of addLocalService!!!");
             }
         });
     }
@@ -152,7 +153,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             @Override
             public void onFailure(int reason) {
                 // TODO Auto-generated method stub
-
+            	Log.d("failure", "failure of discoverService!!!");
             }
         });
 
@@ -170,7 +171,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 			@Override
 			public void onFailure(int reason) {
 				// TODO Auto-generated method stub
-				
+				Log.d("failure", "failure of stopPeerDiscovery!!!");
 			}
 		});
     }
@@ -202,7 +203,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 			@Override
 			public void onFailure(int reason) {
 				// TODO Auto-generated method stub
-				
+				Log.d("failure", "failure of clearServiceRequests!!!");
 			}
 		});
         
@@ -217,7 +218,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 			@Override
 			public void onFailure(int reason) {
 				// TODO Auto-generated method stub
-				
+				Log.d("failure", "failure of clearLocalServices!!!");
 			}
 		});
     }
@@ -233,7 +234,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             @Override
             public void onFailure(int reason) {
                 // TODO Auto-generated method stub
-
+            	Log.d("failure", "failure of connect!!!");
             }
         });
     }
@@ -247,7 +248,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 
             @Override
             public void onFailure(int reason) {
-
+            	Log.d("failure", "failure of removeGroup!!!");
             }
         });
 
@@ -295,6 +296,10 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
             }else if (state == NetworkInfo.State.CONNECTING){
             	mListener.onConnecting();
             }
+        } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
+          // Call WifiP2pManager.requestPeers() to get a list of current peers
+          // Toast.makeText(mContext.getApplicationContext(), "Peer change", Toast.LENGTH_SHORT).show();
+          mManager.requestPeers(mChannel, this);
         }
 
 //        if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {

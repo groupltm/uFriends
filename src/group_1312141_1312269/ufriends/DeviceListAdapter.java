@@ -13,15 +13,15 @@ import android.widget.TextView;
 
 import com.example.ufriends.R;
 
-public class DeviceListAdapter extends ArrayAdapter<Info> {
+public class DeviceListAdapter extends ArrayAdapter<MyPeer> {
 
 	Context mContext;
 	int mResource;
 	// List <WifiP2pDevice> mList;
-	List<Info> mInfoList;
+	List<MyPeer> mInfoList;
 
 	public DeviceListAdapter(Context context, int resource,
-			List<Info> objects) {
+			List<MyPeer> objects) {
 		super(context, resource, objects);
 		// TODO Auto-generated constructor stub
 
@@ -46,8 +46,9 @@ public class DeviceListAdapter extends ArrayAdapter<Info> {
 		TextView tvSubInfo = (TextView) v.findViewById(R.id.tvSubInfo);
 		TextView tvStatus = (TextView)v.findViewById(R.id.tvStatus);
 
-		tvDeviceName.setText(mInfoList.get(position)._name);
-		Info info = mInfoList.get(position);
+		Info info = mInfoList.get(position).peerInfo;
+		tvDeviceName.setText(info._name);
+		
 		String subInfo;
 
 		if (info._sex) {
@@ -57,7 +58,7 @@ public class DeviceListAdapter extends ArrayAdapter<Info> {
 		}
 		tvSubInfo.setText(subInfo);
 		
-		if (info._status == 0){
+		if (info._status == 2){
 			tvStatus.setText("Available");
 			tvStatus.setTextColor(Color.GREEN);
 		}else if (info._status == 1){

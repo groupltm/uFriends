@@ -203,11 +203,15 @@ public class MainActivity extends AppCompatActivity {
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == 1) {
-					if (mBundle.isConnect == true){
-						ChatFragment chatfm = (ChatFragment) ((ViewPagerAdapter) viewPager
-								.getAdapter()).getItem(1);
-						mBundle.mBroadcast.mP2PHandle.setReceiveDataListener((SocketReceiverDataListener)chatfm);
-					}			
+//					if (mBundle.isConnect == true){
+//						ChatFragment chatfm = (ChatFragment) ((ViewPagerAdapter) viewPager
+//								.getAdapter()).getItem(1);
+//						mBundle.mBroadcast.mP2PHandle.setReceiveDataListener((SocketReceiverDataListener)chatfm);
+//					}			
+				}else if (arg0 == 0){
+					BrowseFragment browserfm = (BrowseFragment) ((ViewPagerAdapter) viewPager
+							.getAdapter()).getItem(0);
+					browserfm.restartDiscovery();
 				}
 			}
 
