@@ -120,18 +120,18 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 		String msg = edtChatIn.getText().toString();
 		if (!msg.equals("")){
 			side = false;
-			mChatAdapter.add(new ChatMessage(side, edtChatIn.getText().toString()));
+			mChatAdapter.add(new ChatMessage(side, edtChatIn.getText().toString(),false));
 	        edtChatIn.setText("");
 	        
 	        InputStream is = convertStringToIs(msg);
-	        mBundle.mBroadcast.send(is);
+	        mBundle.mBroadcast.sendMessage(is);
 		}
 		
 		return true;
 	}
 
 	@Override
-	public void onReceiveData(byte[] data) {
+	public void onReceiveMessageData(byte[] data) {
 		// TODO Auto-generated method stub
 		final String msg = new String(data, StandardCharsets.UTF_8);
 		side = true;
@@ -145,7 +145,7 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 				// TODO Auto-generated method stub
 				
 				
-				mChatAdapter.add(new ChatMessage(side, msg));
+				mChatAdapter.add(new ChatMessage(side, msg, false));
 			}
 		});
 		
@@ -153,6 +153,12 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 
 	@Override
 	public void onCompleteSendData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onReceiveImageData(byte[] data) {
 		// TODO Auto-generated method stub
 		
 	}

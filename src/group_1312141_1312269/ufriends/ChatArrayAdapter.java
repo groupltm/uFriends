@@ -1,11 +1,14 @@
 package group_1312141_1312269.ufriends;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.ufriends.R;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +52,39 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (chatMessageObj.left) {
-            row = inflater.inflate(R.layout.list_chat_left_item, null);
-        }else{
-            row = inflater.inflate(R.layout.list_chat_right_item, null);
-        }
-        chatText = (TextView) row.findViewById(R.id.txtMsg);
-        chatText.setText(chatMessageObj.message);
         
-        avatar = (ImageView)row.findViewById(R.id.imvAvatar);
-        avatar.setImageResource(R.drawable.dodo);
+        if (!chatMessageObj.isImage){
+        	if (chatMessageObj.left) {
+                row = inflater.inflate(R.layout.list_chat_left_item, null);
+            }else{
+                row = inflater.inflate(R.layout.list_chat_right_item, null);
+            }
+            chatText = (TextView) row.findViewById(R.id.txtMsg);
+            chatText.setText(chatMessageObj.message);
+            
+            avatar = (ImageView)row.findViewById(R.id.imvAvatar);
+            avatar.setImageResource(R.drawable.dodo);
+
+        } else {
+        	if (chatMessageObj.left){
+        		row = inflater.inflate(R.layout.list_image_left_item, null);
+        	} else {
+        		row = inflater.inflate(R.layout.list_image_right_item, null);
+        	}
+        	
+        	ImageView imvShareImage = (ImageView)row.findViewById(R.id.imvShareImage);
+        	File imgFile = new File(chatMessageObj.message);
+
+			if (imgFile.exists()) {
+
+				Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
+						.getAbsolutePath());
+
+				imvShareImage.setImageBitmap(myBitmap);
+			}
+        }
+        
+        
         return row;
     }
 }

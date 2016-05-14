@@ -9,6 +9,16 @@ import java.util.Arrays;
 /**
  * Created by hungmai on 07/04/2016.
  */
+
+/**
+ * 
+ * @author hungmai
+ * Code:
+ * 200: send message
+ * 220: end message
+ * 400: send image
+ * 420: end image
+ */
 public class FileTransferService {
 
     public static boolean sendCode(final InputStream inputStream, final OutputStream out){
@@ -25,7 +35,7 @@ public class FileTransferService {
         return true;
     }
 
-    public static boolean sendFile(final InputStream inputStream, final OutputStream out) {
+    public static boolean sendMessage(final InputStream inputStream, final OutputStream out) {
         byte buf[] = new byte[1024];
         int len;
 
@@ -38,10 +48,43 @@ public class FileTransferService {
                 byte[] newBuff;
 
                 if (inputStream.available() == 0) {
-                    newBuff = addCode(tempBuf, true);
+                    newBuff = addMessageCode(tempBuf, true);
                     out.write(newBuff, 0, len + 6);
                 } else {
-                    newBuff = addCode(tempBuf, false);
+                    newBuff = addMessageCode(tempBuf, false);
+                    out.write(newBuff, 0, len + 4);
+                }
+
+                if (len != 1024) {
+                    j++;
+                }
+
+                i += len;
+            }
+
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean sendImage(final InputStream inputStream, final OutputStream out) {
+        byte buf[] = new byte[1024];
+        int len;
+
+        int i = 0;
+        int j = 0;
+
+        try {
+            while ((len = inputStream.read(buf)) != -1) {
+                byte[] tempBuf = Arrays.copyOfRange(buf, 0, len);
+                byte[] newBuff;
+
+                if (inputStream.available() == 0) {
+                    newBuff = addImageCode(tempBuf, true);
+                    out.write(newBuff, 0, len + 6);
+                } else {
+                    newBuff = addImageCode(tempBuf, false);
                     out.write(newBuff, 0, len + 4);
                 }
 
@@ -111,28 +154,42 @@ public class FileTransferService {
 //                        out.write(realBuf, 0, len - 4);
 //                    }
 
-                    if (checkCode(code)) {
+                    if (checkCode(code) || checkImageCode(code)) {
                         byte[] endFile = detectEndFile(oldBuf, oldLen);
                         if (checkEndFile(endFile)) {
                             byte[] realBuf = getRealBuffer(oldBuf, oldLen, true);
                             out.write(realBuf, 0, oldLen - 6);
-                            result = 0;
+                            if (checkCode(code))
+                            	result = 0;
+                            else
+                            	result = 4;
                             break;
                         }
                     }
                 } else {
                     byte[] code = detectCode(buf);
-                    boolean isEnd = checkCode(code);
+                    boolean isMessageEnd = checkCode(code);
+                    boolean isImageEnd = checkImageCode(code);
 
-                    byte[] realBuf = getRealBuffer(buf, len, isEnd);
-
-                    if (realBuf != null) {
-                        out.write(realBuf, 0, 1024);
-                    }
-
-                    if (isEnd) {
-                        result = 0;
-                        break;
+                    byte[] realBuf;
+                    
+                    if (isMessageEnd || isImageEnd){
+                    	realBuf = getRealBuffer(buf, len, true);
+                    	if (realBuf != null) {
+                            out.write(realBuf, 0, 1024);
+                        }
+                    	if (isMessageEnd){
+                    		result = 0;
+                    	} else{
+                    		result = 4;
+                    	}
+                    	break;
+                    	
+                    } else {
+                    	realBuf = getRealBuffer(buf, len, false);
+                    	if (realBuf != null) {
+                            out.write(realBuf, 0, 1024);
+                        }
                     }
                 }
             }
@@ -143,7 +200,35 @@ public class FileTransferService {
         return result;
     }
 
-    private static byte[] addCode(byte[] buffer, boolean endFile) {
+    private static byte[] addImageCode(byte[] buffer, boolean endFile) {
+        byte[] code = new byte[4];
+        byte[] codeEndFile = new byte[2];
+        byte[] result;
+
+        if (!endFile) {
+            code[0] = '4';
+            code[1] = '0';
+            code[2] = '0';
+            code[3] = ' ';
+
+            result = combineTwoByteArray(code, buffer);
+        } else {
+            code[0] = '4';
+            code[1] = '2';
+            code[2] = '0';
+            code[3] = ' ';
+
+            codeEndFile[0] = '\r';
+            codeEndFile[1] = '\n';
+
+            result = combineTwoByteArray(code, buffer);
+            result = combineTwoByteArray(result, codeEndFile);
+        }
+
+        return result;
+    }
+    
+    private static byte[] addMessageCode(byte[] buffer, boolean endFile) {
         byte[] code = new byte[4];
         byte[] codeEndFile = new byte[2];
         byte[] result;
@@ -185,6 +270,14 @@ public class FileTransferService {
 
     private static boolean checkCode(byte[] code) {
         if (code[0] == '2' && code[1] == '2' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkImageCode(byte[] code) {
+        if (code[0] == '4' && code[1] == '2' && code[2] == '0' && code[3] == ' ') {
             return true;
         }
 

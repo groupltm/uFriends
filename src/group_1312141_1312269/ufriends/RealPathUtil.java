@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 public class RealPathUtil {
 
     @SuppressLint("NewApi")
-    public static String getRealPathFromURI_API19(Context context, Uri uri){
+    public static String getRealPathFromURI_API20(Context context, Uri uri){
         String filePath = "";
         String wholeID = DocumentsContract.getDocumentId(uri);
 
@@ -37,7 +37,7 @@ public class RealPathUtil {
     
     
     @SuppressLint("NewApi")
-    public static String getRealPathFromURI_API11to18(Context context, Uri contentUri) {
+    public static String getRealPathFromURI_API11to19(Context context, Uri contentUri) {
           String[] proj = { MediaStore.Images.Media.DATA };
           String result = null;
            

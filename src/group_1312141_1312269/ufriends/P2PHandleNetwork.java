@@ -59,12 +59,12 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
         }
     }
 
-    public void send(final InputStream is){
+    public void sendMessage(final InputStream is){
         try {
             for (ConnectedPeer peer:mConnectedPeers) {
                 if (!peer.mSendSocket.isClosed()){
                     final OutputStream os = peer.mSendSocket.getOutputStream();
-                    FileTransferService.sendFile(is, os);
+                    FileTransferService.sendMessage(is, os);
                 }
             }
 
@@ -72,6 +72,22 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    public void sendImage(final InputStream is){
+    	try {
+            for (ConnectedPeer peer:mConnectedPeers) {
+                if (!peer.mSendSocket.isClosed()){
+                    final OutputStream os = peer.mSendSocket.getOutputStream();
+                    FileTransferService.sendImage(is, os);
+                }
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     public void disconnect(){

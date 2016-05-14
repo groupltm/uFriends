@@ -53,7 +53,7 @@ public class ReceiveSocketAsync implements Runnable{
 
                     if (os.size() > 0){
                         if (mReceiveListener != null){
-                            mReceiveListener.onReceiveData(os.toByteArray());
+                            mReceiveListener.onReceiveMessageData(os.toByteArray());
 
                             mReceivedDataListener.onCompleteReceivedData(mPeer);
                         }
@@ -62,6 +62,16 @@ public class ReceiveSocketAsync implements Runnable{
                     mReceivedDataListener.onPing(mPeer);
                 }else if (result == 3){
                     mReceivedDataListener.onPingOK(mPeer);
+                }else if (result == 4){
+                	os.flush();
+
+                    if (os.size() > 0){
+                        if (mReceiveListener != null){
+                            mReceiveListener.onReceiveImageData(os.toByteArray());
+
+                            mReceivedDataListener.onCompleteReceivedData(mPeer);
+                        }
+                    }
                 }
             }
 
@@ -81,7 +91,8 @@ public class ReceiveSocketAsync implements Runnable{
     }
 
     public interface SocketReceiverDataListener{
-        public void onReceiveData(byte[] data);
+        public void onReceiveMessageData(byte[] data);
+        public void onReceiveImageData(byte[] data);
         public void onCompleteSendData();
     }
 
