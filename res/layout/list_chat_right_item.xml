@@ -41,7 +41,7 @@
             />
     </LinearLayout>
     
-    <group_1312141_1312269.ufriends.Custom_MyImageView 
+    <custom_view.Custom_MyImageView 
         android:id="@+id/imvAvatar"
         android:layout_width="0dp"
         android:layout_height="55dp"

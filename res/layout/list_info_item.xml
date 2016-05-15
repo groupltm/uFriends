@@ -1,46 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="80dp" 
-    android:background="#ffffff">
-    
-    <group_1312141_1312269.ufriends.Custom_MyImageView 
+    android:layout_height="80dp"
+    android:background="#ffffff" >
+
+    <ImageView
         android:id="@+id/imvIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-       	android:layout_marginStart="20dp"
-        android:src="@drawable/ic_person"
-        />
-    
-    <TextView 
+        android:layout_marginStart="20dp" />
+
+    <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="20sp"
-        android:layout_toEndOf="@+id/imvIcon"
         android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/imvIcon"
         android:paddingTop="10dp"
-        />
-    
-    <TextView 
+        android:text="Name"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/tvInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hung"
-        android:textSize="15sp"
-        android:layout_toEndOf="@+id/imvIcon"
         android:layout_below="@+id/tv"
         android:layout_marginStart="20dp"
-        />
-    
-    <ImageButton 
-        android:id="@+id/btnModify"
-        android:layout_width="60dp"
-        android:layout_height="70dp"
+        android:layout_toEndOf="@+id/imvIcon"
+        android:text="Hung"
+        android:textSize="15sp" />
+
+    <custom_view.MaterialRippleLayout
+        android:id="@+id/rippleModify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_mode_edit_white_24dp"
-        android:background="#FFE4C4"
-        />
+        app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleColor="#FFFFFF"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleOverlay="true"
+        app:mrl_rippleDelayClick="true" >
+
+        <ImageButton
+            android:id="@+id/btnModify"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:background="#D80027"
+            android:src="@drawable/ic_mode_edit_white_24dp" />
+    </custom_view.MaterialRippleLayout>
 
 </RelativeLayout>

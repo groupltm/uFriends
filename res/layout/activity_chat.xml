@@ -2,7 +2,7 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/abcd"
+    android:background="#B0C4DE"
     android:orientation="vertical"
     android:weightSum="2" >
 
@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:background="@android:color/darker_gray" >
+        android:background="#FFFFFF" >
 
         <TableRow
             android:id="@+id/tableRow"
@@ -55,7 +55,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:background="@android:color/darker_gray" >
+        android:background="#FFFFFF" >
 
         <TableRow
             android:id="@+id/tableRow1"

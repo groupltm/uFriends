@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E9EDF0"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#CCFFFF" >
-    
-    <ListView 
-        android:id="@+id/lvConnectDevice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        >
-        
-    </ListView>
-    
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <custom_view.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        wheel:matProg_barColor="#5588FF"
+        wheel:matProg_barWidth="1dp"
+        wheel:matProg_progressIndeterminate="true" />
+
     <ListView
         android:id="@+id/lvDevice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_weight="1" />
+
+    <custom_view.MaterialRippleLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="145dp"
+        app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleColor="#99D5FF"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleOverlay="true"
+        app:mrl_rippleRoundedCorners="10dp" >
+
+        <ImageButton
+            android:id="@+id/btnFind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_find_blue2"
+            android:layout_gravity="center" />
+    </custom_view.MaterialRippleLayout>
+
 </LinearLayout>

@@ -4,17 +4,12 @@
     android:thickness="0dp"
     >
     
-    <stroke
-        android:width="2dp"
-        android:color="#736F6E"
-        />
-    
     <corners
         android:radius="10dp"
         />
     
     <solid 
-        android:color="#FFFFFF"/>
+        android:color="#87CEFA"/>
     
     
 </shape>

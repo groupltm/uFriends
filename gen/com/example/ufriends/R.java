@@ -1374,6 +1374,94 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int logoDescription=0x7f0100b3;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_barColor=0x7f010117;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_barSpinCycleTime=0x7f01011b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_barWidth=0x7f01011e;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_circleRadius=0x7f01011c;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_fillRadius=0x7f01011d;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_linearProgress=0x7f01011f;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_progressIndeterminate=0x7f010116;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_rimColor=0x7f010118;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_rimWidth=0x7f010119;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int matProg_spinSpeed=0x7f01011a;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -1410,6 +1498,108 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int menu=0x7f0100d7;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleAlpha=0x7f01012d;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleBackground=0x7f010131;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleColor=0x7f01012a;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleDelayClick=0x7f010132;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleDimension=0x7f01012b;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleDuration=0x7f01012e;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleFadeDuration=0x7f01012f;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleHover=0x7f010130;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleInAdapter=0x7f010134;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleOverlay=0x7f01012c;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_ripplePersistent=0x7f010133;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int mrl_rippleRoundedCorners=0x7f010135;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -1591,6 +1781,93 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int rippleColor=0x7f0100d1;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_alpha=0x7f010120;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_centered=0x7f010125;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_color=0x7f010124;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_framerate=0x7f010121;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_rippleDuration=0x7f010122;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_ripplePadding=0x7f010127;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>simpleRipple</code></td><td>0</td><td></td></tr>
+<tr><td><code>doubleRipple</code></td><td>1</td><td></td></tr>
+<tr><td><code>rectangle</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int rv_type=0x7f010126;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_zoom=0x7f010128;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_zoomDuration=0x7f010123;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rv_zoomScale=0x7f010129;
         /**  Search icon displayed as a text field hint 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -2341,20 +2618,20 @@ containing a value of this type.
         public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f050003;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f06004a;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f06004b;
-        public static final int abc_color_highlight_material=0x7f06004c;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f06004b;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f06004c;
+        public static final int abc_color_highlight_material=0x7f06004d;
         public static final int abc_input_method_navigation_guard=0x7f060003;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f06004d;
-        public static final int abc_primary_text_disable_only_material_light=0x7f06004e;
-        public static final int abc_primary_text_material_dark=0x7f06004f;
-        public static final int abc_primary_text_material_light=0x7f060050;
-        public static final int abc_search_url_text=0x7f060051;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f06004e;
+        public static final int abc_primary_text_disable_only_material_light=0x7f06004f;
+        public static final int abc_primary_text_material_dark=0x7f060050;
+        public static final int abc_primary_text_material_light=0x7f060051;
+        public static final int abc_search_url_text=0x7f060052;
         public static final int abc_search_url_text_normal=0x7f060000;
         public static final int abc_search_url_text_pressed=0x7f060002;
         public static final int abc_search_url_text_selected=0x7f060001;
-        public static final int abc_secondary_text_material_dark=0x7f060052;
-        public static final int abc_secondary_text_material_light=0x7f060053;
+        public static final int abc_secondary_text_material_dark=0x7f060053;
+        public static final int abc_secondary_text_material_light=0x7f060054;
         public static final int accent_material_dark=0x7f060011;
         public static final int accent_material_light=0x7f060010;
         public static final int background_floating_material_dark=0x7f060008;
@@ -2443,6 +2720,7 @@ containing a value of this type.
         /**  26% of default values 
          */
         public static final int primary_text_disabled_material_light=0x7f06002a;
+        public static final int rippelColor=0x7f06004a;
         /**  20% white (foreground) 
          */
         public static final int ripple_material_dark=0x7f06000e;
@@ -2459,8 +2737,8 @@ containing a value of this type.
         public static final int secondary_text_disabled_material_light=0x7f06002b;
         public static final int switch_thumb_disabled_material_dark=0x7f060016;
         public static final int switch_thumb_disabled_material_light=0x7f060017;
-        public static final int switch_thumb_material_dark=0x7f060054;
-        public static final int switch_thumb_material_light=0x7f060055;
+        public static final int switch_thumb_material_dark=0x7f060055;
+        public static final int switch_thumb_material_light=0x7f060056;
         public static final int switch_thumb_normal_material_dark=0x7f060014;
         public static final int switch_thumb_normal_material_light=0x7f060015;
         public static final int textColorPrimary=0x7f060046;
@@ -2778,178 +3056,194 @@ containing a value of this type.
         public static final int design_fab_background=0x7f02004d;
         public static final int design_snackbar_background=0x7f02004e;
         public static final int dodo=0x7f02004f;
-        public static final int ic_folder_white_24dp=0x7f020050;
-        public static final int ic_launcher=0x7f020051;
-        public static final int ic_mode_edit_black_24dp=0x7f020052;
-        public static final int ic_mode_edit_white_24dp=0x7f020053;
-        public static final int ic_person=0x7f020054;
-        public static final int ic_person_white_24dp=0x7f020055;
-        public static final int ic_photo_camera_white_24dp=0x7f020056;
-        public static final int ic_photo_library_white_24dp=0x7f020057;
-        public static final int ic_search_white_24dp=0x7f020058;
-        public static final int ic_send_white_24dp=0x7f020059;
-        public static final int ic_settings_white_24dp=0x7f02005a;
-        public static final int ic_supervisor_account_white_24dp=0x7f02005b;
-        public static final int notification_template_icon_bg=0x7f02005e;
-        public static final int rawshapes_left=0x7f02005c;
-        public static final int rawshapes_right=0x7f02005d;
+        public static final int ic_age=0x7f020050;
+        public static final int ic_camera=0x7f020051;
+        public static final int ic_find_blue=0x7f020052;
+        public static final int ic_find_blue2=0x7f020053;
+        public static final int ic_folder_white_24dp=0x7f020054;
+        public static final int ic_launcher=0x7f020055;
+        public static final int ic_mode_edit_black_24dp=0x7f020056;
+        public static final int ic_mode_edit_white_24dp=0x7f020057;
+        public static final int ic_name=0x7f020058;
+        public static final int ic_person=0x7f020059;
+        public static final int ic_person_white_24dp=0x7f02005a;
+        public static final int ic_photo=0x7f02005b;
+        public static final int ic_photo_camera_white_24dp=0x7f02005c;
+        public static final int ic_photo_library_white_24dp=0x7f02005d;
+        public static final int ic_search_white_24dp=0x7f02005e;
+        public static final int ic_send=0x7f02005f;
+        public static final int ic_send_white_24dp=0x7f020060;
+        public static final int ic_settings_white_24dp=0x7f020061;
+        public static final int ic_sex=0x7f020062;
+        public static final int ic_star=0x7f020063;
+        public static final int ic_supervisor_account_white_24dp=0x7f020064;
+        public static final int logo=0x7f020065;
+        public static final int notification_template_icon_bg=0x7f020068;
+        public static final int rawshapes_left=0x7f020066;
+        public static final int rawshapes_right=0x7f020067;
     }
     public static final class id {
-        public static final int action0=0x7f09008f;
-        public static final int action_bar=0x7f090059;
+        public static final int action0=0x7f090094;
+        public static final int action_bar=0x7f09005c;
         public static final int action_bar_activity_content=0x7f090003;
-        public static final int action_bar_container=0x7f090058;
-        public static final int action_bar_root=0x7f090054;
+        public static final int action_bar_container=0x7f09005b;
+        public static final int action_bar_root=0x7f090057;
         public static final int action_bar_spinner=0x7f090002;
-        public static final int action_bar_subtitle=0x7f09003a;
-        public static final int action_bar_title=0x7f090039;
-        public static final int action_context_bar=0x7f09005a;
-        public static final int action_divider=0x7f090093;
+        public static final int action_bar_subtitle=0x7f09003d;
+        public static final int action_bar_title=0x7f09003c;
+        public static final int action_context_bar=0x7f09005d;
+        public static final int action_divider=0x7f090098;
         public static final int action_menu_divider=0x7f090005;
         public static final int action_menu_presenter=0x7f090006;
-        public static final int action_mode_bar=0x7f090056;
-        public static final int action_mode_bar_stub=0x7f090055;
-        public static final int action_mode_close_button=0x7f09003b;
-        public static final int action_settings=0x7f09009c;
-        public static final int activity_chooser_view_content=0x7f09003c;
-        public static final int alertTitle=0x7f090048;
+        public static final int action_mode_bar=0x7f090059;
+        public static final int action_mode_bar_stub=0x7f090058;
+        public static final int action_mode_close_button=0x7f09003e;
+        public static final int action_settings=0x7f0900a2;
+        public static final int activity_chooser_view_content=0x7f09003f;
+        public static final int alertTitle=0x7f09004b;
         public static final int always=0x7f09001a;
         public static final int beginning=0x7f09001f;
         public static final int bottom=0x7f090027;
-        public static final int btnCamera=0x7f09006d;
-        public static final int btnFile=0x7f09006e;
-        public static final int btnModify=0x7f09008e;
-        public static final int btnSend=0x7f090071;
-        public static final int buttonPanel=0x7f090043;
-        public static final int cancel_action=0x7f090090;
+        public static final int btnCamera=0x7f090070;
+        public static final int btnFile=0x7f090071;
+        public static final int btnFind=0x7f090085;
+        public static final int btnModify=0x7f090093;
+        public static final int btnSend=0x7f090074;
+        public static final int buttonPanel=0x7f090046;
+        public static final int cancel_action=0x7f090095;
         public static final int center=0x7f090025;
         public static final int center_horizontal=0x7f090028;
         public static final int center_vertical=0x7f090029;
-        public static final int checkbox=0x7f090051;
-        public static final int chronometer=0x7f090096;
+        public static final int chatToolbar=0x7f0900a1;
+        public static final int checkbox=0x7f090054;
+        public static final int chronometer=0x7f09009b;
         public static final int clip_horizontal=0x7f09002a;
         public static final int clip_vertical=0x7f09002b;
         public static final int collapseActionView=0x7f09001b;
-        public static final int contentPanel=0x7f090049;
-        public static final int custom=0x7f09004f;
-        public static final int customPanel=0x7f09004e;
-        public static final int decor_content_parent=0x7f090057;
-        public static final int default_activity_button=0x7f09003f;
-        public static final int design_bottom_sheet=0x7f090078;
-        public static final int design_menu_item_action_area=0x7f09007f;
-        public static final int design_menu_item_action_area_stub=0x7f09007e;
-        public static final int design_menu_item_text=0x7f09007d;
-        public static final int design_navigation_view=0x7f09007c;
+        public static final int contentPanel=0x7f09004c;
+        public static final int custom=0x7f090052;
+        public static final int customPanel=0x7f090051;
+        public static final int decor_content_parent=0x7f09005a;
+        public static final int default_activity_button=0x7f090042;
+        public static final int design_bottom_sheet=0x7f09007b;
+        public static final int design_menu_item_action_area=0x7f090082;
+        public static final int design_menu_item_action_area_stub=0x7f090081;
+        public static final int design_menu_item_text=0x7f090080;
+        public static final int design_navigation_view=0x7f09007f;
         public static final int disableHome=0x7f09000e;
-        public static final int edit_query=0x7f09005b;
-        public static final int edtChatIn=0x7f090070;
+        public static final int doubleRipple=0x7f090039;
+        public static final int edit_query=0x7f09005e;
+        public static final int edtChatIn=0x7f090073;
         public static final int end=0x7f090020;
-        public static final int end_padder=0x7f09009b;
+        public static final int end_padder=0x7f0900a0;
         public static final int enterAlways=0x7f090032;
         public static final int enterAlwaysCollapsed=0x7f090033;
         public static final int exitUntilCollapsed=0x7f090034;
-        public static final int expand_activities_button=0x7f09003d;
-        public static final int expanded_menu=0x7f090050;
+        public static final int expand_activities_button=0x7f090040;
+        public static final int expanded_menu=0x7f090053;
         public static final int fill=0x7f090026;
         public static final int fill_horizontal=0x7f09002c;
         public static final int fill_vertical=0x7f09002d;
         public static final int fixed=0x7f090023;
         public static final int home=0x7f090000;
         public static final int homeAsUp=0x7f09000f;
-        public static final int icon=0x7f090041;
+        public static final int icon=0x7f090044;
         public static final int ifRoom=0x7f09001c;
-        public static final int image=0x7f09003e;
-        public static final int imvAvatar=0x7f090084;
-        public static final int imvDialogIcon=0x7f090075;
-        public static final int imvIcon=0x7f090087;
-        public static final int imvShareImage=0x7f09008b;
-        public static final int info=0x7f09009a;
-        public static final int layout=0x7f090068;
-        public static final int layout_CameraFile=0x7f09006b;
+        public static final int image=0x7f090041;
+        public static final int imvAvatar=0x7f090088;
+        public static final int imvDialogIcon=0x7f090078;
+        public static final int imvIcon=0x7f09008b;
+        public static final int imvShareImage=0x7f09008f;
+        public static final int info=0x7f09009f;
+        public static final int layout=0x7f09006b;
+        public static final int layout_CameraFile=0x7f09006e;
         public static final int left=0x7f09002e;
-        public static final int line1=0x7f090094;
-        public static final int line3=0x7f090098;
+        public static final int line1=0x7f090099;
+        public static final int line3=0x7f09009d;
         public static final int listMode=0x7f09000b;
-        public static final int list_item=0x7f090040;
-        public static final int lvChat=0x7f090069;
-        public static final int lvConnectDevice=0x7f090080;
-        public static final int lvDevice=0x7f090081;
-        public static final int lvInfo=0x7f090083;
-        public static final int media_actions=0x7f090092;
+        public static final int list_item=0x7f090043;
+        public static final int lvChat=0x7f09006c;
+        public static final int lvDevice=0x7f090084;
+        public static final int lvInfo=0x7f090087;
+        public static final int media_actions=0x7f090097;
         public static final int middle=0x7f090021;
         public static final int mini=0x7f090022;
         public static final int multiply=0x7f090015;
-        public static final int myAvatar=0x7f090082;
-        public static final int navigation_header_container=0x7f09007b;
+        public static final int myAvatar=0x7f090086;
+        public static final int navigation_header_container=0x7f09007e;
         public static final int never=0x7f09001d;
         public static final int none=0x7f090010;
         public static final int normal=0x7f09000c;
         public static final int parallax=0x7f090037;
-        public static final int parentPanel=0x7f090045;
+        public static final int parentPanel=0x7f090048;
         public static final int pin=0x7f090038;
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
-        public static final int radio=0x7f090053;
-        public static final int radioButton1=0x7f090076;
+        public static final int progress_wheel=0x7f090083;
+        public static final int radio=0x7f090056;
+        public static final int radioButton1=0x7f090079;
+        public static final int rectangle=0x7f09003a;
         public static final int right=0x7f09002f;
+        public static final int rippleModify=0x7f090092;
         public static final int screen=0x7f090016;
         public static final int scroll=0x7f090035;
-        public static final int scrollIndicatorDown=0x7f09004d;
-        public static final int scrollIndicatorUp=0x7f09004a;
-        public static final int scrollView=0x7f09004b;
+        public static final int scrollIndicatorDown=0x7f090050;
+        public static final int scrollIndicatorUp=0x7f09004d;
+        public static final int scrollView=0x7f09004e;
         public static final int scrollable=0x7f090024;
-        public static final int search_badge=0x7f09005d;
-        public static final int search_bar=0x7f09005c;
-        public static final int search_button=0x7f09005e;
-        public static final int search_close_btn=0x7f090063;
-        public static final int search_edit_frame=0x7f09005f;
-        public static final int search_go_btn=0x7f090065;
-        public static final int search_mag_icon=0x7f090060;
-        public static final int search_plate=0x7f090061;
-        public static final int search_src_text=0x7f090062;
-        public static final int search_voice_btn=0x7f090066;
-        public static final int select_dialog_listview=0x7f090067;
-        public static final int shortcut=0x7f090052;
+        public static final int search_badge=0x7f090060;
+        public static final int search_bar=0x7f09005f;
+        public static final int search_button=0x7f090061;
+        public static final int search_close_btn=0x7f090066;
+        public static final int search_edit_frame=0x7f090062;
+        public static final int search_go_btn=0x7f090068;
+        public static final int search_mag_icon=0x7f090063;
+        public static final int search_plate=0x7f090064;
+        public static final int search_src_text=0x7f090065;
+        public static final int search_voice_btn=0x7f090069;
+        public static final int select_dialog_listview=0x7f09006a;
+        public static final int shortcut=0x7f090055;
         public static final int showCustom=0x7f090011;
         public static final int showHome=0x7f090012;
         public static final int showTitle=0x7f090013;
-        public static final int snackbar_action=0x7f09007a;
-        public static final int snackbar_text=0x7f090079;
+        public static final int simpleRipple=0x7f09003b;
+        public static final int snackbar_action=0x7f09007d;
+        public static final int snackbar_text=0x7f09007c;
         public static final int snap=0x7f090036;
-        public static final int spacer=0x7f090044;
+        public static final int spacer=0x7f090047;
         public static final int split_action_bar=0x7f090004;
         public static final int src_atop=0x7f090017;
         public static final int src_in=0x7f090018;
         public static final int src_over=0x7f090019;
         public static final int start=0x7f090030;
-        public static final int status_bar_latest_event_content=0x7f090091;
-        public static final int submit_area=0x7f090064;
+        public static final int status_bar_latest_event_content=0x7f090096;
+        public static final int submit_area=0x7f090067;
         public static final int tabMode=0x7f09000d;
-        public static final int tableRow=0x7f09006c;
-        public static final int tableRow1=0x7f09006f;
-        public static final int tabs=0x7f090073;
-        public static final int tblo=0x7f09006a;
-        public static final int text=0x7f090099;
-        public static final int text2=0x7f090097;
-        public static final int textSpacerNoButtons=0x7f09004c;
-        public static final int time=0x7f090095;
-        public static final int title=0x7f090042;
-        public static final int title_template=0x7f090047;
-        public static final int toolbar=0x7f090072;
+        public static final int tableRow=0x7f09006f;
+        public static final int tableRow1=0x7f090072;
+        public static final int tabs=0x7f090076;
+        public static final int tblo=0x7f09006d;
+        public static final int text=0x7f09009e;
+        public static final int text2=0x7f09009c;
+        public static final int textSpacerNoButtons=0x7f09004f;
+        public static final int time=0x7f09009a;
+        public static final int title=0x7f090045;
+        public static final int title_template=0x7f09004a;
+        public static final int toolbar=0x7f090075;
         public static final int top=0x7f090031;
-        public static final int topPanel=0x7f090046;
-        public static final int touch_outside=0x7f090077;
-        public static final int tv=0x7f09008c;
-        public static final int tvInput=0x7f09008d;
-        public static final int tvLabel=0x7f090088;
-        public static final int tvStatus=0x7f09008a;
-        public static final int tvSubInfo=0x7f090089;
-        public static final int txtMsg=0x7f090085;
-        public static final int txtSeenDay=0x7f090086;
+        public static final int topPanel=0x7f090049;
+        public static final int touch_outside=0x7f09007a;
+        public static final int tv=0x7f090090;
+        public static final int tvInput=0x7f090091;
+        public static final int tvLabel=0x7f09008c;
+        public static final int tvStatus=0x7f09008e;
+        public static final int tvSubInfo=0x7f09008d;
+        public static final int txtMsg=0x7f090089;
+        public static final int txtSeenDay=0x7f09008a;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090014;
         public static final int view_offset_helper=0x7f090009;
-        public static final int viewpager=0x7f090074;
+        public static final int viewpager=0x7f090077;
         public static final int withText=0x7f09001e;
         public static final int wrap_content=0x7f09000a;
     }
@@ -7758,6 +8052,217 @@ containing a value of this type.
           @attr name android:dropDownVerticalOffset
         */
         public static final int ListPopupWindow_android_dropDownVerticalOffset = 1;
+        /** Attributes that can be used with a MaterialRippleLayout.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleAlpha com.example.ufriends:mrl_rippleAlpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleBackground com.example.ufriends:mrl_rippleBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleColor com.example.ufriends:mrl_rippleColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleDelayClick com.example.ufriends:mrl_rippleDelayClick}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleDimension com.example.ufriends:mrl_rippleDimension}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleDuration com.example.ufriends:mrl_rippleDuration}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleFadeDuration com.example.ufriends:mrl_rippleFadeDuration}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleHover com.example.ufriends:mrl_rippleHover}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleInAdapter com.example.ufriends:mrl_rippleInAdapter}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleOverlay com.example.ufriends:mrl_rippleOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_ripplePersistent com.example.ufriends:mrl_ripplePersistent}</code></td><td></td></tr>
+           <tr><td><code>{@link #MaterialRippleLayout_mrl_rippleRoundedCorners com.example.ufriends:mrl_rippleRoundedCorners}</code></td><td></td></tr>
+           </table>
+           @see #MaterialRippleLayout_mrl_rippleAlpha
+           @see #MaterialRippleLayout_mrl_rippleBackground
+           @see #MaterialRippleLayout_mrl_rippleColor
+           @see #MaterialRippleLayout_mrl_rippleDelayClick
+           @see #MaterialRippleLayout_mrl_rippleDimension
+           @see #MaterialRippleLayout_mrl_rippleDuration
+           @see #MaterialRippleLayout_mrl_rippleFadeDuration
+           @see #MaterialRippleLayout_mrl_rippleHover
+           @see #MaterialRippleLayout_mrl_rippleInAdapter
+           @see #MaterialRippleLayout_mrl_rippleOverlay
+           @see #MaterialRippleLayout_mrl_ripplePersistent
+           @see #MaterialRippleLayout_mrl_rippleRoundedCorners
+         */
+        public static final int[] MaterialRippleLayout = {
+            0x7f01012a, 0x7f01012b, 0x7f01012c, 0x7f01012d,
+            0x7f01012e, 0x7f01012f, 0x7f010130, 0x7f010131,
+            0x7f010132, 0x7f010133, 0x7f010134, 0x7f010135
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleAlpha}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleAlpha
+        */
+        public static final int MaterialRippleLayout_mrl_rippleAlpha = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleBackground}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleBackground
+        */
+        public static final int MaterialRippleLayout_mrl_rippleBackground = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleColor}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleColor
+        */
+        public static final int MaterialRippleLayout_mrl_rippleColor = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleDelayClick}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleDelayClick
+        */
+        public static final int MaterialRippleLayout_mrl_rippleDelayClick = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleDimension}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleDimension
+        */
+        public static final int MaterialRippleLayout_mrl_rippleDimension = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleDuration}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleDuration
+        */
+        public static final int MaterialRippleLayout_mrl_rippleDuration = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleFadeDuration}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleFadeDuration
+        */
+        public static final int MaterialRippleLayout_mrl_rippleFadeDuration = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleHover}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleHover
+        */
+        public static final int MaterialRippleLayout_mrl_rippleHover = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleInAdapter}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleInAdapter
+        */
+        public static final int MaterialRippleLayout_mrl_rippleInAdapter = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleOverlay}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleOverlay
+        */
+        public static final int MaterialRippleLayout_mrl_rippleOverlay = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_ripplePersistent}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_ripplePersistent
+        */
+        public static final int MaterialRippleLayout_mrl_ripplePersistent = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#mrl_rippleRoundedCorners}
+          attribute's value can be found in the {@link #MaterialRippleLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:mrl_rippleRoundedCorners
+        */
+        public static final int MaterialRippleLayout_mrl_rippleRoundedCorners = 11;
         /**  Base attributes that are available to all groups. 
            <p>Includes the following attributes:</p>
            <table>
@@ -8413,6 +8918,367 @@ containing a value of this type.
           @attr name com.example.ufriends:state_above_anchor
         */
         public static final int PopupWindowBackgroundState_state_above_anchor = 0;
+        /** Attributes that can be used with a ProgressWheel.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_barColor com.example.ufriends:matProg_barColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_barSpinCycleTime com.example.ufriends:matProg_barSpinCycleTime}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_barWidth com.example.ufriends:matProg_barWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_circleRadius com.example.ufriends:matProg_circleRadius}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_fillRadius com.example.ufriends:matProg_fillRadius}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_linearProgress com.example.ufriends:matProg_linearProgress}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_progressIndeterminate com.example.ufriends:matProg_progressIndeterminate}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_rimColor com.example.ufriends:matProg_rimColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_rimWidth com.example.ufriends:matProg_rimWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressWheel_matProg_spinSpeed com.example.ufriends:matProg_spinSpeed}</code></td><td></td></tr>
+           </table>
+           @see #ProgressWheel_matProg_barColor
+           @see #ProgressWheel_matProg_barSpinCycleTime
+           @see #ProgressWheel_matProg_barWidth
+           @see #ProgressWheel_matProg_circleRadius
+           @see #ProgressWheel_matProg_fillRadius
+           @see #ProgressWheel_matProg_linearProgress
+           @see #ProgressWheel_matProg_progressIndeterminate
+           @see #ProgressWheel_matProg_rimColor
+           @see #ProgressWheel_matProg_rimWidth
+           @see #ProgressWheel_matProg_spinSpeed
+         */
+        public static final int[] ProgressWheel = {
+            0x7f010116, 0x7f010117, 0x7f010118, 0x7f010119,
+            0x7f01011a, 0x7f01011b, 0x7f01011c, 0x7f01011d,
+            0x7f01011e, 0x7f01011f
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_barColor}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_barColor
+        */
+        public static final int ProgressWheel_matProg_barColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_barSpinCycleTime}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_barSpinCycleTime
+        */
+        public static final int ProgressWheel_matProg_barSpinCycleTime = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_barWidth}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_barWidth
+        */
+        public static final int ProgressWheel_matProg_barWidth = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_circleRadius}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_circleRadius
+        */
+        public static final int ProgressWheel_matProg_circleRadius = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_fillRadius}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_fillRadius
+        */
+        public static final int ProgressWheel_matProg_fillRadius = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_linearProgress}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_linearProgress
+        */
+        public static final int ProgressWheel_matProg_linearProgress = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_progressIndeterminate}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_progressIndeterminate
+        */
+        public static final int ProgressWheel_matProg_progressIndeterminate = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_rimColor}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_rimColor
+        */
+        public static final int ProgressWheel_matProg_rimColor = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_rimWidth}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_rimWidth
+        */
+        public static final int ProgressWheel_matProg_rimWidth = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#matProg_spinSpeed}
+          attribute's value can be found in the {@link #ProgressWheel} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:matProg_spinSpeed
+        */
+        public static final int ProgressWheel_matProg_spinSpeed = 4;
+        /** Attributes that can be used with a RippleView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #RippleView_rv_alpha com.example.ufriends:rv_alpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_centered com.example.ufriends:rv_centered}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_color com.example.ufriends:rv_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_framerate com.example.ufriends:rv_framerate}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_rippleDuration com.example.ufriends:rv_rippleDuration}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_ripplePadding com.example.ufriends:rv_ripplePadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_type com.example.ufriends:rv_type}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_zoom com.example.ufriends:rv_zoom}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_zoomDuration com.example.ufriends:rv_zoomDuration}</code></td><td></td></tr>
+           <tr><td><code>{@link #RippleView_rv_zoomScale com.example.ufriends:rv_zoomScale}</code></td><td></td></tr>
+           </table>
+           @see #RippleView_rv_alpha
+           @see #RippleView_rv_centered
+           @see #RippleView_rv_color
+           @see #RippleView_rv_framerate
+           @see #RippleView_rv_rippleDuration
+           @see #RippleView_rv_ripplePadding
+           @see #RippleView_rv_type
+           @see #RippleView_rv_zoom
+           @see #RippleView_rv_zoomDuration
+           @see #RippleView_rv_zoomScale
+         */
+        public static final int[] RippleView = {
+            0x7f010120, 0x7f010121, 0x7f010122, 0x7f010123,
+            0x7f010124, 0x7f010125, 0x7f010126, 0x7f010127,
+            0x7f010128, 0x7f010129
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_alpha}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_alpha
+        */
+        public static final int RippleView_rv_alpha = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_centered}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_centered
+        */
+        public static final int RippleView_rv_centered = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_color}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_color
+        */
+        public static final int RippleView_rv_color = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_framerate}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_framerate
+        */
+        public static final int RippleView_rv_framerate = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_rippleDuration}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_rippleDuration
+        */
+        public static final int RippleView_rv_rippleDuration = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_ripplePadding}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_ripplePadding
+        */
+        public static final int RippleView_rv_ripplePadding = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_type}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>simpleRipple</code></td><td>0</td><td></td></tr>
+<tr><td><code>doubleRipple</code></td><td>1</td><td></td></tr>
+<tr><td><code>rectangle</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.example.ufriends:rv_type
+        */
+        public static final int RippleView_rv_type = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_zoom}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_zoom
+        */
+        public static final int RippleView_rv_zoom = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_zoomDuration}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_zoomDuration
+        */
+        public static final int RippleView_rv_zoomDuration = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.ufriends.R.attr#rv_zoomScale}
+          attribute's value can be found in the {@link #RippleView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.ufriends:rv_zoomScale
+        */
+        public static final int RippleView_rv_zoomScale = 9;
         /** Attributes that can be used with a ScrimInsetsFrameLayout.
            <p>Includes the following attributes:</p>
            <table>

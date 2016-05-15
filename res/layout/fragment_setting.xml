@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#CCFFFF"
+    android:background="#E9EDF0"
         >
 
-    <group_1312141_1312269.ufriends.Custom_MyImageView 
+    <custom_view.Custom_MyImageView 
         android:id="@+id/myAvatar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
@@ -22,5 +22,13 @@
         android:layout_height="wrap_content">
         
     </ListView>
+    
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_star"
+        android:layout_marginTop="3dp"
+        />
     
 </LinearLayout>
