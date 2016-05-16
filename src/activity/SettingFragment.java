@@ -90,10 +90,10 @@ public class SettingFragment extends Fragment {
 
 			if (imgFile.exists()) {
 
-				Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
+				myBundle.myAvatar = BitmapFactory.decodeFile(imgFile
 						.getAbsolutePath());
 
-				mAvatar.setImageBitmap(myBitmap);
+				mAvatar.setImageBitmap(myBundle.myAvatar);
 			}
 		}
 	}

@@ -21,6 +21,8 @@ import com.google.gson.JsonSyntaxException;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Environment;
@@ -29,18 +31,22 @@ import android.provider.OpenableColumns;
 public class MyBundle implements Serializable {
 
 	public List<MyPeer> mPeerList;
-	//public List<Info> mPeerInfoList;
+	// public List<Info> mPeerInfoList;
 	public List<Info> mPeerInfoConnectList;
 	public WifiP2PBroadcast mBroadcast;
 	public boolean isConnect;
 	public Info mInfo;
+	public Bitmap peerAvatar;
+	public Bitmap myAvatar;
+	public Info peerInfo;
+
 	private static MyBundle mBundle = new MyBundle();
 
 	private MyBundle() {
 		// TODO Auto-generated constructor stub
 		mPeerList = new ArrayList<MyPeer>();
-		//mPeerInfoList = new ArrayList<>();
-		
+		// mPeerInfoList = new ArrayList<>();
+
 		mPeerInfoConnectList = new ArrayList<>();
 		mInfo = new Info();
 	}
@@ -49,31 +55,39 @@ public class MyBundle implements Serializable {
 		return mBundle;
 	}
 
-	public void getInfoFromJSONFile(Context context) throws JsonSyntaxException,
-			JsonIOException, IOException {
+	public void getInfoFromJSONFile(Context context)
+			throws JsonSyntaxException, JsonIOException, IOException {
 		Gson gson = new Gson();
 
 		File file = new File("data/data/com.example.ufriends/test.json");
-		
+
 		InputStream inputStream = context.openFileInput("test.json");
 		String jsonString = "";
-		
-        if ( inputStream != null ) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String receiveString = "";
-            StringBuilder stringBuilder = new StringBuilder();
 
-            while ( (receiveString = bufferedReader.readLine()) != null ) {
-                stringBuilder.append(receiveString);
-            }
+		if (inputStream != null) {
+			InputStreamReader inputStreamReader = new InputStreamReader(
+					inputStream);
+			BufferedReader bufferedReader = new BufferedReader(
+					inputStreamReader);
+			String receiveString = "";
+			StringBuilder stringBuilder = new StringBuilder();
 
-            inputStream.close();
-            jsonString = stringBuilder.toString();
-        }
+			while ((receiveString = bufferedReader.readLine()) != null) {
+				stringBuilder.append(receiveString);
+			}
+
+			inputStream.close();
+			jsonString = stringBuilder.toString();
+		}
 		if (file.exists()) {
 			// 1. JSON to Java object, read it from a file.
 			mInfo = gson.fromJson(jsonString, Info.class);
+
+			File imgFile = new File(mInfo._imagePath);
+
+			if (imgFile.exists()) {
+				myAvatar = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+			}
 		}
 	}
 
@@ -86,8 +100,8 @@ public class MyBundle implements Serializable {
 		File file = new File("data/data/com.example.ufriends/test.json");
 		if (!file.exists()) {
 			file.createNewFile();
-			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-					Uri.fromFile(file)));
+			context.sendBroadcast(new Intent(
+					Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
 		}
 		String jsonString = gson.toJson(mInfo);
 		OutputStreamWriter out = new OutputStreamWriter(context.openFileOutput(

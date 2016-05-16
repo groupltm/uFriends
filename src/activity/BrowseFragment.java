@@ -4,6 +4,16 @@ import instance.Info;
 import instance.MyBundle;
 import instance.MyPeer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +32,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -66,6 +77,10 @@ public class BrowseFragment extends Fragment implements
 	Handler hd_Progress = null;
 	Runnable r_Progress = null;
 	
+	boolean didSendAvatar = false;
+	boolean isActive = false;
+	boolean didReceive = false;
+	
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -99,6 +114,7 @@ public class BrowseFragment extends Fragment implements
 				// TODO Auto-generated method stub
 				MyPeer peer = mBundle.mPeerList.get(position);
 				if (peer.peerInfo._status == 2){
+					isActive = true;
 					connectToPeer(position);
 				}else if (peer.peerInfo._status == 0){
 					showChatView();
@@ -160,6 +176,7 @@ public class BrowseFragment extends Fragment implements
 		});
 		
 		mBundle.mBroadcast.mListener = this;
+		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		
 		return mView;
 	}
@@ -315,13 +332,42 @@ public class BrowseFragment extends Fragment implements
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
 		startActivity(intent);
 	}
+	
+	private void sendInfo(){
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    ObjectOutputStream os;
+		try {
+			os = new ObjectOutputStream(out);
+			os.writeObject(mBundle.mInfo);
+			byte[] bInfo = out.toByteArray();
+			InputStream is = new ByteArrayInputStream(bInfo);
+			mBundle.mBroadcast.sendMessage(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    
+	    
+	}
+	
+	private void sendAvatar(){
+		try {
+			InputStream is = new FileInputStream(mBundle.mInfo._imagePath);
+			mBundle.mBroadcast.sendImage(is);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void onConnection() {
 		 //TODO Auto-generated method stub
-		mBundle.mBroadcast.stopAdvertise();
-		showChatView();
-
+		mBundle.mBroadcast.stopDiscoveryService();
+		if (isActive == true){
+			sendInfo();
+		}
 //		Handler hd = new Handler(getActivity().getMainLooper());
 //		hd.post(new Runnable() {
 //
@@ -379,18 +425,52 @@ public class BrowseFragment extends Fragment implements
 	@Override
 	public void onReceiveMessageData(byte[] data) {
 		// TODO Auto-generated method stub
-		
+		ByteArrayInputStream in = new ByteArrayInputStream(data);
+	    
+	    try {
+	    	ObjectInputStream is = new ObjectInputStream(in);
+			mBundle.peerInfo = (Info)is.readObject();
+		} catch (OptionalDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void onReceiveImageData(byte[] data) {
+	public void onReceiveImageData(final byte[] data) {
 		// TODO Auto-generated method stub
-		
+		Handler hd = new Handler(getActivity().getMainLooper());
+		hd.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mBundle.peerAvatar = BitmapFactory.decodeByteArray(data , 0, data.length);
+			}
+		});		
+		if (isActive == false){
+			sendInfo();
+		}else {
+			showChatView();
+		}
 	}
 
 	@Override
 	public void onCompleteSendData() {
 		// TODO Auto-generated method stub
-		
+		if (!didSendAvatar){
+			sendAvatar();
+			didSendAvatar = true;
+		}else {
+			if (!isActive){
+				showChatView();
+			}
+		}
 	}
 }

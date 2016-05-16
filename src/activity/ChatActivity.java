@@ -50,6 +50,7 @@ import com.example.ufriends.R;
 public class ChatActivity extends AppCompatActivity implements SocketReceiverDataListener{
 	
 	WifiP2PBroadcast mBroadcast;
+	MyBundle mBundle;
 	
 	ChatArrayAdapter mChatAdapter;
 	
@@ -71,9 +72,11 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test);
 		
+		mBundle = MyBundle.getInstance();
+		
 		mToolbar = (Toolbar)findViewById(R.id.chatToolbar);
 		setSupportActionBar(mToolbar);
-		getSupportActionBar().setTitle("My title");
+		getSupportActionBar().setTitle(mBundle.peerInfo._name);
 		final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 		upArrow.setColorFilter(Color.WHITE, Mode.SRC_ATOP);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
