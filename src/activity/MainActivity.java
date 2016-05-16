@@ -235,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
 		});
 		
 		setBroadcast();
+		
+		mBundle.setMyAvatar(this);
 	}
 	
 	@Override
