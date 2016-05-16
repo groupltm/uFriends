@@ -3,50 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="6">
-    
+    android:weightSum="6" >
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp" >
-        
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_weight="5"
+        android:background="@drawable/rawshapes_right"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txtMsg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" 
-            android:background="@drawable/rawshapes_right"
-            >
-            
-            <TextView
-		        android:id="@+id/txtMsg"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"		        
-		        android:layout_margin="5dp"
-		        android:text="dâdadadadadadadadadadadadadasdzfsdfszdfsdfszda"
-		        
-		       
-		         />
-        </LinearLayout>
-        
-        <TextView 
+            android:layout_margin="5dp"
+            android:text="dâdadadadadadadadadadadadadasdzfsdfszdfsdfszda" />
+
+        <TextView
             android:id="@+id/txtSeenDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:textColor="#EEEEEE"
-            android:text="seen"/>
+            android:text="seen"
+            android:layout_marginLeft="5dp"
+            android:textColor="#D9DADB"
+            android:textStyle="italic" />
             />
     </LinearLayout>
-    
-    <custom_view.Custom_MyImageView 
+
+    <custom_view.Custom_MyImageView
         android:id="@+id/imvAvatar"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_weight="1"
         android:layout_margin="10dp"
-        android:scaleType="fitXY"
-        />
+        android:layout_weight="1"
+        android:scaleType="fitXY" />
+
 </LinearLayout>

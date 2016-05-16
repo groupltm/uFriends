@@ -10,10 +10,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import utility_class.RealPathUtil;
+
 import com.example.ufriends.R;
 import com.google.gson.JsonIOException;
 
 import adapter.InfoArrayAdapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -149,21 +152,28 @@ public class SettingFragment extends Fragment {
 //		 e.printStackTrace();
 //		 }
 //		 setAvatar();
-		
-		Bundle bundle = data.getExtras();
-		Uri uri = data.getData();
-		String realPath = getAbsolutePath(uri);
-		myBundle.mInfo._imagePath = realPath;
-		try {
-			myBundle.setInfoToJSONFile(getContext());
-		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (resultCode == Activity.RESULT_OK){
+			Uri uri = data.getData();
+			String realPath;
+			if (Build.VERSION.SDK_INT < 11){
+				realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getActivity().getApplicationContext(), uri);
+			}else if (Build.VERSION.SDK_INT < 20){
+				realPath = RealPathUtil.getRealPathFromURI_API11to19(getActivity().getApplicationContext(), uri);
+			}else {
+				realPath = RealPathUtil.getRealPathFromURI_API20(getActivity().getApplicationContext(), uri);
+			}
+			myBundle.mInfo._imagePath = realPath;
+			try {
+				myBundle.setInfoToJSONFile(getContext());
+			} catch (JsonIOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			setAvatar();
 		}
-		setAvatar();
 	}
 
 	public String getAbsolutePath(Uri uri) {

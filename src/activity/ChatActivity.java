@@ -1,6 +1,7 @@
 package activity;
 
 import instance.ChatMessage;
+import instance.MyBundle;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -85,8 +86,8 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 		btnCamera = (Button)findViewById(R.id.btnCamera);
 		btnFile = (Button)findViewById(R.id.btnFile);
 		
-		//mBroadcast = MyBundle.getInstance().mBroadcast;
-		//mBroadcast.mP2PHandle.setReceiveDataListener(this);
+		mBroadcast = MyBundle.getInstance().mBroadcast;
+		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		
 		mChatAdapter = new ChatArrayAdapter(this, R.layout.list_chat_left_item);
 		
@@ -251,36 +252,39 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if (requestCode == 100){
-			Uri uri = data.getData();
-			String realPath;
-			if (Build.VERSION.SDK_INT < 11){
-				realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getApplicationContext(), uri);
-			}else if (Build.VERSION.SDK_INT < 20){
-				realPath = RealPathUtil.getRealPathFromURI_API11to19(getApplicationContext(), uri);
-			}else {
-				realPath = RealPathUtil.getRealPathFromURI_API20(getApplicationContext(), uri);
-			}
-			mChatAdapter.add(new ChatMessage(false, realPath, true));
-			
-			ContentResolver cr = getContentResolver();
-            final InputStream is;
-
-            try {
-				is = cr.openInputStream(uri);
-				Handler hd = new Handler();
-				hd.post(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						mBroadcast.sendImage(is);
-					}
-				});
+			if (resultCode == RESULT_OK){
+				Uri uri = data.getData();
+				String realPath;
+				if (Build.VERSION.SDK_INT < 11){
+					realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getApplicationContext(), uri);
+				}else if (Build.VERSION.SDK_INT < 20){
+					realPath = RealPathUtil.getRealPathFromURI_API11to19(getApplicationContext(), uri);
+				}else {
+					realPath = RealPathUtil.getRealPathFromURI_API20(getApplicationContext(), uri);
+				}
+				mChatAdapter.add(new ChatMessage(false, realPath, true));
 				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ContentResolver cr = getContentResolver();
+	            final InputStream is;
+
+	            try {
+					is = cr.openInputStream(uri);
+					Handler hd = new Handler();
+					hd.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							mBroadcast.sendImage(is);
+						}
+					});
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			
 		}
 	}
 	

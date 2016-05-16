@@ -26,17 +26,17 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 
     public static int SERVICE_BROADCASTING_INTERVAL = 10000;
 
-    WifiP2pManager mManager = null;
-    WifiP2pManager.Channel mChannel = null;
+    public WifiP2pManager mManager = null;
+    public WifiP2pManager.Channel mChannel = null;
 
-    WifiP2pDnsSdServiceInfo service;
-    WifiP2pDnsSdServiceRequest serviceRequest;
+    public WifiP2pDnsSdServiceInfo service;
+    public WifiP2pDnsSdServiceRequest serviceRequest;
 
     public Context mContext;
 
     public WifiP2PBroadcastListener mListener = null;
 
-    P2PHandleNetwork mP2PHandle;
+    public P2PHandleNetwork mP2PHandle;
     
     Boolean isFirst = true;
 

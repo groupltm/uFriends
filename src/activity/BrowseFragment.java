@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
 import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
 import com.example.ufriends.R;
@@ -48,7 +49,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 public class BrowseFragment extends Fragment implements
-		WifiP2PBroadcastListener {
+		WifiP2PBroadcastListener, SocketReceiverDataListener {
 
 	DeviceListAdapter deviceListAdapter;
 	DeviceListAdapter deviceConnectListAdapter;
@@ -218,15 +219,6 @@ public class BrowseFragment extends Fragment implements
 //		mBundle.mPeerInfoConnectList.add(peerInfo);
 //		deviceConnectListAdapter.notifyDataSetChanged();
 //	}
-	
-	private void checkConnectPeer(){
-		Info info = mBundle.mPeerInfoConnectList.get(0);
-		if (info._status == 1){
-			mBundle.mBroadcast.disconnectFromPeer();
-		}else {
-			showChatView();
-		}
-	}
 
 	private void connectToPeer(int position) {
 		WifiP2pDevice device = mBundle.mPeerList.get(position).peerDevice;
@@ -281,6 +273,8 @@ public class BrowseFragment extends Fragment implements
 			}
 		}
 		
+		checkConnectedPeer(collecPeers);
+		
 		deviceListAdapter.notifyDataSetChanged();
 		//deviceConnectListAdapter.notifyDataSetChanged();
 	}
@@ -297,12 +291,24 @@ public class BrowseFragment extends Fragment implements
 	
 	private boolean checkPeerInMyPeerList(List<MyPeer>mPeerList, WifiP2pDevice peerDevice){
 		for (MyPeer peer:mPeerList){
-			if (peer.peerDevice.equals(peerDevice)){
+			if (peer.peerDevice.deviceAddress.equals(peerDevice.deviceAddress)){
 				return true;
 			}
 		}
 		
 		return false;
+	}
+	
+	private void checkConnectedPeer(List<WifiP2pDevice> peers){
+		for (WifiP2pDevice peer:peers){
+			if (!checkPeerInMyPeerList(mBundle.mPeerList, peer)){
+				if (peer.status == 0 || peer.status == 1){
+					MyPeer mPeer = new MyPeer();
+					mPeer.peerDevice = peer;
+					mBundle.mPeerList.add(0, mPeer);
+				}
+			}
+		}
 	}
 	
 	private void showChatView(){
@@ -368,5 +374,23 @@ public class BrowseFragment extends Fragment implements
 //				mProgress.setVisibility(View.VISIBLE);
 //			}
 //		});	
+	}
+
+	@Override
+	public void onReceiveMessageData(byte[] data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onReceiveImageData(byte[] data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCompleteSendData() {
+		// TODO Auto-generated method stub
+		
 	}
 }
