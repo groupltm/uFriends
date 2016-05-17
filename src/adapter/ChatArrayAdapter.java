@@ -104,9 +104,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 			if (imgFile.exists()) {
 
 				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
-						chatMessageObj.message,
-						imvShareImage.getLayoutParams().width,
-						imvShareImage.getLayoutParams().height);
+						chatMessageObj.message,200,100);
 
 				imvShareImage.setImageBitmap(myBitmap);
 			}
