@@ -15,6 +15,7 @@ import java.util.List;
 
 import mywifip2pkit.WifiP2PBroadcast;
 
+import com.example.ufriends.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -49,10 +50,15 @@ public class MyBundle implements Serializable {
 
 		mPeerInfoConnectList = new ArrayList<>();
 		mInfo = new Info();
+		
 	}
 
 	public static MyBundle getInstance() {
 		return mBundle;
+	}
+	
+	public void setMyAvatar(Context context){
+		myAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
 	}
 
 	public void getInfoFromJSONFile(Context context)

@@ -40,6 +40,10 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 	public void clear() {
 		chatMessageList.clear();
 	}
+	
+	public static void Clear(){
+		chatMessageList.clear();
+	}
 
 	public ChatArrayAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);

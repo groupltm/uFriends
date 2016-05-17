@@ -27,6 +27,7 @@ import com.example.ufriends.R;
 
 import custom_view.ProgressWheel;
 
+import adapter.ChatArrayAdapter;
 import adapter.DeviceListAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -45,6 +46,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,6 +87,13 @@ public class BrowseFragment extends Fragment implements
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
 	}
 
 	@Override
@@ -353,7 +362,13 @@ public class BrowseFragment extends Fragment implements
 	
 	private void sendAvatar(){
 		try {
-			InputStream is = new FileInputStream(mBundle.mInfo._imagePath);
+			InputStream is;
+			if (!mBundle.mInfo._imagePath.equals("")){
+				is = new FileInputStream(mBundle.mInfo._imagePath);
+			}else {
+				is = getActivity().getResources().openRawResource(R.drawable.ic_launcher);
+			}
+			
 			mBundle.mBroadcast.sendImage(is);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -365,8 +380,10 @@ public class BrowseFragment extends Fragment implements
 	public void onConnection() {
 		 //TODO Auto-generated method stub
 		mBundle.mBroadcast.stopDiscoveryService();
+		ChatArrayAdapter.Clear();
 		if (isActive == true){
 			sendInfo();
+			Log.d("send", "send info");
 		}
 //		Handler hd = new Handler(getActivity().getMainLooper());
 //		hd.post(new Runnable() {
@@ -457,6 +474,7 @@ public class BrowseFragment extends Fragment implements
 		if (isActive == false){
 			sendInfo();
 		}else {
+			didSendAvatar = false;
 			showChatView();
 		}
 	}
@@ -466,9 +484,11 @@ public class BrowseFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		if (!didSendAvatar){
 			sendAvatar();
+			Log.d("send", "send avatar");
 			didSendAvatar = true;
 		}else {
 			if (!isActive){
+				didSendAvatar = false;
 				showChatView();
 			}
 		}
