@@ -30,6 +30,7 @@ import custom_view.ProgressWheel;
 import adapter.ChatArrayAdapter;
 import adapter.DeviceListAdapter;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -94,6 +95,11 @@ public class BrowseFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
+		mBundle.mBroadcast.mListener = this;
+		
+		if (ChatActivity.isDidconnected){
+			restartDiscovery();
+		}
 	}
 
 	@Override
@@ -337,6 +343,16 @@ public class BrowseFragment extends Fragment implements
 		}
 	}
 	
+	private void checkPeerInfoInPeerList(Info peerInfo){
+		for (MyPeer peer:mBundle.mPeerList){
+			if (peer.peerInfo._status == 0){
+				peer.peerInfo = peerInfo;
+				peer.peerInfo._status = 0;
+				deviceListAdapter.notifyDataSetChanged();
+			}
+		}
+	}
+	
 	private void showChatView(){
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
 		startActivity(intent);
@@ -408,7 +424,13 @@ public class BrowseFragment extends Fragment implements
 //		mBundle.mPeerInfoConnectList.clear();
 //		mBundle.mBroadcast.advertiseWifiP2P();
 		
-		restartDiscovery();
+		if (mBundle.peerInfo != null){
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+			alertDialog.setTitle("DISCONNECTED!!!");
+			alertDialog.setMessage("You are disconnected with " + mBundle.peerInfo._name);
+			alertDialog.show();
+		}
+		
 	}
 
 	@Override
@@ -447,6 +469,16 @@ public class BrowseFragment extends Fragment implements
 	    try {
 	    	ObjectInputStream is = new ObjectInputStream(in);
 			mBundle.peerInfo = (Info)is.readObject();
+			Handler hd = new Handler(getContext().getMainLooper());
+			hd.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					checkPeerInfoInPeerList(mBundle.peerInfo);
+				}
+			});
+			
 		} catch (OptionalDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

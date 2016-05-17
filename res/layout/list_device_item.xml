@@ -8,7 +8,7 @@
     <custom_view.Custom_MyImageView
         android:id="@+id/imvIcon"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="55dp"
         android:layout_margin="10dp"
         android:src="@drawable/avatar"
         android:scaleType="fitXY"
@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:text="Available"
             android:textStyle="italic"
+            android:layout_marginBottom="10dp"
             />
         
     </LinearLayout>

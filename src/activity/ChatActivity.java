@@ -16,9 +16,11 @@ import utility_class.RealPathUtil;
 
 import mywifip2pkit.WifiP2PBroadcast;
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
+import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
 import adapter.ChatArrayAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -47,7 +50,7 @@ import android.widget.RelativeLayout;
 
 import com.example.ufriends.R;
 
-public class ChatActivity extends AppCompatActivity implements SocketReceiverDataListener{
+public class ChatActivity extends AppCompatActivity implements SocketReceiverDataListener, WifiP2PBroadcastListener{
 	
 	WifiP2PBroadcast mBroadcast;
 	MyBundle mBundle;
@@ -64,6 +67,7 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 	
 	Toolbar mToolbar;
 	
+	public static boolean isDidconnected = false;
 	
 	
 	@Override
@@ -91,6 +95,7 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 		
 		mBroadcast = MyBundle.getInstance().mBroadcast;
 		mBroadcast.mP2PHandle.setReceiveDataListener(this);
+		mBroadcast.mListener = this;
 		
 		mChatAdapter = new ChatArrayAdapter(this, R.layout.list_chat_left_item);
 		
@@ -356,4 +361,40 @@ public class ChatActivity extends AppCompatActivity implements SocketReceiverDat
 		
 	}
 
+	@Override
+	public void onPeers(WifiP2pDeviceList peers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStopDiscovery() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnect() {
+		// TODO Auto-generated method stub
+		if (mBundle.peerInfo != null){
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+			alertDialog.setTitle("DISCONNECTED!!!");
+			alertDialog.setMessage("You are disconnected with " + mBundle.peerInfo._name);
+			alertDialog.show();
+		}
+		
+		isDidconnected = true;
+	}
+
+	@Override
+	public void onStartDiscovery() {
+		// TODO Auto-generated method stub
+		
+	}
 }

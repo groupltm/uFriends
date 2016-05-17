@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 				}else if (arg0 == 0){
 					BrowseFragment browserfm = (BrowseFragment) ((ViewPagerAdapter) viewPager
 							.getAdapter()).getItem(0);
-					browserfm.restartDiscovery();
+					//browserfm.restartDiscovery();
 				}
 			}
 

@@ -9,16 +9,19 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
+import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
 import com.example.ufriends.R;
 
 import adapter.ChatArrayAdapter;
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -157,13 +160,13 @@ public class ChatFragment extends Fragment implements SocketReceiverDataListener
 	}
 
 	@Override
-	public void onCompleteSendData() {
+	public void onReceiveImageData(byte[] data) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onReceiveImageData(byte[] data) {
+	public void onCompleteSendData() {
 		// TODO Auto-generated method stub
 		
 	}
