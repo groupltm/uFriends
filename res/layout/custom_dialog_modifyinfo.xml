@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:text="NAME"
             android:textSize="30dp"
+      		android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center_vertical"
-            android:textColor="#ffffff"
             />
         
     </TableRow>

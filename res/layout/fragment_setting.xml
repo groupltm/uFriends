@@ -9,6 +9,7 @@
     <custom_view.Custom_MyImageView 
         android:id="@+id/myAvatar"
         android:layout_width="100dp"
+        android:src="@drawable/ic_avt"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"

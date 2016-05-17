@@ -84,7 +84,7 @@ public class SettingFragment extends Fragment {
 
 	private void setAvatar() {
 		if (myBundle.mInfo._imagePath.equals("")) {
-			mAvatar.setImageResource(R.drawable.ic_launcher);
+			mAvatar.setImageResource(R.drawable.man);
 		} else {
 			File imgFile = new File(myBundle.mInfo._imagePath);
 

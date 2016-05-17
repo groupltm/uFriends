@@ -173,7 +173,7 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		inputName.setLayoutParams(lp);
 		alertDialog.setView(inputName);
-		alertDialog.setIcon(R.drawable.ic_launcher);
+		alertDialog.setIcon(R.drawable.ic_name);
 
 		alertDialog.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
@@ -215,7 +215,7 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		inputAge.setLayoutParams(lp);
 		alertDialog.setView(inputAge);
-		alertDialog.setIcon(R.drawable.ic_launcher);
+		alertDialog.setIcon(R.drawable.ic_age);
 
 		alertDialog.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
@@ -303,7 +303,7 @@ public class InfoArrayAdapter extends ArrayAdapter<String> {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		layout.setLayoutParams(lp);
 		alertDialog.setView(layout);
-		alertDialog.setIcon(R.drawable.ic_launcher);
+		alertDialog.setIcon(R.drawable.ic_sex);
 
 		alertDialog.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
