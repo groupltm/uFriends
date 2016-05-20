@@ -23,6 +23,9 @@ import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 import adapter.ChatArrayAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -58,6 +61,8 @@ import com.example.ufriends.R;
 public class ChatActivity extends AppCompatActivity implements
 		SocketReceiverDataListener, WifiP2PBroadcastListener {
 
+	public static int NOTIFICATION_ID = 2303;
+	
 	WifiP2PBroadcast mBroadcast;
 	MyBundle mBundle;
 
@@ -77,6 +82,9 @@ public class ChatActivity extends AppCompatActivity implements
 	String mImagePath;
 	
 	AlertDialog alertDialog;
+	NotificationManager notiManager;
+	
+	boolean isActive;
 	
 	public static boolean isDidconnected = false;
 
@@ -169,6 +177,22 @@ public class ChatActivity extends AppCompatActivity implements
 		alertDialog.setTitle("DISCONNECTED!!!");
 		alertDialog.setMessage("You are disconnected with "
 				+ mBundle.peerInfo._name);
+		
+		notiManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		isActive = true;
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		isActive = false;
 	}
 
 	private File createImageFile() throws IOException {
@@ -209,6 +233,50 @@ public class ChatActivity extends AppCompatActivity implements
 		InputStream stream = new ByteArrayInputStream(
 				s.getBytes(StandardCharsets.UTF_8));
 		return stream;
+	}
+	
+	private String createImageWithData(byte[] data) {
+
+		ByteArrayOutputStream os = new ByteArrayOutputStream(data.length);
+		os.write(data, 0, data.length);
+
+		try {
+			final File f = new File(Environment.getExternalStorageDirectory()
+					+ "/" + getApplicationContext().getPackageName()
+					+ "/wifip2pImageShare-" + System.currentTimeMillis()
+					+ ".jpg");
+
+			File dirs = new File(f.getParent());
+			if (!dirs.exists())
+				dirs.mkdirs();
+			f.createNewFile();
+			os.writeTo(new FileOutputStream(f));
+			getApplicationContext().sendBroadcast(
+					new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
+							.fromFile(f)));
+			return f.getAbsolutePath();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private void createNotification(String msg){
+		Intent mIntent = new Intent(this, ChatActivity.class);
+		PendingIntent pIntent = PendingIntent.getActivity(this, 0, mIntent, 0);
+		Notification.Builder notiBuilder = new Notification.Builder(this);
+		notiBuilder.setContentTitle(mBundle.peerInfo._name);
+		notiBuilder.setContentText(msg);	
+		notiBuilder.setLargeIcon(mBundle.peerAvatar);
+		notiBuilder.setContentIntent(pIntent);
+		notiBuilder.setSmallIcon(R.drawable.ic_launcher);
+		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
+		notiBuilder.setLights(Color.RED, 3000, 3000);
+		notiBuilder.setColor(0xff123456);
+		
+		Notification noti = new Notification.InboxStyle(notiBuilder).addLine("OK OK").build();
+		noti.flags |= Notification.FLAG_AUTO_CANCEL;
+		notiManager.notify(NOTIFICATION_ID, noti);
 	}
 
 	private boolean sendChatMessage() {
@@ -300,32 +368,6 @@ public class ChatActivity extends AppCompatActivity implements
 		}
 	}
 
-	private String createImageWithData(byte[] data) {
-
-		ByteArrayOutputStream os = new ByteArrayOutputStream(data.length);
-		os.write(data, 0, data.length);
-
-		try {
-			final File f = new File(Environment.getExternalStorageDirectory()
-					+ "/" + getApplicationContext().getPackageName()
-					+ "/wifip2pImageShare-" + System.currentTimeMillis()
-					+ ".jpg");
-
-			File dirs = new File(f.getParent());
-			if (!dirs.exists())
-				dirs.mkdirs();
-			f.createNewFile();
-			os.writeTo(new FileOutputStream(f));
-			getApplicationContext().sendBroadcast(
-					new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
-							.fromFile(f)));
-			return f.getAbsolutePath();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	@Override
 	public void onReceiveMessageData(byte[] data) {
 		// TODO Auto-generated method stub
@@ -341,6 +383,9 @@ public class ChatActivity extends AppCompatActivity implements
 				// TODO Auto-generated method stub
 
 				mChatAdapter.add(new ChatMessage(side, msg, false));
+				if (!isActive){
+					createNotification(msg);
+				}
 			}
 		});
 
@@ -363,6 +408,10 @@ public class ChatActivity extends AppCompatActivity implements
 			public void run() {
 				// TODO Auto-generated method stub
 				mChatAdapter.add(new ChatMessage(true, imagePath, true));
+				if (!isActive){
+					String msg = mBundle.peerInfo._name + " have just sended an image for you!!!"; 
+					createNotification(msg);
+				}
 			}
 		});
 
@@ -381,7 +430,7 @@ public class ChatActivity extends AppCompatActivity implements
 	}
 
 	@Override
-	public void onDisconnect() {
+	public void onDisconnect() {	
 		// TODO Auto-generated method stub
 		if (mBundle.peerInfo != null) {
 			if (!alertDialog.isShowing()){
