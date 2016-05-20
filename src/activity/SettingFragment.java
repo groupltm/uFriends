@@ -90,10 +90,13 @@ public class SettingFragment extends Fragment {
 
 			if (imgFile.exists()) {
 
-				myBundle.myAvatar = BitmapFactory.decodeFile(imgFile
-						.getAbsolutePath());
+				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
+						myBundle.mInfo._imagePath,
+						150,
+						150);
+				myBundle.myAvatar = myBitmap;
 
-				mAvatar.setImageBitmap(myBundle.myAvatar);
+				mAvatar.setImageBitmap(myBitmap);
 			}
 		}
 	}

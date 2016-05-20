@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utility_class.RealPathUtil;
+
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
 import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
@@ -34,6 +36,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
@@ -84,6 +88,8 @@ public class BrowseFragment extends Fragment implements
 	boolean isActive = false;
 	boolean didReceive = false;
 	
+	AlertDialog alertDialog;
+	
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -98,7 +104,8 @@ public class BrowseFragment extends Fragment implements
 		mBundle.mBroadcast.mListener = this;
 		
 		if (ChatActivity.isDidconnected){
-			restartDiscovery();
+			mBundle.mPeerList.clear();
+			ChatActivity.isDidconnected = false;
 		}
 	}
 
@@ -192,7 +199,6 @@ public class BrowseFragment extends Fragment implements
 		
 		mBundle.mBroadcast.mListener = this;
 		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
-		
 		return mView;
 	}
 	
@@ -377,19 +383,24 @@ public class BrowseFragment extends Fragment implements
 	}
 	
 	private void sendAvatar(){
-		try {
-			InputStream is;
-			if (!mBundle.mInfo._imagePath.equals("")){
-				is = new FileInputStream(mBundle.mInfo._imagePath);
-			}else {
-				is = getActivity().getResources().openRawResource(R.drawable.ic_launcher);
+		InputStream is = null;
+		if (!mBundle.mInfo._imagePath.equals("")){
+			File imgFile = new File(mBundle.mInfo._imagePath);
+			if (imgFile.exists()) {
+				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
+						mBundle.mInfo._imagePath,
+						150,
+						150);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+				myBitmap.compress(CompressFormat.PNG, 0, bos); 
+				byte[] bitmapdata = bos.toByteArray();
+				is = new ByteArrayInputStream(bitmapdata);
 			}
-			
-			mBundle.mBroadcast.sendImage(is);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}else {
+			is = getActivity().getResources().openRawResource(R.drawable.ic_launcher);
 		}
+		
+		mBundle.mBroadcast.sendImage(is);
 	}
 
 	@Override
@@ -425,40 +436,18 @@ public class BrowseFragment extends Fragment implements
 //		mBundle.mBroadcast.advertiseWifiP2P();
 		
 		if (mBundle.peerInfo != null){
-			AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-			alertDialog.setTitle("DISCONNECTED!!!");
-			alertDialog.setMessage("You are disconnected with " + mBundle.peerInfo._name);
-			alertDialog.show();
+			if (alertDialog == null){
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+				alertDialog = alertDialogBuilder.create();
+				alertDialog.setTitle("DISCONNECTED!!!");
+				alertDialog.setMessage("You are disconnected with " + mBundle.peerInfo._name);		
+			}
+			if (!alertDialog.isShowing()){
+				alertDialog.show();
+			}
 		}
 		
-	}
-
-	@Override
-	public void onStopDiscovery() {
-		// TODO Auto-generated method stub
-//		Handler hd = new Handler(getActivity().getMainLooper());
-//		hd.post(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				mProgress.setVisibility(View.GONE);
-//			}
-//		});	
-	}
-
-	@Override
-	public void onStartDiscovery() {
-		// TODO Auto-generated method stub
-//		Handler hd = new Handler(getActivity().getMainLooper());
-//		hd.post(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				mProgress.setVisibility(View.VISIBLE);
-//			}
-//		});	
+		mBundle.mPeerList.clear();
 	}
 
 	@Override

@@ -57,6 +57,23 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 
         mContext.registerReceiver(this, filter);
     }
+    
+    public void createGroup(){
+    	mManager.createGroup(mChannel, new ActionListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(int reason) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+    }
 
     public void advertiseWifiP2P() {
 
@@ -82,7 +99,7 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
         // _protocol._transportlayer , and the map containing
         // information other devices will want once they connect to this one.
     	
-    	advertiseWifiP2P();
+    	//advertiseWifiP2P();
     	
         service = WifiP2pDnsSdServiceInfo.newInstance(serviceName, serviceType, serviceInfo);
 
@@ -312,21 +329,6 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
           // Call WifiP2pManager.requestPeers() to get a list of current peers
           // Toast.makeText(mContext.getApplicationContext(), "Peer change", Toast.LENGTH_SHORT).show();
           mManager.requestPeers(mChannel, this);
-        } else if (WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION.equals(action)){
-          //Toast.makeText(mActitity, "Discovery start", Toast.LENGTH_SHORT).show();
-
-          int discoverState = intent.getIntExtra(WifiP2pManager.EXTRA_DISCOVERY_STATE, -1);
-
-          if (discoverState == WifiP2pManager.WIFI_P2P_DISCOVERY_STARTED){
-        	  if (mListener != null){
-        		  mListener.onStartDiscovery();
-        	  }
-          }else if (discoverState == WifiP2pManager.WIFI_P2P_DISCOVERY_STOPPED){
-              Toast.makeText(mContext.getApplicationContext(), "Discovery stop", Toast.LENGTH_SHORT).show();
-              if(mListener != null){
-            	  mListener.onStopDiscovery();
-              }
-          }
         }
 
 //        if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
@@ -412,8 +414,6 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
     public interface WifiP2PBroadcastListener{
         public void onPeers(WifiP2pDeviceList peers);
         public void onConnection();
-        public void onStopDiscovery();
         public void onDisconnect();
-        public void onStartDiscovery();
     }
 }
