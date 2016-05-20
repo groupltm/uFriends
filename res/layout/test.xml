@@ -24,7 +24,9 @@
         android:layout_alignParentRight="true"
         android:layout_weight="1"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll" />
+        android:transcriptMode="alwaysScroll" 
+        android:divider="@null"
+		android:dividerHeight="0dp" />
 
     <TableLayout
         android:id="@+id/layout_CameraFile"

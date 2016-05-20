@@ -5,6 +5,7 @@ import instance.MyBundle;
 import instance.MyPeer;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import android.widget.TextView;
 public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
 	private TextView chatText;
+	private TextView timeText;
 	private static List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
 	private Context context;
 	private MyBundle mBundle;
@@ -64,6 +66,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 		View row = convertView;
 		LayoutInflater inflater = (LayoutInflater) this.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
 
 		if (!chatMessageObj.isImage) {
 			if (chatMessageObj.left) {
@@ -108,11 +111,18 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 			if (imgFile.exists()) {
 
 				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
-						chatMessageObj.message,200,100);
+						chatMessageObj.message,300,100);
 
 				imvShareImage.setImageBitmap(myBitmap);
 			}
 		}
+		
+		timeText = (TextView)row.findViewById(R.id.txtSeenDay);
+		long date = System.currentTimeMillis(); 
+
+		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+		String dateString = sdf.format(date);  
+		timeText.setText(dateString);
 
 		return row;
 	}
