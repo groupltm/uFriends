@@ -24,6 +24,8 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
     ServerReceiveSocket_Thread serverReceiveThread;
     ServerSendSocket_Thread serverSendThread;
+    
+//    List<SendingData> list_sendData = new ArrayList<>();
 
     List<ConnectedPeer> mConnectedPeers = new ArrayList<>();
 
@@ -58,9 +60,20 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
             isAlive = true;
         }
     }
+    
+//    public class SendingData {
+//    	boolean _isMessage;
+//    	InputStream _is;
+//    	
+//    	public SendingData(boolean isMessage, InputStream is){
+//    		_isMessage = isMessage;
+//    		_is = is;
+//    	}
+//    }
 
     public void sendMessage(final InputStream is){
         try {
+        	//list_sendData.add(new SendingData(true, is));
             for (ConnectedPeer peer:mConnectedPeers) {
                 if (!peer.mSendSocket.isClosed()){
                     final OutputStream os = peer.mSendSocket.getOutputStream();
