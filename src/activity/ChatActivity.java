@@ -257,7 +257,7 @@ public class ChatActivity extends AppCompatActivity implements
 			return f.getAbsolutePath();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return null
 		}
 	}
 	
@@ -272,7 +272,7 @@ public class ChatActivity extends AppCompatActivity implements
 		notiBuilder.setSmallIcon(R.drawable.ic_launcher);
 		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
 		notiBuilder.setLights(Color.RED, 3000, 3000);
-		notiBuilder.setColor(0xff123456);
+		//notiBuilder.setColor(0xff123456);
 		
 		Notification noti = new Notification.InboxStyle(notiBuilder).addLine("OK OK").build();
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
