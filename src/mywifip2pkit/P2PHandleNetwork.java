@@ -114,9 +114,11 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
     private void closeSocket(ConnectedPeer peer){
         try {
-            peer.mSendSocket.close();
-            peer.mReceiveSocket.close();
-            peer.mReceiveThread.stop();
+        	if (peer.mSendSocket != null){
+        		peer.mSendSocket.close();
+                peer.mReceiveSocket.close();
+                peer.mReceiveThread.stop();
+        	}            
         } catch (IOException e) {
             e.printStackTrace();
         }

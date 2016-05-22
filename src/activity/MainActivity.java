@@ -259,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
 		filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
 
 		mBundle.mBroadcast.register(filter);
+		
+		//mBundle.mBroadcast.createGroup();
 		// mBundle.mBroadcast.advertiseWifiP2P();
 	}
 	
