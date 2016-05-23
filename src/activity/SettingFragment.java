@@ -92,8 +92,8 @@ public class SettingFragment extends Fragment {
 
 				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
 						myBundle.mInfo._imagePath,
-						150,
-						150);
+						RealPathUtil.WidthAvatar,
+						RealPathUtil.HeightAvatar);
 				myBundle.myAvatar = myBitmap;
 
 				mAvatar.setImageBitmap(myBitmap);

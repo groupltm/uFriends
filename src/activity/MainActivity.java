@@ -234,34 +234,30 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
-		setBroadcast();
+		if (mBundle.mBroadcast == null){
+			mBundle.setBroadcast(getApplicationContext());
+			
+		}
 		
-		mBundle.setMyAvatar(this);
+		if (mBundle.myAvatar == null){
+			mBundle.setMyAvatar(this);
+		}
+		
+		
 	}
 	
 	@Override
-	protected void onDestroy() {
+	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onDestroy();
-		
-		unregisterReceiver(mBundle.mBroadcast);
+		super.onResume();
+		mBundle.mBroadcast.registerWithContext(this);
 	}
 	
-	private void setBroadcast() {
-
-		mBundle.mBroadcast = new WifiP2PBroadcast(this);
-		mBundle.mBroadcast.setManager();
-
-		filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
-
-		mBundle.mBroadcast.register(filter);
-		
-		//mBundle.mBroadcast.createGroup();
-		// mBundle.mBroadcast.advertiseWifiP2P();
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mBundle.mBroadcast.unregister();
 	}
 	
 	public void setCurrentTab(int position) {

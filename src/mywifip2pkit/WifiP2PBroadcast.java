@@ -33,15 +33,20 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
     public WifiP2pDnsSdServiceRequest serviceRequest;
 
     public Context mContext;
+    public Context contextRegister;
 
     public WifiP2PBroadcastListener mListener = null;
 
     public P2PHandleNetwork mP2PHandle;
     
-    Boolean isFirst = true;
+    IntentFilter mFilter;
+    
+    boolean isFirst = true;
+    boolean isConnected = false;
 
-    public WifiP2PBroadcast(Context context){
+    public WifiP2PBroadcast(Context context, IntentFilter filter){
         mContext = context;
+        mFilter = filter;
 
         mP2PHandle = new P2PHandleNetwork();
         mP2PHandle.mListener = this;
@@ -53,9 +58,18 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
         mChannel = mManager.initialize(mContext, mContext.getMainLooper(), null);
     }
 
-    public void register(IntentFilter filter){
-
-        mContext.registerReceiver(this, filter);
+    public void registerWithContext(Context context){
+    	mContext = context;
+        mContext.registerReceiver(this, mFilter);
+    }
+    
+    public void unregister(){
+    	try{
+    		mContext.unregisterReceiver(this);
+    	}
+    	catch(IllegalArgumentException e){
+    		
+    	}
     }
     
     public void createGroup(){
@@ -306,10 +320,14 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
 
             NetworkInfo.State state = networkInfo.getState();
             if (state == NetworkInfo.State.CONNECTED){
-
-                mManager.requestConnectionInfo(mChannel, (WifiP2pManager.ConnectionInfoListener)mP2PHandle);
-
+            	if (!isConnected){
+            		isConnected = true;
+            		mManager.requestConnectionInfo(mChannel, (WifiP2pManager.ConnectionInfoListener)mP2PHandle);
+            	}
+           
             }else if (state == NetworkInfo.State.DISCONNECTED){
+            	isConnected = false;
+            	
             	if (isFirst){
             		isFirst = false;
             	}else{

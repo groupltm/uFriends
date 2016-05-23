@@ -412,7 +412,7 @@ public class FileTransferService {
     	byte[] realBuffer = new byte[0];
     	
         if (index > 4) {   	
-        	realBuffer = Arrays.copyOfRange(buffer, 4, index - 1);
+        	realBuffer = Arrays.copyOfRange(buffer, 4, index);
         } else {
             realBuffer = null;
         }

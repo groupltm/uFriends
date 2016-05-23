@@ -15,7 +15,10 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 public class RealPathUtil {
-
+	
+	public static final int WidthAvatar = 150;
+	public static final int HeightAvatar = 150;
+	
     @SuppressLint("NewApi")
     public static String getRealPathFromURI_API20(Context context, Uri uri){
         String filePath = "";
@@ -90,6 +93,11 @@ public class RealPathUtil {
         Bitmap bm = createCorrectBitmap(imagePath, oldbm);
 
         return bm;
+    }
+    
+    public static Bitmap createBitmapWithBitmap(Bitmap bm, int width, int height){
+    	Bitmap newBm = Bitmap.createScaledBitmap(bm, width, height, false);
+    	return newBm;
     }
 
     public static int calculateInSampleSize(
