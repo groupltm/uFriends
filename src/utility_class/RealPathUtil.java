@@ -16,8 +16,8 @@ import android.provider.MediaStore;
 
 public class RealPathUtil {
 	
-	public static final int WidthAvatar = 150;
-	public static final int HeightAvatar = 150;
+	public static final int WidthAvatar = 300;
+	public static final int HeightAvatar = 300;
 	
     @SuppressLint("NewApi")
     public static String getRealPathFromURI_API20(Context context, Uri uri){

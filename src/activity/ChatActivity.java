@@ -276,7 +276,7 @@ public class ChatActivity extends AppCompatActivity implements
 		notiBuilder.setContentText(msg);	
 		notiBuilder.setLargeIcon(mBundle.peerAvatar);
 		notiBuilder.setContentIntent(pIntent);
-		notiBuilder.setSmallIcon(R.drawable.ic_launcher);
+		notiBuilder.setSmallIcon(R.drawable.applogo);
 		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
 		notiBuilder.setLights(Color.RED, 3000, 3000);
 		
