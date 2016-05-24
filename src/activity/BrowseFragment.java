@@ -68,9 +68,8 @@ import android.widget.TextView;
 
 public class BrowseFragment extends Fragment implements
 		WifiP2PBroadcastListener, SocketReceiverDataListener {
-
+	
 	DeviceListAdapter deviceListAdapter;
-	DeviceListAdapter deviceConnectListAdapter;
 	ListView lvDevice;
 	ListView lvConnectDevice;
 	View mView;
@@ -95,19 +94,6 @@ public class BrowseFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-	
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
-		mBundle.mBroadcast.mListener = this;
-		
-		if (ChatActivity.isDidconnected){
-			mBundle.mPeerList.clear();
-			ChatActivity.isDidconnected = false;
-		}
-	}
 
 	@Override
 	@Nullable
@@ -123,8 +109,6 @@ public class BrowseFragment extends Fragment implements
 		
 
 		deviceListAdapter = new DeviceListAdapter(getActivity(),
-				R.layout.list_device_item, mBundle.mPeerList);
-		deviceConnectListAdapter = new DeviceListAdapter(getActivity(),
 				R.layout.list_device_item, mBundle.mPeerList);
 		
 		lvDevice.setAdapter(deviceListAdapter);
@@ -197,9 +181,21 @@ public class BrowseFragment extends Fragment implements
 			
 		});
 		
-		mBundle.mBroadcast.mListener = this;
-		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		return mView;
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mBundle.mBroadcast.mListener = this;
+		
+		if (!ChatActivity.isChat){
+			mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
+			ChatArrayAdapter.Clear();
+			mBundle.mPeerList.clear();
+			deviceListAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	public void restartDiscovery(){
@@ -389,8 +385,8 @@ public class BrowseFragment extends Fragment implements
 			if (imgFile.exists()) {
 				Bitmap myBitmap = RealPathUtil.createBitmapWithPath(
 						mBundle.mInfo._imagePath,
-						150,
-						150);
+						RealPathUtil.WidthAvatar,
+						RealPathUtil.HeightAvatar);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
 				myBitmap.compress(CompressFormat.PNG, 0, bos); 
 				byte[] bitmapdata = bos.toByteArray();
@@ -407,7 +403,7 @@ public class BrowseFragment extends Fragment implements
 	public void onConnection() {
 		 //TODO Auto-generated method stub
 		mBundle.mBroadcast.stopDiscoveryService();
-		ChatArrayAdapter.Clear();
+
 		if (isActive == true){
 			sendInfo();
 			Log.d("send", "send info");
@@ -447,7 +443,12 @@ public class BrowseFragment extends Fragment implements
 			}
 		}
 		
+		ChatActivity.isChat = false;
+		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
+		ChatArrayAdapter.Clear();
+		
 		mBundle.mPeerList.clear();
+		deviceListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -489,7 +490,8 @@ public class BrowseFragment extends Fragment implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				mBundle.peerAvatar = BitmapFactory.decodeByteArray(data , 0, data.length);
+				Bitmap peerBitmap = BitmapFactory.decodeByteArray(data , 0, data.length);
+				mBundle.peerAvatar = RealPathUtil.createBitmapWithBitmap(peerBitmap, RealPathUtil.WidthAvatar, RealPathUtil.HeightAvatar);
 			}
 		});		
 		if (isActive == false){

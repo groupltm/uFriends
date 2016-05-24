@@ -6,10 +6,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import mywifip2pkit.FileTransferService.FileTransferReceiveDataListener;
+
 /**
  * Created by hungmai on 07/04/2016.
  */
-public class ReceiveSocketAsync implements Runnable{
+public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataListener{
 
     static final int PORT = 9000;
 
@@ -43,36 +45,36 @@ public class ReceiveSocketAsync implements Runnable{
                     break;
                 }
 
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                //ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-                int result = FileTransferService.receiveFile(receiveInputStream, os);
-                if (result == 1){
-                    mReceiveListener.onCompleteSendData();
-                }else if (result == 0){
-                    os.flush();
-
-                    if (os.size() > 0){
-                        if (mReceiveListener != null){
-                            mReceiveListener.onReceiveMessageData(os.toByteArray());
-
-                            mReceivedDataListener.onCompleteReceivedData(mPeer);
-                        }
-                    }
-                }else if (result == 2){
-                    mReceivedDataListener.onPing(mPeer);
-                }else if (result == 3){
-                    mReceivedDataListener.onPingOK(mPeer);
-                }else if (result == 4){
-                	os.flush();
-
-                    if (os.size() > 0){
-                        if (mReceiveListener != null){
-                            mReceiveListener.onReceiveImageData(os.toByteArray());
-
-                            mReceivedDataListener.onCompleteReceivedData(mPeer);
-                        }
-                    }
-                }
+                int result = FileTransferService.receiveFile(receiveInputStream, this);
+//                if (result == 1){
+//                    mReceiveListener.onCompleteSendData();
+//                }else if (result == 0){
+//                    os.flush();
+//
+//                    if (os.size() > 0){
+//                        if (mReceiveListener != null){
+//                            mReceiveListener.onReceiveMessageData(os.toByteArray());
+//
+//                            mReceivedDataListener.onCompleteReceivedData(mPeer);
+//                        }
+//                    }
+//                }else if (result == 2){
+//                    mReceivedDataListener.onPing(mPeer);
+//                }else if (result == 3){
+//                    mReceivedDataListener.onPingOK(mPeer);
+//                }else if (result == 4){
+//                	os.flush();
+//
+//                    if (os.size() > 0){
+//                        if (mReceiveListener != null){
+//                            mReceiveListener.onReceiveImageData(os.toByteArray());
+//
+//                            mReceivedDataListener.onCompleteReceivedData(mPeer);
+//                        }
+//                    }
+//                }
             }
 
         } catch (IOException e) {
@@ -101,4 +103,60 @@ public class ReceiveSocketAsync implements Runnable{
         public void onPing(int peer);
         public void onPingOK(int peer);
     }
+
+	@Override
+	public void onReceiveCode() {
+		// TODO Auto-generated method stub
+		mReceiveListener.onCompleteSendData();
+	}
+
+	@Override
+	public void onReceivePing() {
+		// TODO Auto-generated method stub
+		mReceivedDataListener.onPing(mPeer);
+	}
+
+	@Override
+	public void onReceivePingOK() {
+		// TODO Auto-generated method stub
+		mReceivedDataListener.onPingOK(mPeer);
+	}
+
+	@Override
+	public void onReceiveMessage(ByteArrayOutputStream os) {
+		// TODO Auto-generated method stub
+		try {
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (os.size() > 0){
+            if (mReceiveListener != null){
+                mReceiveListener.onReceiveMessageData(os.toByteArray());
+
+                mReceivedDataListener.onCompleteReceivedData(mPeer);
+            }
+        }
+	}
+
+	@Override
+	public void onReceiveImage(ByteArrayOutputStream os) {
+		// TODO Auto-generated method stub
+		try {
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (os.size() > 0){
+            if (mReceiveListener != null){
+                mReceiveListener.onReceiveImageData(os.toByteArray());
+
+                mReceivedDataListener.onCompleteReceivedData(mPeer);
+            }
+        }
+	}
 }

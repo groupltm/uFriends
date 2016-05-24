@@ -3,6 +3,7 @@ package activity;
 
 import instance.MyBundle;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.net.sip.SipRegistrationListener;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
@@ -180,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		if (!appInstalledOrNot()){
+			addShortcutIcon();
+		}
+		
 		mBundle = MyBundle.getInstance();
 		try {
 			mBundle.getInfoFromJSONFile(getApplicationContext());
@@ -234,35 +242,66 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
-		setBroadcast();
+		if (mBundle.mBroadcast == null){
+			mBundle.setBroadcast(getApplicationContext());
+			
+		}
 		
-		mBundle.setMyAvatar(this);
+		if (mBundle.myAvatar == null){
+			mBundle.setMyAvatar(this);
+		}
+		
+		
 	}
 	
 	@Override
-	protected void onDestroy() {
+	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onDestroy();
-		
-		unregisterReceiver(mBundle.mBroadcast);
+		super.onResume();
+		mBundle.mBroadcast.registerWithContext(this);
 	}
 	
-	private void setBroadcast() {
-
-		mBundle.mBroadcast = new WifiP2PBroadcast(this);
-		mBundle.mBroadcast.setManager();
-
-		filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-		filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
-
-		mBundle.mBroadcast.register(filter);
-		
-		//mBundle.mBroadcast.createGroup();
-		// mBundle.mBroadcast.advertiseWifiP2P();
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mBundle.mBroadcast.unregister();
 	}
+	
+	private boolean appInstalledOrNot() {
+		File file = new File("data/data/com.example.ufriends/InstallFile");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.sendBroadcast(new Intent(
+					Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+			return false;
+		}
+        return true;
+    }
+	
+	private void addShortcutIcon() {
+        //shorcutIntent object
+        Intent shortcutIntent = new Intent(getApplicationContext(),
+                MainActivity.class);
+        
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        //shortcutIntent is added with addIntent
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "uFriends");
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+            Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.drawable.applogo));
+
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        // finally broadcast the new Intent
+        getApplicationContext().sendBroadcast(addIntent);
+    }
 	
 	public void setCurrentTab(int position) {
 		viewPager.setCurrentItem(position, true);

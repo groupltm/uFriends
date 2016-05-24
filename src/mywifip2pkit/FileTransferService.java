@@ -101,17 +101,20 @@ public class FileTransferService {
         return true;
     }
 
-    public static int receiveFile(final InputStream inputStream, final OutputStream out) {
+    public static int receiveFile(final InputStream inputStream, FileTransferReceiveDataListener listener) {
         byte buf[] = new byte[1028];
         byte oldBuf[] = null;
         int len = 0;
         int oldLen = 0;
-        int j = 0;
         int result = -1;
 
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        
         try {
             while ((len = inputStream.read(buf)) != -1) {
 
+            	
+            	
                 if (len < 1028 || (len == 1028 && oldLen > 0)) {
                     oldLen += len;
                     byte[] tempBuf = Arrays.copyOfRange(buf, 0, len);
@@ -134,18 +137,43 @@ public class FileTransferService {
                     byte[] code = detectCode(oldBuf);
 
                     if (checkReceivedCode(code)){
-                        result = 1;
-                        break;
+                        //result = 1;
+                    	listener.onReceiveCode();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        
+                        //break;
                     }
 
                     if (checkPing(code)){
-                        result = 2;
-                        break;
+                        //result = 2;
+                    	listener.onReceivePing();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
                     }
 
                     if (checkPingOK(code)){
-                        result = 3;
-                        break;
+                        //result = 3;
+                    	listener.onReceivePingOK();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
                     }
 
 //                    if (checkReceiveId(code)){
@@ -156,14 +184,28 @@ public class FileTransferService {
 
                     if (checkCode(code) || checkImageCode(code)) {
                         byte[] endFile = detectEndFile(oldBuf, oldLen);
-                        if (checkEndFile(endFile)) {
-                            byte[] realBuf = getRealBuffer(oldBuf, oldLen, true);
-                            out.write(realBuf, 0, oldLen - 6);
+                        int indexEndFile = checkEndFile(/*endFile*/ oldBuf);
+                        if (indexEndFile != -1) {
+                            byte[] realBuf = getRealBufferWithIndex(oldBuf, indexEndFile);
+                            out.write(realBuf, 0, realBuf.length);
+                            if (oldLen - indexEndFile > 2){
+                            	oldBuf = Arrays.copyOfRange(oldBuf, indexEndFile + 2, oldLen);
+                            	oldLen = oldLen - indexEndFile + 2;
+                            }else {
+                            	oldBuf = null;
+                            	oldLen = 0;
+                            }
+                            
                             if (checkCode(code))
-                            	result = 0;
+                            	//result = 0;
+                            	listener.onReceiveMessage(out);
                             else
-                            	result = 4;
-                            break;
+                            	//result = 4;
+                            	listener.onReceiveImage(out);
+                            
+                            out = new ByteArrayOutputStream();
+                            
+                            //break;
                         }
                     }
                 } else {
@@ -178,12 +220,20 @@ public class FileTransferService {
                     	if (realBuf != null) {
                             out.write(realBuf, 0, 1024);
                         }
+                    	
+                    	oldBuf = null;
+                    	oldLen = 0;
+                    	
                     	if (isMessageEnd){
-                    		result = 0;
+                    		//result = 0;
+                    		listener.onReceiveMessage(out);
                     	} else{
-                    		result = 4;
+                    		//result = 4;
+                    		listener.onReceiveImage(out);
                     	}
-                    	break;
+                    	
+                    	out = new ByteArrayOutputStream();
+                    	//break;
                     	
                     } else {
                     	realBuf = getRealBuffer(buf, len, false);
@@ -319,16 +369,24 @@ public class FileTransferService {
         byte[] endFile = new byte[2];
         endFile[0] = buffer[len - 2];
         endFile[1] = buffer[len - 1];
-
+    	
         return endFile;
     }
 
-    private static boolean checkEndFile(byte[] endFile) {
-        if (endFile[0] == '\r' && endFile[1] == '\n') {
-            return true;
-        }
+    private static int checkEndFile(/*byte[] endFile*/ byte[] buffer) {
+//        if (endFile[0] == '\r' && endFile[1] == '\n') {
+//            return true;
+//        }
+    	
+    	for (int i = 0; i < buffer.length; i++){
+    		if (buffer[i] == '\r' && i != buffer.length - 1){
+    			if (buffer[i + 1] == '\n'){
+    				return i;
+    			}
+    		}
+    	}
 
-        return false;
+        return -1;
     }
 
     private static byte[] getRealBuffer(byte[] buffer, int len, boolean endFile) {
@@ -348,5 +406,25 @@ public class FileTransferService {
 
 
         return realBuffer;
+    }
+    
+    private static byte[] getRealBufferWithIndex(byte[] buffer, int index){
+    	byte[] realBuffer = new byte[0];
+    	
+        if (index > 4) {   	
+        	realBuffer = Arrays.copyOfRange(buffer, 4, index);
+        } else {
+            realBuffer = null;
+        }
+
+        return realBuffer;
+    }
+    
+    public interface FileTransferReceiveDataListener{
+    	public void onReceiveCode();
+    	public void onReceivePing();
+    	public void onReceivePingOK();
+    	public void onReceiveMessage(ByteArrayOutputStream os);
+    	public void onReceiveImage(ByteArrayOutputStream os);
     }
 }

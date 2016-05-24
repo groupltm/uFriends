@@ -22,10 +22,12 @@ import com.google.gson.JsonSyntaxException;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Environment;
 import android.provider.OpenableColumns;
 
@@ -40,6 +42,8 @@ public class MyBundle implements Serializable {
 	public Bitmap peerAvatar;
 	public Bitmap myAvatar;
 	public Info peerInfo;
+	
+	
 
 	private static MyBundle mBundle = new MyBundle();
 
@@ -55,6 +59,22 @@ public class MyBundle implements Serializable {
 
 	public static MyBundle getInstance() {
 		return mBundle;
+	}
+	
+	public void setBroadcast(Context context) {
+		
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		filter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
+		
+		mBundle.mBroadcast = new WifiP2PBroadcast(context, filter);
+		mBundle.mBroadcast.setManager();
+		
+		//mBundle.mBroadcast.createGroup();
+		// mBundle.mBroadcast.advertiseWifiP2P();
 	}
 	
 	public void setMyAvatar(Context context){

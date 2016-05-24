@@ -24,6 +24,8 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
     ServerReceiveSocket_Thread serverReceiveThread;
     ServerSendSocket_Thread serverSendThread;
+    
+//    List<SendingData> list_sendData = new ArrayList<>();
 
     List<ConnectedPeer> mConnectedPeers = new ArrayList<>();
 
@@ -42,7 +44,9 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
         mReceiveDataListener = listener;
         for (ConnectedPeer peer:mConnectedPeers){
         	if (peer != null){
-        		peer.mReceiveThread.mReceiveListener = listener;
+        		if (peer.mReceiveThread != null){
+        			peer.mReceiveThread.mReceiveListener = listener;
+        		}      		
         	}         
         }
     }
@@ -58,11 +62,22 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
             isAlive = true;
         }
     }
+    
+//    public class SendingData {
+//    	boolean _isMessage;
+//    	InputStream _is;
+//    	
+//    	public SendingData(boolean isMessage, InputStream is){
+//    		_isMessage = isMessage;
+//    		_is = is;
+//    	}
+//    }
 
     public void sendMessage(final InputStream is){
         try {
+        	//list_sendData.add(new SendingData(true, is));
             for (ConnectedPeer peer:mConnectedPeers) {
-                if (!peer.mSendSocket.isClosed()){
+                if (peer.mSendSocket != null){
                     final OutputStream os = peer.mSendSocket.getOutputStream();
                     FileTransferService.sendMessage(is, os);
                 }
@@ -201,7 +216,6 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
         if (info.groupFormed){
             tempPeer = new ConnectedPeer();
-            addPeer(tempPeer);
 
             if (info.isGroupOwner){
                 try {
@@ -220,9 +234,9 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
 
                 final Socket mSendSocket = new Socket();
                 final Socket mReceiveSocket = new Socket();
-
+                addPeer(tempPeer);
                 ReceiveSocketAsync receiveThread = new ReceiveSocketAsync(this, mReceiveDataListener, mReceiveSocket, mConnectedPeers.indexOf(tempPeer));
-
+                
                 tempPeer.mSendSocket = mSendSocket;
                 tempPeer.mReceiveSocket = mReceiveSocket;
                 tempPeer.mReceiveThread = receiveThread;
@@ -240,7 +254,6 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
                             mSendSocket.connect(new InetSocketAddress(hostIP, ServerReceiveSocket_Thread.PORT), SOCKET_TIMEOUT);
 
                             tempPeer.mReceiveThread.start();
-                            addPeer(tempPeer);
                             mListener.onConnectComplete();
 
                         } catch (IOException e) {
@@ -287,12 +300,12 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener, 
     public void onReceive_ReceiveSocket(Socket receiveSocket) {
         // TODO Auto-generated method stub
         Socket mReceiveSocket = receiveSocket;
-
+        
+        addPeer(tempPeer);
         tempPeer.mReceiveSocket = mReceiveSocket;
 
         tempPeer.mReceiveThread = new ReceiveSocketAsync(this, mReceiveDataListener, receiveSocket, mConnectedPeers.indexOf(tempPeer));
-        tempPeer.mReceiveThread.start();
-        addPeer(tempPeer);
+        tempPeer.mReceiveThread.start();      
 
         mListener.onConnectComplete();
     }

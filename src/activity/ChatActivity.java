@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -86,7 +87,7 @@ public class ChatActivity extends AppCompatActivity implements
 	
 	boolean isActive;
 	
-	public static boolean isDidconnected = false;
+	public static boolean isChat = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class ChatActivity extends AppCompatActivity implements
 		setContentView(R.layout.test);
 
 		mBundle = MyBundle.getInstance();
+		isChat = true;
 
 		mToolbar = (Toolbar) findViewById(R.id.chatToolbar);
 		setSupportActionBar(mToolbar);
@@ -112,7 +114,7 @@ public class ChatActivity extends AppCompatActivity implements
 		btnCamera = (Button) findViewById(R.id.btnCamera);
 		btnFile = (Button) findViewById(R.id.btnFile);
 
-		mBroadcast = MyBundle.getInstance().mBroadcast;
+		mBroadcast = mBundle.mBroadcast;
 		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		mBroadcast.mListener = this;
 
@@ -129,8 +131,6 @@ public class ChatActivity extends AppCompatActivity implements
 				return false;
 			}
 		});
-
-		LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
 
 		btnSend.setOnClickListener(new View.OnClickListener() {
 
@@ -186,6 +186,7 @@ public class ChatActivity extends AppCompatActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		isActive = true;
+		mBundle.mBroadcast.registerWithContext(this);
 	}
 	
 	@Override
@@ -193,6 +194,7 @@ public class ChatActivity extends AppCompatActivity implements
 		// TODO Auto-generated method stub
 		super.onPause();
 		isActive = false;
+		mBundle.mBroadcast.registerWithContext(this);
 	}
 
 	private File createImageFile() throws IOException {
@@ -263,16 +265,23 @@ public class ChatActivity extends AppCompatActivity implements
 	
 	private void createNotification(String msg){
 		Intent mIntent = new Intent(this, ChatActivity.class);
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, mIntent, 0);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(ChatActivity.class);
+		stackBuilder.addNextIntent(mIntent);
+
+		//mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		Notification.Builder notiBuilder = new Notification.Builder(this);
 		notiBuilder.setContentTitle(mBundle.peerInfo._name);
 		notiBuilder.setContentText(msg);	
 		notiBuilder.setLargeIcon(mBundle.peerAvatar);
 		notiBuilder.setContentIntent(pIntent);
-		notiBuilder.setSmallIcon(R.drawable.ic_launcher);
+		notiBuilder.setSmallIcon(R.drawable.applogo);
 		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
 		notiBuilder.setLights(Color.RED, 3000, 3000);
-		//notiBuilder.setColor(0xff123456);
+		
+		String soundPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/capisci";
+		notiBuilder.setSound(Uri.parse(soundPath));
 		
 		Notification noti = new Notification.InboxStyle(notiBuilder).addLine("OK OK").build();
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -319,6 +328,7 @@ public class ChatActivity extends AppCompatActivity implements
 			}
 		}
 	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -433,11 +443,15 @@ public class ChatActivity extends AppCompatActivity implements
 	public void onDisconnect() {	
 		// TODO Auto-generated method stub
 		if (mBundle.peerInfo != null) {
-			if (!alertDialog.isShowing()){
-				alertDialog.show();
+			if (isActive){
+				if (!alertDialog.isShowing()){
+					alertDialog.show();
+				}
+			}else{
+				createNotification("You disconnected with " + mBundle.peerInfo._name);
 			}
 		}
 
-		isDidconnected = true;
+		isChat = false;
 	}
 }
