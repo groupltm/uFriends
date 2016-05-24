@@ -257,7 +257,7 @@ public class ChatActivity extends AppCompatActivity implements
 			return f.getAbsolutePath();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null
+			return null;
 		}
 	}
 	
