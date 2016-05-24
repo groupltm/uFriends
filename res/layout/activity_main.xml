@@ -17,14 +17,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:background="@drawable/mainlogo"
+                android:background="@drawable/applogo_256"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#99D5FF"
                 app:tabGravity="fill"
                 app:tabMode="fixed" />
         </android.support.design.widget.AppBarLayout>

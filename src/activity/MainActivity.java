@@ -184,9 +184,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		if (!appInstalledOrNot()){
-			addShortcutIcon();
-		}
+		//addShortcutIcon();
 		
 		mBundle = MyBundle.getInstance();
 		try {
@@ -268,40 +266,25 @@ public class MainActivity extends AppCompatActivity {
 		mBundle.mBroadcast.unregister();
 	}
 	
-	private boolean appInstalledOrNot() {
-		File file = new File("data/data/com.example.ufriends/InstallFile");
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.sendBroadcast(new Intent(
-					Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-			return false;
-		}
-        return true;
-    }
-	
 	private void addShortcutIcon() {
-        //shorcutIntent object
-        Intent shortcutIntent = new Intent(getApplicationContext(),
-                MainActivity.class);
-        
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-        //shortcutIntent is added with addIntent
-        Intent addIntent = new Intent();
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "uFriends");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-            Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.applogo));
+		// shorcutIntent object
+		Intent shortcutIntent = new Intent(getApplicationContext(),
+				MainActivity.class);
 
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        // finally broadcast the new Intent
-        getApplicationContext().sendBroadcast(addIntent);
-    }
+		//shortcutIntent.setAction(Intent.ACTION_MAIN);
+
+		// shortcutIntent is added with addIntent
+		Intent addIntent = new Intent();
+		addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "uFriends");
+		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+				Intent.ShortcutIconResource.fromContext(
+						getApplicationContext(), R.drawable.applogo));
+
+		addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+		// finally broadcast the new Intent
+		getApplicationContext().sendBroadcast(addIntent);
+	}
 	
 	public void setCurrentTab(int position) {
 		viewPager.setCurrentItem(position, true);

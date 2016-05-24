@@ -393,7 +393,7 @@ public class BrowseFragment extends Fragment implements
 				is = new ByteArrayInputStream(bitmapdata);
 			}
 		}else {
-			is = getActivity().getResources().openRawResource(R.drawable.ic_launcher);
+			is = getActivity().getResources().openRawResource(R.drawable.man);
 		}
 		
 		mBundle.mBroadcast.sendImage(is);
