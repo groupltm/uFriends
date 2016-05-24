@@ -280,8 +280,8 @@ public class ChatActivity extends AppCompatActivity implements
 		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
 		notiBuilder.setLights(Color.RED, 3000, 3000);
 		
-		String soundPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/capisci";
-		notiBuilder.setSound(Uri.parse(soundPath));
+		notiBuilder.setSound(Uri.parse("android.resource://"
+	            + this.getPackageName() + "/" + R.raw.capisci));
 		
 		Notification noti = new Notification.InboxStyle(notiBuilder).addLine("OK OK").build();
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
