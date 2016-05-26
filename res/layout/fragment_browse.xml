@@ -26,29 +26,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_weight="1" 
+        android:layout_weight="1"
         android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="0dp" />
 
-    <custom_view.MaterialRippleLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <custom_view.RippleBackground
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rpFind"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="130dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="145dp"
-        app:mrl_rippleAlpha="0.2"
-        app:mrl_rippleColor="#99D5FF"
-        app:mrl_rippleHover="true"
-        app:mrl_rippleOverlay="true"
-        app:mrl_rippleRoundedCorners="10dp" >
+        app:rb_color="#0099CC"
+        app:rb_duration="1000"
+        app:rb_radius="20dp"
+        app:rb_rippleAmount="3"
+        app:rb_scale="2" >
 
         <ImageButton
             android:id="@+id/btnFind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_find_blue2"
-            android:layout_gravity="center" />
-    </custom_view.MaterialRippleLayout>
+            android:src="@drawable/ic_find_blue2" />
+    </custom_view.RippleBackground>
 
 </LinearLayout>

@@ -7,4 +7,5 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#c8e8ff</color>
     <color name="rippelColor">#FFFFFF</color>
+    <color name="rippelbgColor">#0099CC</color>
 </resources>

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 public class IntroActivity extends Activity {
 	
+	public static boolean FLAG_ALIVE = false;
 	MyBundle mBundle;
 	
 	@Override
@@ -55,13 +56,25 @@ public class IntroActivity extends Activity {
 				startActivityForResult(intent, 100);
 			}
 		}, 3000);
+		
+		FLAG_ALIVE = true;
 	}
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		mBundle.mBroadcast.disconnectFromPeer();
+//		FLAG_ALIVE = false;
+//		Handler hd = new Handler();
+//		hd.postDelayed(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				if (!FLAG_ALIVE)
+//					mBundle.mBroadcast.disconnectFromPeer();
+//			}
+//		}, 2000);
 	}
 
 	private boolean appInstalledOrNot() {

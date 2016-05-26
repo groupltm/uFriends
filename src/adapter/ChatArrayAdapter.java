@@ -13,11 +13,15 @@ import utility_class.RealPathUtil;
 
 import com.example.ufriends.R;
 
+import activity.ImageActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -62,7 +66,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ChatMessage chatMessageObj = getItem(position);
+		final ChatMessage chatMessageObj = getItem(position);
 		View row = convertView;
 		LayoutInflater inflater = (LayoutInflater) this.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -106,6 +110,17 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
 			ImageView imvShareImage = (ImageView) row
 					.findViewById(R.id.imvShareImage);
+			
+			imvShareImage.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					int position = mBundle.receivedImagePath.indexOf(chatMessageObj.message);
+					showImageActivity(position);
+				}
+			});
+			
 			File imgFile = new File(chatMessageObj.message);
 
 			if (imgFile.exists()) {
@@ -125,5 +140,11 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 		timeText.setText(dateString);
 
 		return row;
+	}
+	
+	private void showImageActivity(int position){
+		Intent intent = new Intent(context, ImageActivity.class);
+		intent.putExtra("position", position);
+		context.startActivity(intent);
 	}
 }

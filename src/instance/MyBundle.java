@@ -36,6 +36,8 @@ public class MyBundle implements Serializable {
 	public List<MyPeer> mPeerList;
 	// public List<Info> mPeerInfoList;
 	public List<Info> mPeerInfoConnectList;
+	public List<String> receivedImagePath;
+	
 	public WifiP2PBroadcast mBroadcast;
 	public boolean isConnect;
 	public Info mInfo;
@@ -50,9 +52,11 @@ public class MyBundle implements Serializable {
 	private MyBundle() {
 		// TODO Auto-generated constructor stub
 		mPeerList = new ArrayList<MyPeer>();
-		// mPeerInfoList = new ArrayList<>();
 
 		mPeerInfoConnectList = new ArrayList<>();
+		
+		receivedImagePath = new ArrayList<>();
+		
 		mInfo = new Info();
 		
 	}
@@ -78,7 +82,7 @@ public class MyBundle implements Serializable {
 	}
 	
 	public void setMyAvatar(Context context){
-		myAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+		myAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.applogo_256);
 	}
 
 	public void getInfoFromJSONFile(Context context)

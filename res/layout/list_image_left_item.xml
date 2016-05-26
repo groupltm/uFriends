@@ -39,9 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
-            android:textColor="#EEEEEE"
+            android:textColor="#D9DADB"
             android:text="seen"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
         	android:layout_gravity="left"
             />
     </LinearLayout>

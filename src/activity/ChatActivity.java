@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.w3c.dom.Text;
+
 import utility_class.RealPathUtil;
 
 import mywifip2pkit.WifiP2PBroadcast;
@@ -46,16 +48,22 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ufriends.R;
 
@@ -274,7 +282,9 @@ public class ChatActivity extends AppCompatActivity implements
 		Notification.Builder notiBuilder = new Notification.Builder(this);
 		notiBuilder.setContentTitle(mBundle.peerInfo._name);
 		notiBuilder.setContentText(msg);	
-		notiBuilder.setLargeIcon(mBundle.peerAvatar);
+		
+		Bitmap newBm = RealPathUtil.createBitmapWithBitmap(mBundle.peerAvatar, RealPathUtil.WidthAvatar, RealPathUtil.HeightAvatar);
+		notiBuilder.setLargeIcon(newBm);
 		notiBuilder.setContentIntent(pIntent);
 		notiBuilder.setSmallIcon(R.drawable.applogo);
 		notiBuilder.setVibrate(new long[]{100, 100, 100, 100, 100});
@@ -286,6 +296,33 @@ public class ChatActivity extends AppCompatActivity implements
 		Notification noti = new Notification.InboxStyle(notiBuilder).addLine("OK OK").build();
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		notiManager.notify(NOTIFICATION_ID, noti);
+	}
+	
+	private void createToast(String msg){
+		LayoutInflater inflater = getLayoutInflater();
+
+		View layout = inflater.inflate(R.layout.custom_toast_chatmessage, null);
+		ImageView imvAvatar = (ImageView)layout.findViewById(R.id.imvAvatar);
+		TextView tvPeerName = (TextView)layout.findViewById(R.id.tvPeerName);
+		TextView tvMessage = (TextView)layout.findViewById(R.id.tvMessage);
+		TextView tvTime = (TextView)layout.findViewById(R.id.tvTime);
+		
+		Bitmap newBm = RealPathUtil.createBitmapWithBitmap(mBundle.peerAvatar, RealPathUtil.WidthAvatar, RealPathUtil.HeightAvatar);
+		imvAvatar.setImageBitmap(newBm);
+		tvPeerName.setText(mBundle.peerInfo._name);
+		tvTime.setText(msg);
+		
+		long date = System.currentTimeMillis(); 
+
+		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+		String dateString = sdf.format(date);  
+		tvMessage.setText(dateString);
+		
+		Toast toast = new Toast(getApplicationContext());
+		toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, 0);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(layout);
+		toast.show();
 	}
 
 	private boolean sendChatMessage() {
@@ -351,9 +388,11 @@ public class ChatActivity extends AppCompatActivity implements
 							getApplicationContext(), uri);
 				}
 				mChatAdapter.add(new ChatMessage(false, realPath, true));
+				mBundle.receivedImagePath.add(realPath);
 			} else if(requestCode == 120){
 				uri = mImageUri;
 				mChatAdapter.add(new ChatMessage(false, mImagePath, true));
+				mBundle.receivedImagePath.add(mImagePath.toString());
 			}
 
 			ContentResolver cr = getContentResolver();
@@ -395,6 +434,7 @@ public class ChatActivity extends AppCompatActivity implements
 				mChatAdapter.add(new ChatMessage(side, msg, false));
 				if (!isActive){
 					createNotification(msg);
+					createToast(msg);
 				}
 			}
 		});
@@ -411,6 +451,7 @@ public class ChatActivity extends AppCompatActivity implements
 	public void onReceiveImageData(byte[] data) {
 		// TODO Auto-generated method stub
 		final String imagePath = createImageWithData(data);
+		mBundle.receivedImagePath.add(imagePath);
 		Handler hd = new Handler(getMainLooper());
 		hd.post(new Runnable() {
 
@@ -421,6 +462,7 @@ public class ChatActivity extends AppCompatActivity implements
 				if (!isActive){
 					String msg = mBundle.peerInfo._name + " have just sended an image for you!!!"; 
 					createNotification(msg);
+					createToast(msg);
 				}
 			}
 		});
@@ -448,7 +490,11 @@ public class ChatActivity extends AppCompatActivity implements
 					alertDialog.show();
 				}
 			}else{
-				createNotification("You disconnected with " + mBundle.peerInfo._name);
+				if (isChat){
+					String msg = "You disconnected with " + mBundle.peerInfo._name;
+					createNotification(msg);
+					createToast(msg);
+				}			
 			}
 		}
 

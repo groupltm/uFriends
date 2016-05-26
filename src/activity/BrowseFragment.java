@@ -28,6 +28,7 @@ import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 import com.example.ufriends.R;
 
 import custom_view.ProgressWheel;
+import custom_view.RippleBackground;
 
 import adapter.ChatArrayAdapter;
 import adapter.DeviceListAdapter;
@@ -89,6 +90,8 @@ public class BrowseFragment extends Fragment implements
 	
 	AlertDialog alertDialog;
 	
+	RippleBackground rippleBackground;
+	
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -105,7 +108,7 @@ public class BrowseFragment extends Fragment implements
 		lvDevice = (ListView) mView.findViewById(R.id.lvDevice);
 		mProgress = (ProgressWheel)mView.findViewById(R.id.progress_wheel);
 		btnFind = (ImageButton)mView.findViewById(R.id.btnFind);
-		//lvConnectDevice = (ListView)mView.findViewById(R.id.lvConnectDevice);
+		rippleBackground=(RippleBackground)mView.findViewById(R.id.rpFind);
 		
 
 		deviceListAdapter = new DeviceListAdapter(getActivity(),
@@ -160,6 +163,8 @@ public class BrowseFragment extends Fragment implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				rippleBackground.startRippleAnimation();
+				
 				mProgress.setVisibility(View.VISIBLE);
 				if (hd_Progress == null){
 					hd_Progress = new Handler();
@@ -171,6 +176,7 @@ public class BrowseFragment extends Fragment implements
 						public void run() {
 							// TODO Auto-generated method stub
 							mProgress.setVisibility(View.GONE);
+							rippleBackground.stopRippleAnimation();
 						}
 					};
 				}
@@ -393,7 +399,7 @@ public class BrowseFragment extends Fragment implements
 				is = new ByteArrayInputStream(bitmapdata);
 			}
 		}else {
-			is = getActivity().getResources().openRawResource(R.drawable.man);
+			is = getActivity().getResources().openRawResource(R.drawable.applogo_256);
 		}
 		
 		mBundle.mBroadcast.sendImage(is);
@@ -438,7 +444,8 @@ public class BrowseFragment extends Fragment implements
 				alertDialog.setTitle("DISCONNECTED!!!");
 				alertDialog.setMessage("You are disconnected with " + mBundle.peerInfo._name);		
 			}
-			if (!alertDialog.isShowing()){
+			
+			if (ChatActivity.isChat && !alertDialog.isShowing()){
 				alertDialog.show();
 			}
 		}
@@ -490,8 +497,7 @@ public class BrowseFragment extends Fragment implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Bitmap peerBitmap = BitmapFactory.decodeByteArray(data , 0, data.length);
-				mBundle.peerAvatar = RealPathUtil.createBitmapWithBitmap(peerBitmap, RealPathUtil.WidthAvatar, RealPathUtil.HeightAvatar);
+				mBundle.peerAvatar = BitmapFactory.decodeByteArray(data , 0, data.length);
 			}
 		});		
 		if (isActive == false){
