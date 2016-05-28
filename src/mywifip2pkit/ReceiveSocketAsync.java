@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import mywifip2pkit.FileTransferService.FileTransferReceiveDataListener;
 
@@ -19,7 +20,9 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
 
     public SocketReceiverDataListener mReceiveListener;
 
-    onReceivedDataListener mReceivedDataListener;
+    public onReceivedDataListener mReceivedDataListener;
+    
+    public OnStreamListener mStreamListener;
 
     int mPeer;
 
@@ -38,7 +41,6 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
         // TODO Auto-generated method stub
         try {
             InputStream receiveInputStream = mReceiveSocket.getInputStream();
-            OutputStream receivedOutputStream = mReceiveSocket.getOutputStream();
 
             while (true){
                 if (mReceiveSocket.isClosed()){
@@ -90,18 +92,6 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
 
     public void stop(){
 
-    }
-
-    public interface SocketReceiverDataListener{
-        public void onReceiveMessageData(byte[] data);
-        public void onReceiveImageData(byte[] data);
-        public void onCompleteSendData();
-    }
-
-    public interface onReceivedDataListener{
-        public void onCompleteReceivedData(int peer);
-        public void onPing(int peer);
-        public void onPingOK(int peer);
     }
 
 	@Override
@@ -159,4 +149,71 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
             }
         }
 	}
+
+	@Override
+	public void onReceiveRequestStreamCode() {
+		// TODO Auto-generated method stub
+		mStreamListener.onReceiveRequestStream();
+	}
+	
+	@Override
+	public void onReceiveAllowStreamCode() {
+		// TODO Auto-generated method stub
+		mStreamListener.onReceiveAllowStream();
+	}
+
+	@Override
+	public void onReceiveDisallowStreamCode() {
+		// TODO Auto-generated method stub
+		mStreamListener.onReceiveDisallowStream();
+	}
+	
+	@Override
+	public void onAlreadyStream(ByteArrayOutputStream os) {
+		// TODO Auto-generated method stub
+		try {
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (os.size() > 0){
+            if (mReceiveListener != null){
+            	String streamerIP = new String(os.toByteArray(), StandardCharsets.UTF_8);
+            	
+                mStreamListener.onAlreadyStream(streamerIP);
+
+                mReceivedDataListener.onCompleteReceivedData(mPeer);
+            }
+        }
+	}
+	
+	@Override
+	public void onStopStream() {
+		// TODO Auto-generated method stub
+		mStreamListener.onStopStream();
+	}
+	
+	public interface SocketReceiverDataListener{
+        public void onReceiveMessageData(byte[] data);
+        public void onReceiveImageData(byte[] data);
+        public void onCompleteSendData();
+        
+        
+    }
+	
+	public interface OnStreamListener{
+		public void onReceiveRequestStream();
+        public void onReceiveAllowStream();
+        public void onReceiveDisallowStream();
+        public void onAlreadyStream(String streamerIP);
+        public void onStopStream();
+	}
+
+    public interface onReceivedDataListener{
+        public void onCompleteReceivedData(int peer);
+        public void onPing(int peer);
+        public void onPingOK(int peer);
+    }
 }

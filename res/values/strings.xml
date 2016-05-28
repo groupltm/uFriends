@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_chat">Chat View</string>
     <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_streamer_">Streamer_Activity</string>
 
 </resources>

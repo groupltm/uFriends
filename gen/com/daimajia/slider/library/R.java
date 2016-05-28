@@ -38,7 +38,7 @@ public final class R {
 		public static final int visibility = 0x7f010004;
 	}
 	public static final class drawable {
-		public static final int indicator_corner_bg = 0x7f02006b;
+		public static final int indicator_corner_bg = 0x7f020068;
 	}
 	public static final class id {
 		public static final int Accordion = 0x7f0c000c;
@@ -57,19 +57,19 @@ public final class R {
 		public static final int ZoomIn = 0x7f0c0019;
 		public static final int ZoomOut = 0x7f0c001a;
 		public static final int ZoomOutSlide = 0x7f0c001b;
-		public static final int daimajia_indicator_wrapper = 0x7f0c00a6;
-		public static final int daimajia_slider_image = 0x7f0c00bf;
-		public static final int daimajia_slider_viewpager = 0x7f0c00c3;
-		public static final int default_bottom_left_indicator = 0x7f0c00c6;
-		public static final int default_bottom_right_indicator = 0x7f0c00c5;
-		public static final int default_center_bottom_indicator = 0x7f0c00c4;
-		public static final int default_center_top_indicator = 0x7f0c00c7;
-		public static final int default_center_top_left_indicator = 0x7f0c00c9;
-		public static final int default_center_top_right_indicator = 0x7f0c00c8;
-		public static final int description = 0x7f0c00c2;
-		public static final int description_layout = 0x7f0c00c1;
+		public static final int daimajia_indicator_wrapper = 0x7f0c009f;
+		public static final int daimajia_slider_image = 0x7f0c00b8;
+		public static final int daimajia_slider_viewpager = 0x7f0c00bc;
+		public static final int default_bottom_left_indicator = 0x7f0c00bf;
+		public static final int default_bottom_right_indicator = 0x7f0c00be;
+		public static final int default_center_bottom_indicator = 0x7f0c00bd;
+		public static final int default_center_top_indicator = 0x7f0c00c0;
+		public static final int default_center_top_left_indicator = 0x7f0c00c2;
+		public static final int default_center_top_right_indicator = 0x7f0c00c1;
+		public static final int description = 0x7f0c00bb;
+		public static final int description_layout = 0x7f0c00ba;
 		public static final int invisible = 0x7f0c000a;
-		public static final int loading_bar = 0x7f0c00c0;
+		public static final int loading_bar = 0x7f0c00b9;
 		public static final int oval = 0x7f0c001c;
 		public static final int rect = 0x7f0c001d;
 		public static final int visible = 0x7f0c000b;

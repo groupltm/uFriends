@@ -411,6 +411,26 @@ public class WifiP2PBroadcast extends BroadcastReceiver implements WifiP2pManage
     public void sendImage(InputStream is){
     	mP2PHandle.sendImage(is);
     }
+    
+    public void requestStream(){
+    	mP2PHandle.requestStream();
+    }
+    
+    public void allowStream(){
+    	mP2PHandle.allowStream();
+    }
+    
+    public void disallowStream(){
+    	mP2PHandle.disallowStream();
+    }
+    
+    public void notifyAlreadyStream(){
+    	mP2PHandle.notifyAlreadyStream();
+    }
+    
+    public void notifyStopStream(){
+    	mP2PHandle.notifyStopStream();
+    }
 
     @Override
     public void onConnectComplete() {

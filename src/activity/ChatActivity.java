@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 
 import utility_class.RealPathUtil;
 
+import mywifip2pkit.ReceiveSocketAsync.OnStreamListener;
 import mywifip2pkit.WifiP2PBroadcast;
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
 import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
@@ -31,6 +32,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
@@ -48,6 +50,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -68,7 +71,7 @@ import android.widget.Toast;
 import com.example.ufriends.R;
 
 public class ChatActivity extends AppCompatActivity implements
-		SocketReceiverDataListener, WifiP2PBroadcastListener {
+		SocketReceiverDataListener, WifiP2PBroadcastListener, OnStreamListener {
 
 	public static int NOTIFICATION_ID = 2303;
 	
@@ -82,6 +85,7 @@ public class ChatActivity extends AppCompatActivity implements
 	Button btnSend;
 	Button btnCamera;
 	Button btnFile;
+	Button btnStream;
 
 	boolean side = false;
 
@@ -92,6 +96,8 @@ public class ChatActivity extends AppCompatActivity implements
 	
 	AlertDialog alertDialog;
 	NotificationManager notiManager;
+	
+	Handler mhd;
 	
 	boolean isActive;
 	
@@ -121,9 +127,9 @@ public class ChatActivity extends AppCompatActivity implements
 		btnSend = (Button) findViewById(R.id.btnSend);
 		btnCamera = (Button) findViewById(R.id.btnCamera);
 		btnFile = (Button) findViewById(R.id.btnFile);
+		btnStream = (Button) findViewById(R.id.btnStream);
 
 		mBroadcast = mBundle.mBroadcast;
-		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		mBroadcast.mListener = this;
 
 		mChatAdapter = new ChatArrayAdapter(this, R.layout.list_chat_left_item);
@@ -167,6 +173,15 @@ public class ChatActivity extends AppCompatActivity implements
 				sendImageInGallery();
 			}
 		});
+		
+		btnStream.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mBundle.mBroadcast.requestStream();
+			}
+		});
 
 		lvChat.setAdapter(mChatAdapter);
 
@@ -187,6 +202,8 @@ public class ChatActivity extends AppCompatActivity implements
 				+ mBundle.peerInfo._name);
 		
 		notiManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		
+		mhd = new Handler(getMainLooper());
 	}
 	
 	@Override
@@ -195,6 +212,8 @@ public class ChatActivity extends AppCompatActivity implements
 		super.onResume();
 		isActive = true;
 		mBundle.mBroadcast.registerWithContext(this);
+		mBroadcast.mP2PHandle.setReceiveDataListener(this);
+		mBroadcast.mP2PHandle.setStreamListener(this);
 	}
 	
 	@Override
@@ -202,26 +221,10 @@ public class ChatActivity extends AppCompatActivity implements
 		// TODO Auto-generated method stub
 		super.onPause();
 		isActive = false;
-		mBundle.mBroadcast.registerWithContext(this);
+		//mBundle.mBroadcast.registerWithContext(this);
 	}
 
 	private File createImageFile() throws IOException {
-		// Create an image file name
-		// String mprefix = prefix;
-		//
-		// if (prefix == null){
-		// String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new
-		// Date());
-		// mprefix = "JPEG_" + timeStamp;
-		// }
-		//
-		// File storageDir = Environment.getExternalStoragePublicDirectory(
-		// Environment.DIRECTORY_PICTURES);
-		// File image = new File(storageDir, mprefix + suffix);
-		//
-		// image.createNewFile();
-
-		// Create an image file name
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
 				.format(new Date());
 		String imageFileName = "JPEG_" + timeStamp + "_";
@@ -323,6 +326,41 @@ public class ChatActivity extends AppCompatActivity implements
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.setView(layout);
 		toast.show();
+	}
+	
+	private void showAlertRequestStream(){
+		final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle("Request Stream");
+		alertDialogBuilder.setMessage(mBundle.peerInfo._name + " want to share  his camera with you!!!");
+		alertDialogBuilder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				mBundle.mBroadcast.allowStream();
+			}
+		}); 
+		
+		alertDialogBuilder.setNegativeButton("Disallow", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				mBundle.mBroadcast.disallowStream();
+			}
+		});
+		alertDialogBuilder.show();
+	}
+	
+	private void showStreamerView(){
+		Intent intent = new Intent(this, StreamerActivity.class);
+		startActivity(intent);
+	}
+	
+	private void showPlayerView(String streamerIP){
+		Intent intent = new Intent(this, PlayerActivity.class);
+		intent.putExtra("IPSTREAMER", streamerIP);
+		startActivity(intent);
 	}
 
 	private boolean sendChatMessage() {
@@ -499,5 +537,60 @@ public class ChatActivity extends AppCompatActivity implements
 		}
 
 		isChat = false;
+	}
+	
+	@Override
+	public void onReceiveRequestStream() {
+		// TODO Auto-generated method stub
+		mhd.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				showAlertRequestStream();
+			}
+		});
+	}
+
+	@Override
+	public void onReceiveAllowStream() {
+		// TODO Auto-generated method stub
+		
+		mhd.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				showStreamerView();
+			}
+		});
+		
+	}
+
+	@Override
+	public void onReceiveDisallowStream() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAlreadyStream(final String streamerIP) {
+		// TODO Auto-generated method stub
+		Log.e("streamip", streamerIP);
+		mhd.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				showPlayerView(streamerIP);
+			}
+		});
+		
+	}
+
+	@Override
+	public void onStopStream() {
+		// TODO Auto-generated method stub
+		
 	}
 }

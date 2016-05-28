@@ -175,14 +175,56 @@ public class FileTransferService {
                         }
                         //break;
                     }
+                    
+                    if (checkRequestStreamCode(code)){
+                    	listener.onReceiveRequestStreamCode();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
+                    }
+                    
+                    if (checkAllowStreamCode(code)){
+                    	listener.onReceiveAllowStreamCode();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
+                    }
+                    
+                    if (checkDisallowStreamCode(code)){
+                    	listener.onReceiveDisallowStreamCode();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
+                    }
+                    
+                    if (checkStopStreamCode(code)){
+                    	listener.onStopStream();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
+                    }
 
-//                    if (checkReceiveId(code)){
-//                        result = 4;
-//                        byte[] realBuf = getRealBuffer(buf, len, false);
-//                        out.write(realBuf, 0, len - 4);
-//                    }
-
-                    if (checkCode(code) || checkImageCode(code)) {
+                    if (checkCode(code) || checkImageCode(code) || checkAlreadyStreamCode(code)) {
                         byte[] endFile = detectEndFile(oldBuf, oldLen);
                         int indexEndFile = checkEndFile(/*endFile*/ oldBuf);
                         if (indexEndFile != -1) {
@@ -199,9 +241,12 @@ public class FileTransferService {
                             if (checkCode(code))
                             	//result = 0;
                             	listener.onReceiveMessage(out);
-                            else
+                            else if (checkImageCode(code))
                             	//result = 4;
                             	listener.onReceiveImage(out);
+                            else if (checkAlreadyStreamCode(code)){
+                            	listener.onAlreadyStream(out);
+                            }
                             
                             out = new ByteArrayOutputStream();
                             
@@ -256,15 +301,15 @@ public class FileTransferService {
         byte[] result;
 
         if (!endFile) {
-            code[0] = '4';
+            code[0] = '2';
             code[1] = '0';
             code[2] = '0';
             code[3] = ' ';
 
             result = combineTwoByteArray(code, buffer);
         } else {
-            code[0] = '4';
-            code[1] = '2';
+            code[0] = '2';
+            code[1] = '4';
             code[2] = '0';
             code[3] = ' ';
 
@@ -327,7 +372,7 @@ public class FileTransferService {
     }
     
     private static boolean checkImageCode(byte[] code) {
-        if (code[0] == '4' && code[1] == '2' && code[2] == '0' && code[3] == ' ') {
+        if (code[0] == '2' && code[1] == '4' && code[2] == '0' && code[3] == ' ') {
             return true;
         }
 
@@ -352,6 +397,46 @@ public class FileTransferService {
 
     private static boolean checkPingOK(byte[] code){
         if (code[0] == '3' && code[1] == '6' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkRequestStreamCode(byte[] code){
+        if (code[0] == '3' && code[1] == '8' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkAllowStreamCode(byte[] code){
+        if (code[0] == '4' && code[1] == '0' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkDisallowStreamCode(byte[] code){
+        if (code[0] == '4' && code[1] == '2' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkAlreadyStreamCode(byte[] code){
+        if (code[0] == '4' && code[1] == '4' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private static boolean checkStopStreamCode(byte[] code){
+        if (code[0] == '4' && code[1] == '6' && code[2] == '0' && code[3] == ' ') {
             return true;
         }
 
@@ -424,6 +509,12 @@ public class FileTransferService {
     	public void onReceiveCode();
     	public void onReceivePing();
     	public void onReceivePingOK();
+    	public void onReceiveRequestStreamCode();
+    	public void onReceiveAllowStreamCode();
+    	public void onReceiveDisallowStreamCode();   	
+    	public void onAlreadyStream(ByteArrayOutputStream os);
+    	public void onStopStream();
+    	
     	public void onReceiveMessage(ByteArrayOutputStream os);
     	public void onReceiveImage(ByteArrayOutputStream os);
     }
