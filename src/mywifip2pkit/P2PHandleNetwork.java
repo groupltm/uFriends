@@ -94,6 +94,21 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener,
 	// _is = is;
 	// }
 	// }
+	
+	public void notifyDisconnect(){
+		try {
+			for (ConnectedPeer peer : mConnectedPeers) {
+				if (!peer.mSendSocket.isClosed()) {
+					final OutputStream os = peer.mSendSocket.getOutputStream();
+					sendDisconnect(os);
+				}
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void sendMessage(final InputStream is) {
 		try {
@@ -228,16 +243,22 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener,
 		try {
 			if (peer.mSendSocket != null) {
 				peer.mSendSocket.close();
+			}
+			if (peer.mReceiveSocket != null){
 				peer.mReceiveSocket.close();
+				
+			}			
+			if (peer.mReceiveThread != null){
 				peer.mReceiveThread.stop();
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		int position = mConnectedPeers.indexOf(peer);
 		mConnectedPeers.set(position, null);
-		mListener.onDisconnectComplete();
+		//mListener.onDisconnectComplete();
 	}
 
 	private void addPeer(ConnectedPeer peer) {
@@ -430,6 +451,13 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener,
 				stopStream.getBytes(StandardCharsets.UTF_8));
 		FileTransferService.sendCode(stream, os);
 	}
+	
+	private void sendDisconnect(OutputStream os) {
+		String disconnect = "480 ";
+		InputStream stream = new ByteArrayInputStream(
+				disconnect.getBytes(StandardCharsets.UTF_8));
+		FileTransferService.sendCode(stream, os);
+	}
 
 	public String getLocalIpAddress() {
 		String ipAddress = "";
@@ -504,6 +532,12 @@ public class P2PHandleNetwork implements WifiP2pManager.ConnectionInfoListener,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void onDisconnect() {
+		// TODO Auto-generated method stub
+		mListener.onDisconnectComplete();
 	}
 
 	@Override

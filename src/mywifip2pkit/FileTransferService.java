@@ -223,6 +223,18 @@ public class FileTransferService {
                         }
                         //break;
                     }
+                    
+                    if (checkDisconnectCode(code)){
+                    	listener.onDisconnect();
+                        if (oldLen > 4){
+                        	oldBuf = Arrays.copyOfRange(oldBuf, 4, oldLen);
+                            oldLen -= 4;
+                        }else {
+                        	oldBuf = null;
+                        	oldLen = 0;
+                        }
+                        //break;
+                    }
 
                     if (checkCode(code) || checkImageCode(code) || checkAlreadyStreamCode(code)) {
                         byte[] endFile = detectEndFile(oldBuf, oldLen);
@@ -442,6 +454,14 @@ public class FileTransferService {
 
         return false;
     }
+    
+    private static boolean checkDisconnectCode(byte[] code){
+        if (code[0] == '4' && code[1] == '8' && code[2] == '0' && code[3] == ' ') {
+            return true;
+        }
+
+        return false;
+    }
 
     private static byte[] detectCode(byte[] buffer) {
 
@@ -517,5 +537,7 @@ public class FileTransferService {
     	
     	public void onReceiveMessage(ByteArrayOutputStream os);
     	public void onReceiveImage(ByteArrayOutputStream os);
+    	
+    	public void onDisconnect();
     }
 }

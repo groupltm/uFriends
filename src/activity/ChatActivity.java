@@ -130,7 +130,6 @@ public class ChatActivity extends AppCompatActivity implements
 		btnStream = (Button) findViewById(R.id.btnStream);
 
 		mBroadcast = mBundle.mBroadcast;
-		mBroadcast.mListener = this;
 
 		mChatAdapter = new ChatArrayAdapter(this, R.layout.list_chat_left_item);
 
@@ -212,6 +211,8 @@ public class ChatActivity extends AppCompatActivity implements
 		super.onResume();
 		isActive = true;
 		mBundle.mBroadcast.registerWithContext(this);
+		
+		mBroadcast.mListener = this;
 		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		mBroadcast.mP2PHandle.setStreamListener(this);
 	}
@@ -221,7 +222,6 @@ public class ChatActivity extends AppCompatActivity implements
 		// TODO Auto-generated method stub
 		super.onPause();
 		isActive = false;
-		//mBundle.mBroadcast.registerWithContext(this);
 	}
 
 	private File createImageFile() throws IOException {
@@ -522,6 +522,9 @@ public class ChatActivity extends AppCompatActivity implements
 	@Override
 	public void onDisconnect() {	
 		// TODO Auto-generated method stub
+		
+		mBroadcast.disconnectFromPeer();
+		
 		if (mBundle.peerInfo != null) {
 			if (isActive){
 				if (!alertDialog.isShowing()){
@@ -535,6 +538,10 @@ public class ChatActivity extends AppCompatActivity implements
 				}			
 			}
 		}
+		
+		mBundle.mPeerList.clear();
+		
+		mBundle.mBroadcast.createGroup();
 
 		isChat = false;
 	}

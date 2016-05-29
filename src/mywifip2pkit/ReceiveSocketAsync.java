@@ -195,6 +195,12 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
 		mStreamListener.onStopStream();
 	}
 	
+	@Override
+	public void onDisconnect() {
+		// TODO Auto-generated method stub
+		mReceivedDataListener.onDisconnect();
+	}
+	
 	public interface SocketReceiverDataListener{
         public void onReceiveMessageData(byte[] data);
         public void onReceiveImageData(byte[] data);
@@ -215,5 +221,6 @@ public class ReceiveSocketAsync implements Runnable, FileTransferReceiveDataList
         public void onCompleteReceivedData(int peer);
         public void onPing(int peer);
         public void onPingOK(int peer);
+        public void onDisconnect();
     }
 }

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import service.MyService;
+
 import mywifip2pkit.WifiP2PBroadcast;
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
 import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
@@ -52,127 +54,6 @@ import com.google.gson.JsonIOException;
 
 public class MainActivity extends AppCompatActivity {
 
-	// DeviceListAdapter deviceListAdapter;
-	// ListView lvDevice;
-	//
-	// IntentFilter filter = new IntentFilter();
-	//
-	// public static MyBundle mBundle = new MyBundle();
-	//
-	// @Override
-	// protected void onCreate(Bundle savedInstanceState) {
-	// // TODO Auto-generated method stub
-	// super.onCreate(savedInstanceState);
-	// setContentView(R.layout.activity_main);
-	//
-	// lvDevice = (ListView)findViewById(R.id.lvDevice);
-	//
-	// deviceListAdapter = new DeviceListAdapter(this,
-	// R.layout.list_device_item, mBundle.mPeerList);
-	// lvDevice.setAdapter(deviceListAdapter);
-	// lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	//
-	// @Override
-	// public void onItemClick(AdapterView<?> parent, View view,
-	// int position, long id) {
-	// // TODO Auto-generated method stub
-	// connectToPeer(position);
-	// }
-	// });
-	//
-	// setBroadcast();
-	// }
-	//
-	// @Override
-	// protected void onSaveInstanceState(Bundle outState) {
-	// // TODO Auto-generated method stub
-	// super.onSaveInstanceState(outState);
-	//
-	//
-	// }
-	//
-	// private void setBroadcast() {
-	//
-	// mBundle.mBroadcast = new WifiP2PBroadcast(this);
-	// mBundle.mBroadcast.setManager();
-	//
-	// mBundle.mBroadcast.mListener = this;
-	//
-	// filter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-	// filter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-	// filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-	// filter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-	// filter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
-	//
-	// mBundle.mBroadcast.register(filter);
-	// mBundle.mBroadcast.advertiseWifiP2P();
-	// }
-	//
-	//
-	// public class DeviceListAdapter extends ArrayAdapter<WifiP2pDevice> {
-	//
-	// Context mContext;
-	// int mResource;
-	// List <WifiP2pDevice> mList;
-	//
-	// public DeviceListAdapter(Context context, int resource,
-	// List<WifiP2pDevice> objects) {
-	// super(context, resource, objects);
-	// // TODO Auto-generated constructor stub
-	//
-	// mContext = context;
-	// mResource = resource;
-	// mList = objects;
-	// }
-	//
-	// @SuppressLint("ViewHolder") @Override
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	// // TODO Auto-generated method stub
-	//
-	// View v = convertView;
-	//
-	// LayoutInflater inflater = getLayoutInflater();
-	// v = inflater.inflate(mResource, null);
-	//
-	// TextView tvDeviceName = (TextView)v.findViewById(R.id.tvLabel);
-	// tvDeviceName.setText(mList.get(position).deviceName);
-	//
-	// return v;
-	// }
-	//
-	// }
-	//
-	// private void connectToPeer(int position){
-	// WifiP2pDevice device = mBundle.mPeerList.get(position);
-	// final WifiP2pConfig config = new WifiP2pConfig();
-	// config.deviceAddress = device.deviceAddress;
-	// config.wps.setup = WpsInfo.PBC;
-	// config.groupOwnerIntent = 15;
-	//
-	// mBundle.mBroadcast.connectPeer(config);
-	// }
-	//
-	// @Override
-	// public void onPeers(WifiP2pDeviceList peers) {
-	// // TODO Auto-generated method stub
-	// mBundle.mPeerList.clear();
-	// mBundle.mPeerList.addAll(peers.getDeviceList());
-	// deviceListAdapter.notifyDataSetChanged();
-	// }
-	//
-	// @Override
-	// public void onConnection() {
-	// // TODO Auto-generated method stub
-	//Intent intent = new Intent(this, ChatActivity.class);
-	// startActivity(intent);
-	// }
-	//
-	// @Override
-	// public void onDisconnect() {
-	// // TODO Auto-generated method stub
-	// mBundle.mBroadcast.advertiseWifiP2P();
-	// }
-
 	private Toolbar toolbar;
 	private TabLayout tabLayout;
 	public static ViewPager viewPager;
@@ -214,12 +95,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				if (arg0 == 1) {
-//					if (mBundle.isConnect == true){
-//						ChatFragment chatfm = (ChatFragment) ((ViewPagerAdapter) viewPager
-//								.getAdapter()).getItem(1);
-//						mBundle.mBroadcast.mP2PHandle.setReceiveDataListener((SocketReceiverDataListener)chatfm);
-//					}			
+				if (arg0 == 1) {		
 				}else if (arg0 == 0){
 					BrowseFragment browserfm = (BrowseFragment) ((ViewPagerAdapter) viewPager
 							.getAdapter()).getItem(0);
@@ -249,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
 			mBundle.setMyAvatar(this);
 		}
 		
-		
+		Intent intentService = new Intent(getApplicationContext(), MyService.class);
+		startService(intentService);
 	}
 	
 	@Override

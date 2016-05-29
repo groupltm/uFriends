@@ -35,7 +35,6 @@ public class MyBundle implements Serializable {
 
 	public List<MyPeer> mPeerList;
 	// public List<Info> mPeerInfoList;
-	public List<Info> mPeerInfoConnectList;
 	public List<String> receivedImagePath;
 	
 	public WifiP2PBroadcast mBroadcast;
@@ -52,8 +51,6 @@ public class MyBundle implements Serializable {
 	private MyBundle() {
 		// TODO Auto-generated constructor stub
 		mPeerList = new ArrayList<MyPeer>();
-
-		mPeerInfoConnectList = new ArrayList<>();
 		
 		receivedImagePath = new ArrayList<>();
 		
