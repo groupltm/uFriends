@@ -15,12 +15,15 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -39,31 +42,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
         </activity>
+        
         <activity
             android:name="activity.ChatActivity"
             android:label="@string/title_activity_chat"
             android:parentActivityName="activity.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
+        
         <activity
             android:name="activity.ImageActivity"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
-        <activity android:name="activity.StreamerActivity" >
+        
+        <activity
+            android:name="activity.StreamerActivity">
         </activity>
-        <activity android:name="activity.PlayerActivity" >
+        
+        <activity
+            android:name="activity.PlayerActivity" >
         </activity>
-
+        
         <service android:name="net.majorkernelpanic.streaming.rtsp.RtspServer" />
-        <service
-            android:name="service.MyService"
-            android:stopWithTask="false" >
-        </service>
+        
+        <service 
+            android:name="service.MyService" 
+            android:stopWithTask="false"
+            />
+        
     </application>
 
 </manifest>

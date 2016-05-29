@@ -68,13 +68,6 @@ public class MainActivity extends AppCompatActivity {
 		//addShortcutIcon();
 		
 		mBundle = MyBundle.getInstance();
-		try {
-			mBundle.getInfoFromJSONFile(getApplicationContext());
-			//mBundle.setInfoToJSONFile(getApplicationContext());
-		} catch (JsonIOException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -125,8 +118,15 @@ public class MainActivity extends AppCompatActivity {
 			mBundle.setMyAvatar(this);
 		}
 		
-		Intent intentService = new Intent(getApplicationContext(), MyService.class);
-		startService(intentService);
+		try {
+			mBundle.getInfoFromJSONFile(getApplicationContext());
+			//mBundle.setInfoToJSONFile(getApplicationContext());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		startMyService();
 	}
 	
 	@Override
@@ -143,24 +143,29 @@ public class MainActivity extends AppCompatActivity {
 		mBundle.mBroadcast.unregister();
 	}
 	
-	private void addShortcutIcon() {
-		// shorcutIntent object
-		Intent shortcutIntent = new Intent(getApplicationContext(),
-				MainActivity.class);
-
-		//shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-		// shortcutIntent is added with addIntent
-		Intent addIntent = new Intent();
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "uFriends");
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-				Intent.ShortcutIconResource.fromContext(
-						getApplicationContext(), R.drawable.applogo));
-
-		addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-		// finally broadcast the new Intent
-		getApplicationContext().sendBroadcast(addIntent);
+//	private void addShortcutIcon() {
+//		// shorcutIntent object
+//		Intent shortcutIntent = new Intent(getApplicationContext(),
+//				MainActivity.class);
+//
+//		//shortcutIntent.setAction(Intent.ACTION_MAIN);
+//
+//		// shortcutIntent is added with addIntent
+//		Intent addIntent = new Intent();
+//		addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+//		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "uFriends");
+//		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+//				Intent.ShortcutIconResource.fromContext(
+//						getApplicationContext(), R.drawable.applogo));
+//
+//		addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+//		// finally broadcast the new Intent
+//		getApplicationContext().sendBroadcast(addIntent);
+//	}
+	
+	private void startMyService(){
+		Intent intent = new Intent(getApplicationContext(), MyService.class);
+		startService(intent);
 	}
 	
 	public void setCurrentTab(int position) {

@@ -88,6 +88,7 @@ public class ChatActivity extends AppCompatActivity implements
 	Button btnStream;
 
 	boolean side = false;
+	boolean isReceiveRequestStream = false;
 
 	Toolbar mToolbar;
 
@@ -130,6 +131,7 @@ public class ChatActivity extends AppCompatActivity implements
 		btnStream = (Button) findViewById(R.id.btnStream);
 
 		mBroadcast = mBundle.mBroadcast;
+		mBroadcast.mListener = this;
 
 		mChatAdapter = new ChatArrayAdapter(this, R.layout.list_chat_left_item);
 
@@ -211,10 +213,13 @@ public class ChatActivity extends AppCompatActivity implements
 		super.onResume();
 		isActive = true;
 		mBundle.mBroadcast.registerWithContext(this);
-		
-		mBroadcast.mListener = this;
 		mBroadcast.mP2PHandle.setReceiveDataListener(this);
 		mBroadcast.mP2PHandle.setStreamListener(this);
+		
+		if (isReceiveRequestStream){
+			isReceiveRequestStream = false;
+			showAlertRequestStream();
+		}
 	}
 	
 	@Override
@@ -522,28 +527,23 @@ public class ChatActivity extends AppCompatActivity implements
 	@Override
 	public void onDisconnect() {	
 		// TODO Auto-generated method stub
-		
-		mBroadcast.disconnectFromPeer();
-		
-		if (mBundle.peerInfo != null) {
-			if (isActive){
-				if (!alertDialog.isShowing()){
-					alertDialog.show();
+		if (!mBundle.isKilled){
+			if (mBundle.peerInfo != null) {
+				if (isActive){
+					if (!alertDialog.isShowing()){
+						alertDialog.show();
+					}
+				}else{
+					if (isChat){
+						String msg = "You disconnected with " + mBundle.peerInfo._name;
+						createNotification(msg);
+						createToast(msg);
+					}			
 				}
-			}else{
-				if (isChat){
-					String msg = "You disconnected with " + mBundle.peerInfo._name;
-					createNotification(msg);
-					createToast(msg);
-				}			
 			}
-		}
-		
-		mBundle.mPeerList.clear();
-		
-		mBundle.mBroadcast.createGroup();
 
-		isChat = false;
+			isChat = false;
+		}		
 	}
 	
 	@Override
@@ -554,6 +554,12 @@ public class ChatActivity extends AppCompatActivity implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				String msg = mBundle.peerInfo._name + " want to share live stream with you!!!";
+				if (!isChat){
+					createNotification(msg);
+					createToast(msg);
+					isReceiveRequestStream = true;
+				}			
 				showAlertRequestStream();
 			}
 		});

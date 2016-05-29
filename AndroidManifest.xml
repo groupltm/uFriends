@@ -60,10 +60,12 @@
         </activity>
 
         <service android:name="net.majorkernelpanic.streaming.rtsp.RtspServer" />
-        <service
-            android:name="service.MyService"
-            android:stopWithTask="false" >
-        </service>
+        
+        <service 
+            android:name="service.MyService" 
+            android:stopWithTask="false"
+            />
+        
     </application>
 
 </manifest>

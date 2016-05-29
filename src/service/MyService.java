@@ -18,13 +18,13 @@ public class MyService extends Service{
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		
-		mBundle = MyBundle.getInstance();
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
+		
+		mBundle = MyBundle.getInstance();
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -42,6 +42,7 @@ public class MyService extends Service{
 		// TODO Auto-generated method stub
 		super.onTaskRemoved(rootIntent);
 		
-		stopSelf();
+		mBundle.isKilled = true;
+		mBundle.mBroadcast.disconnectFromPeer();
 	}
 }

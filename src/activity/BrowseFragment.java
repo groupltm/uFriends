@@ -23,6 +23,7 @@ import java.util.Map;
 import utility_class.RealPathUtil;
 
 import mywifip2pkit.ReceiveSocketAsync.SocketReceiverDataListener;
+import mywifip2pkit.WifiP2PBroadcast.OnWifiP2PStateListener;
 import mywifip2pkit.WifiP2PBroadcast.WifiP2PBroadcastListener;
 
 import com.example.ufriends.R;
@@ -35,11 +36,15 @@ import adapter.DeviceListAdapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -62,13 +67,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 public class BrowseFragment extends Fragment implements
-		WifiP2PBroadcastListener, SocketReceiverDataListener {
+		WifiP2PBroadcastListener, SocketReceiverDataListener,
+		OnWifiP2PStateListener {
 
 	DeviceListAdapter deviceListAdapter;
 	ListView lvDevice;
@@ -87,9 +94,6 @@ public class BrowseFragment extends Fragment implements
 	boolean didSendAvatar = false;
 	boolean isActive = false;
 	boolean didReceive = false;
-	boolean isFoundService = false;
-
-	int loopRestartDiscovery = 0;
 
 	AlertDialog alertDialog;
 
@@ -99,6 +103,8 @@ public class BrowseFragment extends Fragment implements
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		checkWifi();
 	}
 
 	@Override
@@ -109,16 +115,13 @@ public class BrowseFragment extends Fragment implements
 		mView = inflater.inflate(R.layout.fragment_browse, container, false);
 
 		lvDevice = (ListView) mView.findViewById(R.id.lvDevice);
-		mProgress = (ProgressWheel)mView.findViewById(R.id.progress_wheel);
-		btnFind = (ImageButton)mView.findViewById(R.id.btnFind);
-		rippleBackground=(RippleBackground)mView.findViewById(R.id.rpFind);
-		
-		mBundle.mBroadcast.mListener = this;
-		
+		mProgress = (ProgressWheel) mView.findViewById(R.id.progress_wheel);
+		btnFind = (ImageButton) mView.findViewById(R.id.btnFind);
+		rippleBackground = (RippleBackground) mView.findViewById(R.id.rpFind);
 
 		deviceListAdapter = new DeviceListAdapter(getActivity(),
 				R.layout.list_device_item, mBundle.mPeerList);
-		
+
 		lvDevice.setAdapter(deviceListAdapter);
 		lvDevice.setOnItemClickListener(new OnItemClickListener() {
 
@@ -127,15 +130,18 @@ public class BrowseFragment extends Fragment implements
 					int position, long id) {
 				// TODO Auto-generated method stub
 				MyPeer peer = mBundle.mPeerList.get(position);
-				if (peer.peerInfo._status == 2){
+				if (peer.peerInfo._status == 2) {
+					mProgress.setVisibility(View.GONE);
+					rippleBackground.stopRippleAnimation();
+
 					isActive = true;
 					connectToPeer(position);
-				}else if (peer.peerInfo._status == 0){
+				} else if (peer.peerInfo._status == 0) {
 					showChatView();
 				}
 			}
 		});
-		
+
 		lvDevice.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -143,33 +149,40 @@ public class BrowseFragment extends Fragment implements
 					int position, long id) {
 				// TODO Auto-generated method stub
 				MyPeer peer = mBundle.mPeerList.get(position);
-				if (peer.peerInfo._status == 0){
+				if (peer.peerInfo._status == 0) {
 					mBundle.mBroadcast.disconnectFromPeer();
+					// restartDiscovery();
 				}
-				
+
 				return false;
 			}
-		}); 
-		
+		});
+
+		// lvConnectDevice.setAdapter(deviceConnectListAdapter);
+		// lvConnectDevice.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// // TODO Auto-generated method stub
+		// checkConnectPeer();
+		// }
+		// });
+
 		btnFind.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				isFoundService = false;
-				loopRestartDiscovery = 0;
-				
-				mBundle.mBroadcast.createGroup();
-				
 				rippleBackground.startRippleAnimation();
-				
+
 				mProgress.setVisibility(View.VISIBLE);
-				if (hd_Progress == null){
+				if (hd_Progress == null) {
 					hd_Progress = new Handler();
 				}
-				if (r_Progress == null){
+				if (r_Progress == null) {
 					r_Progress = new Runnable() {
-						
+
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
@@ -180,26 +193,13 @@ public class BrowseFragment extends Fragment implements
 				}
 				hd_Progress.removeCallbacks(r_Progress);
 				hd_Progress.postDelayed(r_Progress, 30000);
-				
-				final Handler hd = new Handler();
-				hd.postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						if (loopRestartDiscovery < 6 && !isFoundService){
-							restartDiscovery();
-							loopRestartDiscovery ++;
-							hd.postDelayed(this, 5000);
-						}else{
-							mProgress.setVisibility(View.GONE);
-							rippleBackground.stopRippleAnimation();
-						}
-					}
-				}, 1000);	
+				// restartDiscovery();
+				mBundle.mPeerList.clear();
+				mBundle.mBroadcast.advertiseWifiP2P();
 			}
+
 		});
-		
+
 		return mView;
 	}
 
@@ -207,8 +207,9 @@ public class BrowseFragment extends Fragment implements
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		mBundle.mBroadcast.mListener = this;
+		mBundle.mBroadcast.setWifiP2PStateListener(this);
 
-		
 		if (!ChatActivity.isChat) {
 			mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
 			ChatArrayAdapter.Clear();
@@ -221,8 +222,7 @@ public class BrowseFragment extends Fragment implements
 		mBundle.mPeerList.clear();
 
 		Map<String, String> serviceInfo = createMap(mBundle.mInfo);
-		//mBundle.mBroadcast.stopDiscoveryService();
-		mBundle.mBroadcast.advertiseWifiP2P();
+		mBundle.mBroadcast.stopDiscoveryService();
 		mBundle.mBroadcast.advertiseService("ufriends", "_tcp", serviceInfo);
 		mBundle.mBroadcast.discoverService(new DnsSdTxtRecordListener() {
 
@@ -231,10 +231,7 @@ public class BrowseFragment extends Fragment implements
 					Map<String, String> txtRecordMap, WifiP2pDevice srcDevice) {
 				// TODO Auto-generated method stub
 				if (fullDomainName.equals("ufriends._tcp.local.")) {
-					if (!checkPeerInMyPeerList(mBundle.mPeerList, srcDevice)) {
-
-						isFoundService = true;
-
+					if (checkPeerInMyPeerList(mBundle.mPeerList, srcDevice) == -1) {
 						Info info = convertMapToInfo(txtRecordMap);
 						MyPeer peer = new MyPeer();
 						peer.peerDevice = srcDevice;
@@ -274,74 +271,118 @@ public class BrowseFragment extends Fragment implements
 	// deviceConnectListAdapter.notifyDataSetChanged();
 	// }
 
-	private void connectToPeer(final int position) {
-		mBundle.mBroadcast.removeGroup();
-		Handler hdConnect = new Handler();
-		hdConnect.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
-				WifiP2pDevice device = mBundle.mPeerList.get(position).peerDevice;
-				final WifiP2pConfig config = new WifiP2pConfig();
-				config.deviceAddress = device.deviceAddress;
-				config.wps.setup = WpsInfo.PBC;
+	private void checkWifi() {
+		WifiManager wifiManager = (WifiManager) getActivity().getSystemService(
+				Context.WIFI_SERVICE);
+		if (!wifiManager.isWifiEnabled()) {
+			showTurnOnWifiAlert();
+		}
+	}
 
-				mBundle.mBroadcast.connectPeer(config);
+	private void turnOnWifi() {
+		WifiManager wifiManager = (WifiManager) getActivity().getSystemService(
+				Context.WIFI_SERVICE);
+		wifiManager.setWifiEnabled(true);
+	}
+
+	private void showTurnOnWifiAlert() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				getActivity());
+		alertDialogBuilder
+				.setMessage("uFriends needs to enable Wifi to run correctly. Turn on Wifi");
+		alertDialogBuilder.setPositiveButton("Allow",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						turnOnWifi();
+					}
+				});
+
+		alertDialogBuilder.setNegativeButton("Disallow",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						getActivity().finish();
+					}
+				});
+
+		AlertDialog dialog = alertDialogBuilder.create();
+		dialog.setOnShowListener(new OnShowListener() {
+
+			@Override
+			public void onShow(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				Button positiveButton = ((AlertDialog) dialog)
+						.getButton(DialogInterface.BUTTON_POSITIVE);
+				positiveButton.setBackgroundColor(Color.BLUE);
+				positiveButton.invalidate();
 			}
-		}, 1000);
-		
+		});
+
+		alertDialogBuilder.show();
+	}
+
+	private void connectToPeer(int position) {
+		WifiP2pDevice device = mBundle.mPeerList.get(position).peerDevice;
+		final WifiP2pConfig config = new WifiP2pConfig();
+		config.deviceAddress = device.deviceAddress;
+		config.wps.setup = WpsInfo.PBC;
+		config.groupOwnerIntent = 15;
+
+		mBundle.mBroadcast.connectPeer(config);
 	}
 
 	@Override
 	public void onPeers(WifiP2pDeviceList peers) {
 		// TODO Auto-generated method stub
-		// mBundle.mPeerList.clear();
-		// mBundle.mPeerList.addAll(peers.getDeviceList());
-		//
-		//
-		// mBundle.mPeerInfoList.clear();
-		// for (int i = 0; i < mBundle.mPeerList.size(); i++){
-		// mBundle.mPeerInfoList.add(new Info());
-		//
-		// if (mBundle.mPeerList.get(i).status == 1){
-		// addConnectPeerToList(mBundle.mPeerInfoList.get(i), 1);
+
+		// Check follow service discovery
+		// List<WifiP2pDevice> collecPeers = new ArrayList<WifiP2pDevice>();
+		// collecPeers.addAll(peers.getDeviceList());
+		// for (MyPeer peer:mBundle.mPeerList){
+		// int i = checkAvailablePeers(collecPeers, peer.peerDevice);
+		// int peerPosition = mBundle.mPeerList.indexOf(peer);
+		// if(i == -1){
+		// mBundle.mPeerList.remove(peerPosition);
+		// } else {
+		// WifiP2pDevice tempPeer = collecPeers.get(i);
+		// if (tempPeer.status == 0 || tempPeer.status == 1){
+		// peer.peerInfo._status = tempPeer.status;
+		// mBundle.mPeerList.remove(peerPosition);
+		// mBundle.mPeerList.add(0, peer);
 		// }
-		// else if (mBundle.mPeerList.get(i).status == 0){
-		// addConnectPeerToList(mBundle.mPeerInfoList.get(i), 2);
+		// }
 		// }
 		//
-		// }
+		// checkConnectedPeer(collecPeers);
 		//
 		// deviceListAdapter.notifyDataSetChanged();
 
+		// check for normal discovery
 		List<WifiP2pDevice> collecPeers = new ArrayList<WifiP2pDevice>();
 		collecPeers.addAll(peers.getDeviceList());
-		for (MyPeer peer : mBundle.mPeerList) {
-			int i = checkAvailablePeers(collecPeers, peer.peerDevice);
-			int peerPosition = mBundle.mPeerList.indexOf(peer);
-			if (i == -1) {
-				mBundle.mPeerList.remove(peerPosition);
+		for (WifiP2pDevice peerDevice : collecPeers) {
+			int position = checkPeerInMyPeerList(mBundle.mPeerList, peerDevice);
+			if (position == -1) {
+				MyPeer peer = new MyPeer();
+				peer.peerDevice = peerDevice;
+				peer.peerInfo._name = peerDevice.deviceName;
+				mBundle.mPeerList.add(peer);
 			} else {
-				WifiP2pDevice tempPeer = collecPeers.get(i);
-				if (tempPeer.status == 0 || tempPeer.status == 1) {
-					// int position = mBundle.mPeerList.indexOf(peer);
-					// Info infoConnectPeer =
-					// mBundle.mPeerInfoList.get(position);
-					// infoConnectPeer._status = collecPeers.get(i).status;
-					// mBundle.mPeerInfoConnectList.add(mBundle.mPeerInfoList.get(position));
-					peer.peerInfo._status = tempPeer.status;
-					mBundle.mPeerList.remove(peerPosition);
+				int peerStatus = peerDevice.status;
+				if (peerStatus == 0 || peerStatus == 1) {
+					MyPeer peer = mBundle.mPeerList.get(position);
+					peer.peerInfo._status = peerStatus;
+					mBundle.mPeerList.remove(position);
 					mBundle.mPeerList.add(0, peer);
 				}
 			}
 		}
 
-		checkConnectedPeer(collecPeers);
-
 		deviceListAdapter.notifyDataSetChanged();
-		// deviceConnectListAdapter.notifyDataSetChanged();
 	}
 
 	private int checkAvailablePeers(List<WifiP2pDevice> peers,
@@ -355,20 +396,20 @@ public class BrowseFragment extends Fragment implements
 		return -1;
 	}
 
-	private boolean checkPeerInMyPeerList(List<MyPeer> mPeerList,
+	private int checkPeerInMyPeerList(List<MyPeer> mPeerList,
 			WifiP2pDevice peerDevice) {
 		for (MyPeer peer : mPeerList) {
 			if (peer.peerDevice.deviceAddress.equals(peerDevice.deviceAddress)) {
-				return true;
+				return mPeerList.indexOf(peer);
 			}
 		}
 
-		return false;
+		return -1;
 	}
 
 	private void checkConnectedPeer(List<WifiP2pDevice> peers) {
 		for (WifiP2pDevice peer : peers) {
-			if (!checkPeerInMyPeerList(mBundle.mPeerList, peer)) {
+			if (checkPeerInMyPeerList(mBundle.mPeerList, peer) == -1) {
 				if (peer.status == 0 || peer.status == 1) {
 					MyPeer mPeer = new MyPeer();
 					mPeer.peerDevice = peer;
@@ -379,12 +420,19 @@ public class BrowseFragment extends Fragment implements
 	}
 
 	private void checkPeerInfoInPeerList(Info peerInfo) {
-		for (MyPeer peer : mBundle.mPeerList) {
-			if (peer.peerInfo._status == 0) {
-				peer.peerInfo = peerInfo;
-				peer.peerInfo._status = 0;
-				deviceListAdapter.notifyDataSetChanged();
-			}
+		MyPeer peer = mBundle.mPeerList.get(0);
+		if (peer.peerInfo._status == 0) {
+			peer.peerInfo = peerInfo;
+			peer.peerInfo._status = 0;
+			deviceListAdapter.notifyDataSetChanged();
+		}
+	}
+	
+	private void setAvatarToConnectPeer(Bitmap avatar){
+		MyPeer peer = mBundle.mPeerList.get(0);
+		if (peer.peerInfo._status == 0) {
+			peer.peerAvatar = avatar;
+			deviceListAdapter.notifyDataSetChanged();
 		}
 	}
 
@@ -406,7 +454,6 @@ public class BrowseFragment extends Fragment implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	private void sendAvatar() {
@@ -439,52 +486,34 @@ public class BrowseFragment extends Fragment implements
 			sendInfo();
 			Log.d("send", "send info");
 		}
-		// Handler hd = new Handler(getActivity().getMainLooper());
-		// hd.post(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// // TODO Auto-generated method stub
-		// // MainActivity.viewPager.setCurrentItem(1, true);
-		// mBundle.isConnect = true;
-		//
-		// MainActivity tab = ((MainActivity) getActivity());
-		// tab.setCurrentTab(2);
-		//
-		// }
-		// });
 
 	}
 
 	@Override
 	public void onDisconnect() {
-		// TODO Auto-generated method stub
-		// mBundle.mPeerInfoConnectList.clear();
-		// mBundle.mBroadcast.advertiseWifiP2P();
+		if (!mBundle.isKilled) {
+			if (mBundle.peerInfo != null) {
+				if (alertDialog == null) {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+							getActivity());
+					alertDialog = alertDialogBuilder.create();
+					alertDialog.setTitle("DISCONNECTED!!!");
+					alertDialog.setMessage("You are disconnected with "
+							+ mBundle.peerInfo._name);
+				}
 
-		if (mBundle.peerInfo != null) {
-			if (alertDialog == null) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-						getActivity());
-				alertDialog = alertDialogBuilder.create();
-				alertDialog.setTitle("DISCONNECTED!!!");
-				alertDialog.setMessage("You are disconnected with "
-						+ mBundle.peerInfo._name);
+				if (ChatActivity.isChat && !alertDialog.isShowing()) {
+					alertDialog.show();
+				}
 			}
 
-			if (ChatActivity.isChat && !alertDialog.isShowing()) {
-				alertDialog.show();
-			}
+			ChatActivity.isChat = false;
+			mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
+			ChatArrayAdapter.Clear();
+
+			mBundle.mPeerList.clear();
+			deviceListAdapter.notifyDataSetChanged();
 		}
-
-		ChatActivity.isChat = false;
-		mBundle.mBroadcast.mP2PHandle.setReceiveDataListener(this);
-		ChatArrayAdapter.Clear();
-
-		mBundle.mPeerList.clear();
-		deviceListAdapter.notifyDataSetChanged();
-		
-		mBundle.mBroadcast.createGroup();
 	}
 
 	@Override
@@ -528,12 +557,14 @@ public class BrowseFragment extends Fragment implements
 				// TODO Auto-generated method stub
 				mBundle.peerAvatar = BitmapFactory.decodeByteArray(data, 0,
 						data.length);
+				setAvatarToConnectPeer(mBundle.peerAvatar);
 			}
 		});
 		if (isActive == false) {
 			sendInfo();
 		} else {
 			didSendAvatar = false;
+			isActive = false;
 			showChatView();
 		}
 	}
@@ -548,8 +579,20 @@ public class BrowseFragment extends Fragment implements
 		} else {
 			if (!isActive) {
 				didSendAvatar = false;
+				isActive = false;
 				showChatView();
 			}
 		}
+	}
+
+	@Override
+	public void onStateEnable() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStateDisable() {
+		// TODO Auto-generated method stu
 	}
 }
