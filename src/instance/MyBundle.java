@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Environment;
 import android.provider.OpenableColumns;
 
@@ -44,6 +46,8 @@ public class MyBundle implements Serializable {
 	public Bitmap peerAvatar;
 	public Bitmap myAvatar;
 	public Info peerInfo;
+	
+	public boolean isKilled = false;
 	
 	
 
@@ -119,6 +123,8 @@ public class MyBundle implements Serializable {
 				myAvatar = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 			}
 		}
+		
+		setDeviceName(mInfo._name);
 	}
 
 	public void setInfoToJSONFile(Context context) throws JsonIOException,
@@ -138,5 +144,32 @@ public class MyBundle implements Serializable {
 				"test.json", Context.MODE_PRIVATE));
 		out.write(jsonString);
 		out.close();
+		
+		setDeviceName(mInfo._name);
+	}
+	
+	private void setDeviceName(String name){
+		try {
+            Method m = mBroadcast.mManager.getClass().getMethod(
+                    "setDeviceName",
+                    new Class[]{WifiP2pManager.Channel.class, String.class,
+                            WifiP2pManager.ActionListener.class});
+
+            m.invoke(mBroadcast.mManager, mBroadcast.mChannel, name, new ActionListener() {
+    			
+    			@Override
+    			public void onSuccess() {
+    				// TODO Auto-generated method stub
+    				
+    			}
+    			
+    			@Override
+    			public void onFailure(int reason) {
+    				// TODO Auto-generated method stub
+    				
+    			}
+    		});
+        } catch (Exception e) {
+        }
 	}
 }

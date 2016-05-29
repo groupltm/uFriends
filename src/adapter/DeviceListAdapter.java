@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ufriends.R;
@@ -48,18 +49,29 @@ public class DeviceListAdapter extends ArrayAdapter<MyPeer> {
 		TextView tvDeviceName = (TextView) v.findViewById(R.id.tvLabel);
 		TextView tvSubInfo = (TextView) v.findViewById(R.id.tvSubInfo);
 		TextView tvStatus = (TextView)v.findViewById(R.id.tvStatus);
+		
+		MyPeer peer = mInfoList.get(position);
+		if (peer.peerAvatar != null){
+			ImageView imvAvatar = (ImageView)v.findViewById(R.id.imvAvatar);
+			imvAvatar.setImageBitmap(peer.peerAvatar);
+		}
 
-		Info info = mInfoList.get(position).peerInfo;
+		Info info = peer.peerInfo;
 		tvDeviceName.setText(info._name);
 		
-		String subInfo;
+		if (info._age != 0){
+			String subInfo;
 
-		if (info._sex) {
-			subInfo = "Sex: Male; " + "Age: " + String.valueOf(info._age);
-		} else {
-			subInfo = "Sex: Female; " + "Age: " + String.valueOf(info._age);
+			if (info._sex) {
+				subInfo = "Sex: Male; " + "Age: " + String.valueOf(info._age);
+			} else {
+				subInfo = "Sex: Female; " + "Age: " + String.valueOf(info._age);
+			}
+			tvSubInfo.setText(subInfo);
+		}else {
+			tvSubInfo.setVisibility(View.GONE);
 		}
-		tvSubInfo.setText(subInfo);
+		
 		
 		if (info._status == 2){
 			tvStatus.setText("Available");

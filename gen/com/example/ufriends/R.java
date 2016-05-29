@@ -3527,8 +3527,8 @@ containing a value of this type.
         public static final int imvAppLogo=0x7f0c0083;
         public static final int imvAvatar=0x7f0c008c;
         public static final int imvDialogIcon=0x7f0c008a;
-        public static final int imvIcon=0x7f0c00a2;
-        public static final int imvShareImage=0x7f0c00a6;
+        public static final int imvIcon=0x7f0c00a6;
+        public static final int imvShareImage=0x7f0c00a5;
         public static final int info=0x7f0c00b6;
         public static final int invisible=0x7f0c000a;
         public static final int layout=0x7f0c00c3;
@@ -3619,11 +3619,11 @@ containing a value of this type.
         public static final int tv=0x7f0c00a7;
         public static final int tvAppName=0x7f0c0082;
         public static final int tvInput=0x7f0c00a8;
-        public static final int tvLabel=0x7f0c00a3;
+        public static final int tvLabel=0x7f0c00a2;
         public static final int tvMessage=0x7f0c008f;
         public static final int tvPeerName=0x7f0c008d;
-        public static final int tvStatus=0x7f0c00a5;
-        public static final int tvSubInfo=0x7f0c00a4;
+        public static final int tvStatus=0x7f0c00a4;
+        public static final int tvSubInfo=0x7f0c00a3;
         public static final int tvTime=0x7f0c008e;
         public static final int txtMsg=0x7f0c00a0;
         public static final int txtSeenDay=0x7f0c00a1;

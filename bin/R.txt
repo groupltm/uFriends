@@ -776,8 +776,8 @@ int id image 0x7f0c0057
 int id imvAppLogo 0x7f0c0083
 int id imvAvatar 0x7f0c008c
 int id imvDialogIcon 0x7f0c008a
-int id imvIcon 0x7f0c00a2
-int id imvShareImage 0x7f0c00a6
+int id imvIcon 0x7f0c00a6
+int id imvShareImage 0x7f0c00a5
 int id info 0x7f0c00b6
 int id invisible 0x7f0c000a
 int id layout 0x7f0c00c3
@@ -868,11 +868,11 @@ int id touch_outside 0x7f0c0090
 int id tv 0x7f0c00a7
 int id tvAppName 0x7f0c0082
 int id tvInput 0x7f0c00a8
-int id tvLabel 0x7f0c00a3
+int id tvLabel 0x7f0c00a2
 int id tvMessage 0x7f0c008f
 int id tvPeerName 0x7f0c008d
-int id tvStatus 0x7f0c00a5
-int id tvSubInfo 0x7f0c00a4
+int id tvStatus 0x7f0c00a4
+int id tvSubInfo 0x7f0c00a3
 int id tvTime 0x7f0c008e
 int id txtMsg 0x7f0c00a0
 int id txtSeenDay 0x7f0c00a1
